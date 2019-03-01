@@ -23,7 +23,7 @@ const viewer = [
    
 ];
 
-const announcement = [
+const announcements = [
     { id: "1", tag: "#Event", date: "11/11/2011", description: "kittens event" , created_by:"Mariam", videos: "https://www.pexels.com/search/kitten/" , photos:"https://www.pexels.com/search/kitten/"},
     { id: "2", tag: "#fun", date: "10/10/2010", description: "Cinnabon in the Platform!" , created_by:"Doha", videos: "https://www.pexels.com/search/kitten/" , photos:"https://www.pexels.com/search/kitten/"},
     { id: "3", tag: "#google", date: "9/9/2019", description: "Google event brought to you by VGS" , created_by:"Ziad", videos: "https://www.pexels.com/search/kitten/" , photos:"https://www.pexels.com/search/kitten/"}
@@ -91,6 +91,18 @@ const photo=[
     {id:"1",album_id:"1",link:"https://www.pexels.com/search/kitten/"},
     {id:"2",album_id:"2",link:"https://www.pexels.com/search/kitten/"}
 
+]
+const subscribers = [
+    { name: 'Yara', email: 'yara@guc.com'},
+    { name: 'Doha', email: 'doha@guc.com'},
+    { name: 'Ziad', email: 'ziad@guc.com'},
+    { name: 'Sara', email: 'yomna@guc.com'}
+]
+const Description = [
+    { name: 'MUN', text: 'asjndmsnanjazj' },
+    { name: 'Enactus', text: 'asjndmsnanjazj'},
+    { name: 'Inspire', text: 'asjndmsnanjazj' },
+    { name: 'TedxGUC', text: 'asjndmsnanjazj'},
 ]
 
 
