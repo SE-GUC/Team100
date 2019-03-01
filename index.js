@@ -1,5 +1,4 @@
 
-
 const express = require('express');
 const messages = require('./messages')
 const team_members = require('./team_members')
@@ -13,7 +12,7 @@ app.use(express.json())
 app.use('/messages', messages)
 app.use('/team_members', team_members)
 
-// Handling 404
+
 const committe = require('./committee')
 
 app.get('/', (req, res) => {
