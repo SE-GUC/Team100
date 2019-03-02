@@ -33,4 +33,23 @@ router.delete('/delete_photo/:id', (req, res) => {
     res.send(photo)
 })
 
+//menna
+// add photo
+router.post("/", (req, res) => { 
+    const id = req.body.id;
+    const albumID = req.body.album_id;
+    const photoLink = req.body.link;
+    const descrip = req.body.description;
+    const ph = {
+      id: photo.length + 1,
+      album_id: albumID,
+      link: photoLink,
+      description: descrip
+    };
+    photo.push(ph);
+    res.send(photo);
+  });
+  
+  
+
 module.exports=router
