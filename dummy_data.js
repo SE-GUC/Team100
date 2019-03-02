@@ -23,7 +23,7 @@ const viewer = [
    
 ];
 
-const announcements = [
+const announcement = [
     { id: "1", tag: "#Event", date: "11/11/2011", description: "kittens event" , created_by:"Mariam", videos: "https://www.pexels.com/search/kitten/" , photos:"https://www.pexels.com/search/kitten/"},
     { id: "2", tag: "#fun", date: "10/10/2010", description: "Cinnabon in the Platform!" , created_by:"Doha", videos: "https://www.pexels.com/search/kitten/" , photos:"https://www.pexels.com/search/kitten/"},
     { id: "3", tag: "#google", date: "9/9/2019", description: "Google event brought to you by VGS" , created_by:"Ziad", videos: "https://www.pexels.com/search/kitten/" , photos:"https://www.pexels.com/search/kitten/"}
@@ -46,11 +46,12 @@ const club = [
    
 ];
 
+
 const event = [
-    { id: "1", club: "MUN", name: "10th anniversary", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"10th anniversary",feedback:["gamed","gamed awi"],place:"Uni",description:"description",committee:"Marketing"},
-    { id: "2", club: "VGS", name: "recruitment", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"recruitment",feedback:["not much","lazeez"],place:"BUE",description:"description",committee:"HR"},
-    { id: "3", club: "TIQ", name: "opening", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"opening",feedback:["asd","asd"],place:"Hilton Hotel",description:"description",committee:"Fundraising"},
-    { id: "4", club: "MUN", name: "conference", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"conference",feedback:["dsa","dsa"],place:"Kempinski Hotel",description:"description",committee:"Security Council"} 
+    { id: "1", club: "MUN", name: "10th anniversary", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"10th anniversary",feedback:["gamed","gamed awi"],place:"Uni",description:"description",committee:"Marketing", rating: 50, ratingCount: 10, rate:5},
+    { id: "2", club: "VGS", name: "recruitment", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"recruitment",feedback:["not much","lazeez"],place:"BUE",description:"description",committee:"HR", rating: 40, ratingCount: 10, rate: 4 },
+    { id: "3", club: "TIQ", name: "opening", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"opening",feedback:["asd","asd"],place:"Hilton Hotel",description:"description",committee:"Fundraising", rating: 30, ratingCount: 10, rate: 3},
+    { id: "4", club: "MUN", name: "conference", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"conference",feedback:["dsa","dsa"],place:"Kempinski Hotel",description:"description",committee:"Security Council", rating: 20, ratingCount: 10, rate:2} 
 ];
 
 
@@ -92,20 +93,8 @@ const photo=[
     {id:"2",album_id:"2",link:"https://www.pexels.com/search/kitten/"}
 
 ]
-const subscribers = [
-    { name: 'Yara', email: 'yara@guc.com'},
-    { name: 'Doha', email: 'doha@guc.com'},
-    { name: 'Ziad', email: 'ziad@guc.com'},
-    { name: 'Sara', email: 'yomna@guc.com'}
-]
-const Description = [
-    { name: 'MUN', text: 'asjndmsnanjazj' },
-    { name: 'Enactus', text: 'asjndmsnanjazj'},
-    { name: 'Inspire', text: 'asjndmsnanjazj' },
-    { name: 'TedxGUC', text: 'asjndmsnanjazj'},
-]
 
 
 
-const port = 3000;
-app.listen(port, () => console.log(`Listening on port ${port}`));
+// const port = 5000;
+// app.listen(port, () => console.log(`Listening on port ${port}`));

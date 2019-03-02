@@ -1,0 +1,459 @@
+
+const express = require('express');
+//const app = express();
+const Joi = require('joi');
+const router = express.Router();
+
+//router.use(express.json())
+
+const members = [
+    { id: "1", name: "Yomna", email: "yomna@gmail.com", password: "12345" , major:"law", telephone: "22222" , photo:"https://www.pexels.com/search/kitten/",club:"MUN",committee:"Fundraising",admin:"0"},
+    { id: "2", name: "Dina", email: "dina@gmail.com", password: "1234" , major:"met", telephone: "33333" , photo:"https://www.pexels.com/search/kitten/",club:"MUN",committee:"Marketing",admin:"0"},
+    { id: "3", name: "Dalia", email: "dalia@gmail.com", password: "abcd" , major:"bi", telephone: "111111" , photo:"https://www.pexels.com/search/kitten/",club:"TIQ",committee:"Marketing",admin:"0"}
+    
+];
+
+const admins = [
+    { id: "4", name: "Mariam", email: "mariam@gmail.com", password: "12345" , major:"law", telephone: "22222" , photo:"https://www.pexels.com/search/kitten/",club:"MUN",committee:"Marketing"},
+    { id: "5", name: "Doha", email: "doha@gmail.com", password: "1234" , major:"met", telephone: "33333" , photo:"https://www.pexels.com/search/kitten/",club:"MUN",committee:"Security Council"},
+    { id: "6", name: "Ziad", email: "ziad@gmail.com", password: "12345" , major:"bi", telephone: "111111" , photo:"https://www.pexels.com/search/kitten/",club:"VGS",committee:"Game Development"}
+   
+];
+
+const viewers = [
+    { id: "7", name: "Yara", email: "yara@gmail.com", password: "12345" , major:"law", telephone: "22222" , photo:"https://www.pexels.com/search/kitten/", uni_type:"GUC"},
+    { id: "8", name: "Menna", email: "menna@gmail.com", password: "abcd" , major:"met", telephone: "33333" , photo:"https://www.pexels.com/search/kitten/",uni_type:"AUC"},
+    { id: "9", name: "Marwan", email: "marwan@gmail.com", password: "12345" , major:"bi", telephone: "111111" , photo:"https://www.pexels.com/search/kitten/",uni_type:"GUC"}
+   
+];
+
+
+
+
+
+router.get('/viewers/:id', (req, res) => {
+    const id = req.params.id
+    const result = viewers.find(viewers => viewers.id === id)
+    res.send(result)
+})
+router.get('/admins/:id', (req, res) => {
+    const id = req.params.id
+    const a = admins.find(admins => admins.id === id)
+    res.send(a)
+
+})
+router.get('/members/:id', (req, res) => {
+    const id = req.params.id
+    const m = members.find(members => members.id === id)
+    res.send(m)
+})
+
+
+
+
+router.get('/viewer_info/:id', (req, res) => {
+    const viewid = req.params.id
+    const x = viewers.find(x => x.id === viewid)
+    res.send({data: x})
+})
+router.get('/admin_info/:id', (req, res) => {
+    const adminid = req.params.id
+    const x = admins.find(x => x.id === adminid)
+    res.send({data: x})
+})
+router.get('/member_info/:id', (req, res) => {
+    const memberid = req.params.id
+    const x = members.find(x => x.id === memberid)
+    res.send({data: x})
+})
+
+
+router.post('/create_member/', (req, res) => {
+   // const nid = req.body.id
+    const n_name = req.body.name
+    const n_email = req.body.email
+    const n_password = req.body.password
+    const n_major = req.body.major
+    const n_telephone = req.body.telephone
+    const n_photo = req.body.photo
+    const n_club = req.body.club
+    const n_committee= req.body.committee
+    const n_admin = req.body.admin
+
+    const schema = {
+		name: Joi.string().min(3).required(),
+        email: Joi.string().required(),
+        password: Joi.string().min(5).required(),
+        major:Joi.string().required(),
+        telephone: Joi.number(),
+        photo: Joi.string(),
+        club: Joi.string(),
+        committee:Joi.string(),
+        admin: Joi.boolean()
+
+	}
+    const result = Joi.validate(req.body, schema);
+    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+
+
+    const member = {
+        id: members.length + 1,
+        name: n_name,
+        email: n_email,
+        password: n_password,
+        major: n_major,
+        telephone: n_telephone,
+        photo: n_photo,
+        club: n_club,
+        committee:n_committee,
+        admin:n_admin
+    }
+    members.push(member)
+    res.send(members)
+})
+
+
+router.post('/create_admin/', (req, res) => {
+   // const na_id = req.body.id
+    const na_name = req.body.name
+    const na_email = req.body.email
+    const na_password = req.body.password
+    const na_major = req.body.major
+    const na_telephone = req.body.telephone
+    const na_photo = req.body.photo
+    const na_club = req.body.club
+    const na_committee= req.body.committee
+
+
+    const schema = {
+		name: Joi.string().min(3).required(),
+        email: Joi.string().required(),
+        password: Joi.string().min(5).required(),
+        major:Joi.string().required(),
+        telephone: Joi.number(),
+        photo: Joi.string(),
+        club: Joi.string(),
+        committee: Joi.string()
+
+	}
+    const result = Joi.validate(req.body, schema);
+    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+
+
+    const admin = {
+        id: admins.length + 1,
+        name: na_name,
+        email: na_email,
+        password: na_password,
+        major: na_major,
+        telephone: na_telephone,
+        photo: na_photo,
+        club: na_club,
+        committee:na_committee
+    }
+    admins.push(admin)
+    res.send(admins)
+})
+
+
+router.post('/create_viewer/', (req, res) => {
+    //const nv_id = req.body.id
+    const nv_name = req.body.name
+    const nv_email = req.body.email
+    const nv_password = req.body.password
+    const nv_major = req.body.major
+    const nv_telephone = req.body.telephone
+    const nv_photo = req.body.photo
+    const nv_uni = req.body.uni_type
+   
+
+    const schema = {
+		name: Joi.string().min(3).required(),
+        email: Joi.string().required(),
+        password: Joi.string().min(5).required(),
+        major:Joi.string().required(),
+        telephone: Joi.number(),
+        photo: Joi.string(),
+        uni_type: Joi.string()
+       
+
+	}
+    const result = Joi.validate(req.body, schema);
+    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+
+
+    const viewer = {
+        id: viewers.length + 1,
+        name: nv_name,
+        email: nv_email,
+        password: nv_password,
+        major: nv_major,
+        telephone: nv_telephone,
+        photo: nv_photo,
+        uni_type: nv_uni
+       
+    }
+    viewers.push(viewer)
+    res.send(viewers)
+})
+
+router.delete('/delete_viewer/:id', (req, res) => {
+    const vid = req.params.id
+    const x = viewers.filter(x => x.id === vid )[0]
+    const index = viewers.indexOf(x)
+    if(x && index!==null){
+        viewers.splice(index,1)
+        res.send(viewers)
+    }
+    else{
+        res.status(400).send({ err: 'Invalid value for viewer id' });   
+    }}
+)
+
+router.delete('/delete_admin/:id', (req, res) => {
+    const aid = req.params.id
+    const x = admins.filter(x => x.id === aid )[0]
+    const index = admins.indexOf(x)
+    if(x && index!==null){
+        admins.splice(index,1)
+        res.send(admins)
+    }
+    else{
+        res.status(400).send({ err: 'Invalid value for admin id' });   
+    }
+
+}
+)
+
+router.delete('/delete_member/:id', (req, res) => {
+    const mid = req.params.id
+    const x = members.filter(x => x.id === mid )[0]
+    const index = members.indexOf(x)
+    if(x && index!==null){
+        members.splice(index,1)
+        res.send(members)
+    }
+    else{
+        res.status(400).send({ err: 'Invalid value for member id' });   
+    }
+
+}
+)
+
+
+router.put('/update_member/:id', (req, res) => {
+    const memb_id = req.params.id
+    const up_member = members.filter(up_member => up_member.id === memb_id)[0]
+
+if(req.body.name!==undefined){
+    if(typeof req.body.name==='string'){
+        up_member.name= req.body.name
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for name' });   
+    }
+}
+
+if(req.body.major!==undefined){
+    if(typeof req.body.major==='string'){
+        up_member.major= req.body.major
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for major' });   
+    }
+}
+
+if(req.body.email!==undefined){
+    if(typeof req.body.email==='string'){
+        up_member.email= req.body.email
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for email' });   
+    }
+}
+if(req.body.telephone!==undefined){
+    if(typeof req.body.telephone==='number'){
+        up_member.telephone= req.body.telephone
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for telephone' });   
+    }
+}
+if(req.body.photo!==undefined){
+    if(typeof req.body.photo==='string'){
+        up_member.photo= req.body.photo
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for photo' });   
+    }
+}
+
+if(req.body.club!==undefined){
+    if(typeof req.body.club==='string'){
+        up_member.club= req.body.club
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for club' });   
+    }
+}
+
+
+if(req.body.committee!==undefined){
+    if(typeof req.body.committee==='string'){
+        up_member.committee= req.body.committee
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for committee' });   
+    }
+}
+
+if(req.body.admin!==undefined){
+    if(typeof req.body.admin==='boolean'){
+        up_member.admin= req.body.admin
+    }
+    else{
+        res.status(400).send({ err: 'Invalid data type for admin' });   
+    }
+}
+res.send(members)
+
+    
+
+}
+)
+
+router.put('/update_admin/:id', (req, res) => {
+    const admin_id = req.params.id
+    const up_admin = admins.filter(up_admin => up_admin.id === admin_id)[0]
+
+   if(req.body.name!==undefined){
+        if(typeof req.body.name==='string'){
+            up_admin.name= req.body.name
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for name' });   
+        }
+    }
+    
+    if(req.body.major!==undefined){
+        if(typeof req.body.major==='string'){
+            up_admin.major= req.body.major
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for major' });   
+        }
+    }
+    
+    if(req.body.email!==undefined){
+        if(typeof req.body.email==='string'){
+            up_admin.email= req.body.email
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for email' });   
+        }
+    }
+    if(req.body.telephone!==undefined){
+        if(typeof req.body.telephone==='number'){
+            up_admin.telephone= req.body.telephone
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for telephone' });   
+        }
+    }
+    if(req.body.photo!==undefined){
+        if(typeof req.body.photo==='string'){
+            up_admin.photo= req.body.photo
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for photo' });   
+        }
+    }
+    
+    if(req.body.club!==undefined){
+        if(typeof req.body.club==='string'){
+            up_admin.club= req.body.club
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for club' });   
+        }
+    }
+    
+    
+    if(req.body.committee!==undefined){
+        if(typeof req.body.committee==='string'){
+            up_admin.committee= req.body.committee
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for committee' });   
+        }
+    }
+	res.send(admins)
+
+}
+)
+router.put('/update_viewer/:id', (req, res) => {
+    const viewer_id = req.params.id
+    const up_viewer = viewers.filter(up_viewer => up_viewer.id === viewer_id)[0]
+
+    if(req.body.name!==undefined){
+        if(typeof req.body.name==='string'){
+            up_viewer.name= req.body.name
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for name' });   
+        }
+    }
+
+    if(req.body.major!==undefined){
+        if(typeof req.body.major==='string'){
+            up_viewer.major= req.body.major
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for major' });   
+        }
+    }
+
+    if(req.body.email!==undefined){
+        if(typeof req.body.email==='string'){
+            up_viewer.email= req.body.email
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for email' });   
+        }
+    }
+    if(req.body.telephone!==undefined){
+        if(typeof req.body.telephone==='number'){
+            up_viewer.telephone= req.body.telephone
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for telephone' });   
+        }
+    }
+    if(req.body.photo!==undefined){
+        if(typeof req.body.photo==='string'){
+            up_viewer.photo= req.body.photo
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for photo' });   
+        }
+    }
+
+    if(req.body.uni_type!==undefined){
+        if(typeof req.body.uni_type==='string'){
+            up_viewer.uni_type= req.body.uni_type
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for uni' });   
+        }
+    }
+    
+   res.send(viewers)
+
+
+}
+)
+
+
+module.exports=router
+//const port = 5000;
+//router.listen(port, () => console.log(`Listening on port ${port}`));
