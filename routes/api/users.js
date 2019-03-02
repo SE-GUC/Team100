@@ -31,6 +31,27 @@ const viewers = [
 
 router.get('/', (req, res) => res.send("AWGs Hub"))
 
+
+router.get('/viewers/:id', (req, res) => {
+    const id = req.params.id
+    const result = viewers.find(viewers => viewers.id === id)
+    res.send(result)
+})
+router.get('/admins/:id', (req, res) => {
+    const id = req.params.id
+    const a = admins.find(admins => admins.id === id)
+    res.send(a)
+
+})
+router.get('/members/:id', (req, res) => {
+    const id = req.params.id
+    const m = members.find(members => members.id === id)
+    res.send(m)
+})
+
+
+
+
 router.get('/viewer_info/:id', (req, res) => {
     const viewid = req.params.id
     const x = viewers.find(x => x.id === viewid)
