@@ -5,6 +5,8 @@ const photo = require('./photo')
 const FAQs = require('./FAQs')
 const committe = require('./committee')
 const MissionAndVision = require('./MissionAndVision')
+const Rating = require('./Rating')
+
 
 const messages = require('./messages')
 const team_members = require('./team_members')
@@ -17,6 +19,8 @@ const team_members = require('./team_members')
 app.use('/messages', messages)
 app.use('/team_members', team_members)
 app.use('/MissionAndVision', MissionAndVision)
+app.use('/Rating', Rating)
+
 
 
 //const committe = require('./committee')
