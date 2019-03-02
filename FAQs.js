@@ -371,8 +371,13 @@ router.delete('/:id', (req, res) => {
     const faqId = req.params.id 
     const x = faqs.find(x => x.id === faqId)
     const index = faqs.indexOf(x)
-    faqs.splice(index,1)
-    res.send(faqs)
+    if(x && index!==null){
+      faqs.splice(index,1)
+      res.send(faqs)
+    }
+    else{
+      res.status(400).send({err: 'Invalid value for FAQ ID'});
+    }
 
 });
 module.exports=router;

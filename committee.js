@@ -134,8 +134,14 @@ router.delete("/:name", (req, res) => {
 
   const comm = committee.find(comm => comm.name === name);
   const index = committee.indexOf(comm);
+  if(comm && index !==null){
   committee.splice(index, 1);
   res.send(committee);
+  }
+  else{
+    return res.status(400).send({ error: "invalid value for committee name" });
+
+  }
 });
 
 module.exports = router;
