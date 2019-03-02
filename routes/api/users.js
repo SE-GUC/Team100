@@ -29,7 +29,6 @@ const viewers = [
 
 
 
-router.get('/', (req, res) => res.send("AWGs Hub"))
 
 
 router.get('/viewers/:id', (req, res) => {
@@ -316,19 +315,8 @@ if(req.body.admin!==undefined){
         res.status(400).send({ err: 'Invalid data type for admin' });   
     }
 }
-const index= members.indexOf(up_member)
-if(up_member&&index !== null){
-const keys = Object.keys(req.body)
-keys.forEach(key=> {
-    up_member[key] = req.body[key]
-})
-members[index]= up_member
-res.json(members[index]) 
-}
-else{
-    res.status(400).send({ err: 'Invalid value for member id' });   
+res.send(members)
 
-}
     
 
 }
