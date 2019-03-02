@@ -332,6 +332,12 @@ router.post("/", (req, res) => {
     question: question,
     answer: answer
   };
+  const schema = {
+       question:Joi.string().required(),
+       answer:Joi.string().required()
+  }
+	const result = Joi.validate(req.body, schema);
+	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
   faqs.push(FAQ);
   res.send(faqs);
 });
