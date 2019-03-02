@@ -1,13 +1,15 @@
 
-const app = express()
-app.use(express.json())
 const express = require('express')
+const app = express()
+
+app.use(express.json())
 const photo = require('./photo')
 const FAQs = require('./FAQs')
 const committe = require('./committee')
 
 const messages = require('./messages')
 const team_members = require('./team_members')
+const achievements = require('./achievements')
 
 
 //const router = express.Router();
@@ -16,9 +18,10 @@ const team_members = require('./team_members')
 // Direct routes to appropriate files 
 app.use('/messages', messages)
 app.use('/team_members', team_members)
+app.use('/achievements', achievements)
 
 
-const committe = require('./committee')
+//const committe = require('./committee')
 
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome to MUN</h1>  `);
