@@ -247,7 +247,7 @@ router.put('/update_member/:id', (req, res) => {
 
 if(req.body.name!==undefined){
     if(typeof req.body.name==='string'){
-        members.name= req.body.name
+        up_member.name= req.body.name
     }
     else{
         res.status(400).send({ err: 'Invalid data type for name' });   
@@ -256,7 +256,7 @@ if(req.body.name!==undefined){
 
 if(req.body.major!==undefined){
     if(typeof req.body.major==='string'){
-        members.major= req.body.major
+        up_member.major= req.body.major
     }
     else{
         res.status(400).send({ err: 'Invalid data type for major' });   
@@ -265,7 +265,7 @@ if(req.body.major!==undefined){
 
 if(req.body.email!==undefined){
     if(typeof req.body.email==='string'){
-        members.email= req.body.email
+        up_member.email= req.body.email
     }
     else{
         res.status(400).send({ err: 'Invalid data type for email' });   
@@ -273,7 +273,7 @@ if(req.body.email!==undefined){
 }
 if(req.body.telephone!==undefined){
     if(typeof req.body.telephone==='number'){
-        members.telephone= req.body.telephone
+        up_member.telephone= req.body.telephone
     }
     else{
         res.status(400).send({ err: 'Invalid data type for telephone' });   
@@ -281,7 +281,7 @@ if(req.body.telephone!==undefined){
 }
 if(req.body.photo!==undefined){
     if(typeof req.body.photo==='string'){
-        members.photo= req.body.photo
+        up_member.photo= req.body.photo
     }
     else{
         res.status(400).send({ err: 'Invalid data type for photo' });   
@@ -290,7 +290,7 @@ if(req.body.photo!==undefined){
 
 if(req.body.club!==undefined){
     if(typeof req.body.club==='string'){
-        members.club= req.body.club
+        up_member.club= req.body.club
     }
     else{
         res.status(400).send({ err: 'Invalid data type for club' });   
@@ -300,7 +300,7 @@ if(req.body.club!==undefined){
 
 if(req.body.committee!==undefined){
     if(typeof req.body.committee==='string'){
-        members.committee= req.body.committee
+        up_member.committee= req.body.committee
     }
     else{
         res.status(400).send({ err: 'Invalid data type for committee' });   
@@ -309,7 +309,7 @@ if(req.body.committee!==undefined){
 
 if(req.body.admin!==undefined){
     if(typeof req.body.admin==='boolean'){
-        members.admin= req.body.admin
+        up_member.admin= req.body.admin
     }
     else{
         res.status(400).send({ err: 'Invalid data type for admin' });   
