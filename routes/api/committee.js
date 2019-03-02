@@ -27,6 +27,14 @@ const committee = [
   }
 ];
 
+//view committees
+
+router.get('/view_committee/', (req, res) => {
+   // const id=req.params.id
+     const name = req.body.name
+     const r = committee.find(committee => committee.name === name)
+    res.send(r)
+})
 
 //get all committees
 
