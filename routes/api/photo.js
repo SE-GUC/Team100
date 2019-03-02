@@ -46,6 +46,14 @@ router.post("/", (req, res) => {
       link: photoLink,
       description: descrip
     };
+    const schema = {
+        album_id:Joi.string().min(1).required(),
+        link:Joi.string().required()
+     }
+ 
+     const result = Joi.validate(req.body, schema);
+ 
+     if (result.error) return res.status(400).send({ error: result.error.details[0].message });
     photo.push(ph);
     res.send(photo);
   });
