@@ -18,6 +18,7 @@ const achievements = require('./routes/api/achievements')
 const feedback = require('./routes/api/feedback')
 const subscribers = require('./routes/api/subscribers')
 const announcements = require('./routes/api/announcements')
+const club = require('./routes/api/club')
 
 
 
@@ -38,6 +39,10 @@ app.use('/api/feedback',feedback)
 app.use('/api/messages', messages)
 app.use('/api/team_members', team_members)
 app.use('/api/achievements', achievements)
+app.use('/api/club', club)
+
+
+
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome to AWG Hub</h1>  `);
 })
