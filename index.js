@@ -19,6 +19,8 @@ const team_members = require('./team_members')
 const achievements = require('./achievements')
 
 const subscribers = require('./subscribers')
+const announcements = require('./announcements')
+
 
 
 app.use('/messages', messages)
@@ -38,6 +40,7 @@ app.use('/api/committee', committe)
 app.use('/api/albums', albums)
 app.use('/api/Description', Description)
 app.use('/api/subscribers', subscribers)
+app.use('/api/announcements', announcements)
 
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome to AWG Hub</h1>  `);
@@ -45,26 +48,13 @@ app.get('/', (req, res) => {
 
 
 // Direct routes to appropriate files 
-app.use('/api/committee', committe)
-
-
-
-
-
- })
-
-
-
-const club = require('./routes/api/club')
-const feedback = require('./routes/api/feedback')
-const library = require('./routes/api/library')
-// Direct routes to appropriate files 
-app.use('/club', club)
-app.use('/feedback',feedback)
-app.use('/library',library)
+app.use('/api/committee', committe)+
 
 
 // Handling 404
+app.get('/', (req, res) => {
+    res.send(`<h1>Welcome to AWG Hub</h1>  `);
+})
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
