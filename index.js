@@ -12,6 +12,7 @@ const MissionAndVision = require('./MissionAndVision')
 const Rating = require('./Rating')
 const messages = require('./messages')
 const team_members = require('./team_members')
+const subscribers = require('./subscribers')
 
 app.use('/messages', messages)
 app.use('/team_members', team_members)
@@ -23,6 +24,8 @@ app.use('/api/FAQs', FAQs)
 app.use('/api/committee', committe)
 app.use('/api/albums', albums)
 app.use('/api/Description', Description)
+app.use('/api/subscribers', subscribers)
+
 
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome to AWG Hub</h1>  `);
