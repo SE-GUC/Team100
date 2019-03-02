@@ -33,7 +33,7 @@ app.use('/achievements', achievements)
 
 app.use('/MissionAndVision', MissionAndVision)
 app.use('/Rating', Rating)
-app.use('/users', users)
+app.use('/api/users', users)
 app.use('/api/photo', photo)
 app.use('/api/FAQs', FAQs)
 app.use('/api/committee', committe)
@@ -48,13 +48,10 @@ app.get('/', (req, res) => {
 
 
 // Direct routes to appropriate files 
-app.use('/api/committee', committe)+
 
 
 // Handling 404
-app.get('/', (req, res) => {
-    res.send(`<h1>Welcome to AWG Hub</h1>  `);
-})
+
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
