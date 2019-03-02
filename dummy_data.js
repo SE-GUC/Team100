@@ -46,11 +46,12 @@ const club = [
    
 ];
 
+
 const event = [
-    { id: "1", club: "MUN", name: "10th anniversary", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"10th anniversary",feedback:["gamed","gamed awi"],place:"Uni",description:"description",committee:"Marketing"},
-    { id: "2", club: "VGS", name: "recruitment", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"recruitment",feedback:["not much","lazeez"],place:"BUE",description:"description",committee:"HR"},
-    { id: "3", club: "TIQ", name: "opening", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"opening",feedback:["asd","asd"],place:"Hilton Hotel",description:"description",committee:"Fundraising"},
-    { id: "4", club: "MUN", name: "conference", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"conference",feedback:["dsa","dsa"],place:"Kempinski Hotel",description:"description",committee:"Security Council"} 
+    { id: "1", club: "MUN", name: "10th anniversary", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"10th anniversary",feedback:["gamed","gamed awi"],place:"Uni",description:"description",committee:"Marketing", rating: 50, ratingCount: 10, rate:5},
+    { id: "2", club: "VGS", name: "recruitment", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"recruitment",feedback:["not much","lazeez"],place:"BUE",description:"description",committee:"HR", rating: 40, ratingCount: 10, rate: 4 },
+    { id: "3", club: "TIQ", name: "opening", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"opening",feedback:["asd","asd"],place:"Hilton Hotel",description:"description",committee:"Fundraising", rating: 30, ratingCount: 10, rate: 3},
+    { id: "4", club: "MUN", name: "conference", date:"11/11/2011", photo:"https://www.pexels.com/search/kitten/",title:"conference",feedback:["dsa","dsa"],place:"Kempinski Hotel",description:"description",committee:"Security Council", rating: 20, ratingCount: 10, rate:2} 
 ];
 
 
