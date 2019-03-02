@@ -1,6 +1,7 @@
 const express = require('express')
 
 const committe = require('./committee')
+const Description = require('./Description')
 
 const app = express()
 app.use(express.json())
@@ -12,6 +13,8 @@ app.get('/', (req, res) => {
 
 // Direct routes to appropriate files 
 app.use('/api/committee', committe)
+app.use('/api/Description', Description)
+
 
 //Handling 404
 app.use((req, res) => {
