@@ -387,6 +387,8 @@ router.put('/update_admin/:id', (req, res) => {
             res.status(400).send({ err: 'Invalid data type for committee' });   
         }
     }
+	res.send(admins)
+
 }
 )
 router.put('/update_viewer/:id', (req, res) => {
@@ -445,7 +447,8 @@ router.put('/update_viewer/:id', (req, res) => {
         }
     }
     
-   
+   res.send(viewers)
+
 
 }
 )
