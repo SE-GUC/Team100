@@ -1,11 +1,9 @@
-const events = require('./events')
-app.use('/events', events)
 
 const express = require('express')
 const app = express()
 app.use(express.json())
 
-
+const events = require('./routes/api/events')
 const users = require('./routes/api/users')
 const albums = require('./routes/api/albums')
 const photo = require('./routes/api/photo')
@@ -26,7 +24,7 @@ const announcements = require('./routes/api/announcements')
 
 
 //const committe = require('./committee')
-
+app.use('/api/events', events)
 app.use('/api/MissionAndVision', MissionAndVision)
 app.use('/api/Rating', Rating)
 app.use('/api/users', users)
