@@ -1,5 +1,7 @@
 const express =require('express');
 const router=express.Router();
+const Joi=require('joi');
+
 
 const photo=[
     {id:"1",album_id:"1",link:"https://www.pexels.com/search/kitten/",description : "kittens"},
