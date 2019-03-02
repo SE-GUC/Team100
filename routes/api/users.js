@@ -326,18 +326,66 @@ router.put('/update_admin/:id', (req, res) => {
     const admin_id = req.params.id
     const up_admin = admins.filter(up_admin => up_admin.id === admin_id)[0]
 
-    const index= admins.indexOf(up_admin)
-    if(up_admin&&index !== null){
-    const keys = Object.keys(req.body)
-    keys.forEach(key=> {
-        up_admin[key] = req.body[key]
-    })
-    admins[index]= up_admin
-    res.json(admins[index]) 
+   if(req.body.name!==undefined){
+        if(typeof req.body.name==='string'){
+            up_admin.name= req.body.name
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for name' });   
+        }
     }
-    else{
-        res.status(400).send({ err: 'Invalid value for admin id' });   
-
+    
+    if(req.body.major!==undefined){
+        if(typeof req.body.major==='string'){
+            up_admin.major= req.body.major
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for major' });   
+        }
+    }
+    
+    if(req.body.email!==undefined){
+        if(typeof req.body.email==='string'){
+            up_admin.email= req.body.email
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for email' });   
+        }
+    }
+    if(req.body.telephone!==undefined){
+        if(typeof req.body.telephone==='number'){
+            up_admin.telephone= req.body.telephone
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for telephone' });   
+        }
+    }
+    if(req.body.photo!==undefined){
+        if(typeof req.body.photo==='string'){
+            up_admin.photo= req.body.photo
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for photo' });   
+        }
+    }
+    
+    if(req.body.club!==undefined){
+        if(typeof req.body.club==='string'){
+            up_admin.club= req.body.club
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for club' });   
+        }
+    }
+    
+    
+    if(req.body.committee!==undefined){
+        if(typeof req.body.committee==='string'){
+            up_admin.committee= req.body.committee
+        }
+        else{
+            res.status(400).send({ err: 'Invalid data type for committee' });   
+        }
     }
 }
 )
@@ -347,7 +395,7 @@ router.put('/update_viewer/:id', (req, res) => {
 
     if(req.body.name!==undefined){
         if(typeof req.body.name==='string'){
-            viewers.name= req.body.name
+            up_viewer.name= req.body.name
         }
         else{
             res.status(400).send({ err: 'Invalid data type for name' });   
@@ -356,7 +404,7 @@ router.put('/update_viewer/:id', (req, res) => {
 
     if(req.body.major!==undefined){
         if(typeof req.body.major==='string'){
-            viewers.major= req.body.major
+            up_viewer.major= req.body.major
         }
         else{
             res.status(400).send({ err: 'Invalid data type for major' });   
@@ -365,7 +413,7 @@ router.put('/update_viewer/:id', (req, res) => {
 
     if(req.body.email!==undefined){
         if(typeof req.body.email==='string'){
-            viewers.email= req.body.email
+            up_viewer.email= req.body.email
         }
         else{
             res.status(400).send({ err: 'Invalid data type for email' });   
@@ -373,7 +421,7 @@ router.put('/update_viewer/:id', (req, res) => {
     }
     if(req.body.telephone!==undefined){
         if(typeof req.body.telephone==='number'){
-            viewers.telephone= req.body.telephone
+            up_viewer.telephone= req.body.telephone
         }
         else{
             res.status(400).send({ err: 'Invalid data type for telephone' });   
@@ -381,7 +429,7 @@ router.put('/update_viewer/:id', (req, res) => {
     }
     if(req.body.photo!==undefined){
         if(typeof req.body.photo==='string'){
-            viewers.photo= req.body.photo
+            up_viewer.photo= req.body.photo
         }
         else{
             res.status(400).send({ err: 'Invalid data type for photo' });   
@@ -390,7 +438,7 @@ router.put('/update_viewer/:id', (req, res) => {
 
     if(req.body.uni_type!==undefined){
         if(typeof req.body.uni_type==='string'){
-            viewers.uni_type= req.body.uni_type
+            up_viewer.uni_type= req.body.uni_type
         }
         else{
             res.status(400).send({ err: 'Invalid data type for uni' });   
@@ -399,18 +447,6 @@ router.put('/update_viewer/:id', (req, res) => {
     
    
 
-    const index= viewers.indexOf(up_viewer)
-    if(up_viewer&&index !== null){
-    const keys = Object.keys(req.body)
-    keys.forEach(key=> {
-        up_viewer[key] = req.body[key]
-    })
-    viewers[index]= up_viewer
-    res.json(viewers[index]) }
-    else{
-        res.status(400).send({ err: 'Invalid value for viewer id' });   
-
-    }
 }
 )
 
