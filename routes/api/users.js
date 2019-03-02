@@ -326,68 +326,6 @@ router.put('/update_admin/:id', (req, res) => {
     const admin_id = req.params.id
     const up_admin = admins.filter(up_admin => up_admin.id === admin_id)[0]
 
-    if(req.body.name!==undefined){
-        if(typeof req.body.name==='string'){
-            admins.name= req.body.name
-        }
-        else{
-            res.status(400).send({ err: 'Invalid data type for name' });   
-        }
-    }
-
-    if(req.body.major!==undefined){
-        if(typeof req.body.major==='string'){
-            admins.major= req.body.major
-        }
-        else{
-            res.status(400).send({ err: 'Invalid data type for major' });   
-        }
-    }
-
-    if(req.body.email!==undefined){
-        if(typeof req.body.email==='string'){
-            admins.email= req.body.email
-        }
-        else{
-            res.status(400).send({ err: 'Invalid data type for email' });   
-        }
-    }
-    if(req.body.telephone!==undefined){
-        if(typeof req.body.telephone==='number'){
-            admins.telephone= req.body.telephone
-        }
-        else{
-            res.status(400).send({ err: 'Invalid data type for telephone' });   
-        }
-    }
-    if(req.body.photo!==undefined){
-        if(typeof req.body.photo==='string'){
-            admins.photo= req.body.photo
-        }
-        else{
-            res.status(400).send({ err: 'Invalid data type for photo' });   
-        }
-    }
-
-    if(req.body.club!==undefined){
-        if(typeof req.body.club==='string'){
-            admins.club= req.body.club
-        }
-        else{
-            res.status(400).send({ err: 'Invalid data type for club' });   
-        }
-    }
-    
-
-    if(req.body.committee!==undefined){
-        if(typeof req.body.committee==='string'){
-            admins.body= req.body.committee
-        }
-        else{
-            res.status(400).send({ err: 'Invalid data type for committee' });   
-        }
-    }
-
     const index= admins.indexOf(up_admin)
     if(up_admin&&index !== null){
     const keys = Object.keys(req.body)
