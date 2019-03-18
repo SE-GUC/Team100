@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/SE-GUC/Team100/issues"
   },
-  "homepage": "https://github.com/SE-GUC/Team100#readme"
+  "homepage": "https://github.com/SE-GUC/Team100#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^14.3.1"
+  }
 }
