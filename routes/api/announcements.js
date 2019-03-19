@@ -36,7 +36,7 @@ const announcements  = [
         photos: 'https://www.pexels.com/search/kitten/'
     }
 ]
-module.exports = router;
+//module.exports = router;
 
 // Create an announcement
 router.post('/', (req, res) => {
@@ -89,3 +89,24 @@ router.delete('/:id', (req, res) => {
     announcements.splice(index,1)
     res.send(announcements)
 })
+
+//update announcements
+router.put('/announcements_update/:id', (req, res) => {
+    const an_id = req.params.id
+    const announce = announcements.filter(announcements => announcements.id === an_id)[0]
+
+    const index= announcements.indexOf(announce)
+    if(announce&&index !== null){
+    const keys = Object.keys(req.body)
+    keys.forEach(key=> {
+        announce[key] = req.body[key]
+    })
+    announcements[index]= announce
+    res.json(announcements[index]) }
+    else{
+        res.status(400).send({ err: 'Invalid value for announcement id' });   
+
+    }
+}
+)
+module.exports = router;
