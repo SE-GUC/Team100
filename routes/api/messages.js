@@ -84,7 +84,12 @@ router.get('/:committee', (req,res) => {
 router.delete('/:id', (req, res) => {
     const messageId = req.params.id 
     const message = messages.find(message => message.id === messageId)
-    const index = messages.indexOf(message)
+    const index = messages.indexOf(message) 
+    if (messages && index !== null ){
     messages.splice(index,1)
     res.send(messages)
+    }
+    else {
+        return res.status (400).send ({ err: " invalid value for message id"})
+    }
 })
