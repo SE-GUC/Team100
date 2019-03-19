@@ -172,6 +172,16 @@ router.get('/:id', (req, res)=>{
 router.get('/',(req,res)=> {
     res.send(events)
 })
+//delete
+router.delete('/:id', (req, res)=>{
+    const eventID = req.params.id
+    const event = events.find(event => event.id === eventID)
+    const index = events.indexOf(event)
+    if(event !== undefined && index !== undefined){
+    events.splice(index,1)
+    }
+    res.send(events)
+})
 
 
 module.exports = router;
