@@ -101,6 +101,7 @@ router.delete('/:id', (req, res) => {
     res.send(albums)
 })
 
+
 // Define the port, get it from the enviroment (used in production)
 // Or just use 3000
 //const port = process.env.PORT | 3000

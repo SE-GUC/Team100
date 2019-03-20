@@ -26,7 +26,7 @@ const committee = [
     team_members: ["Dalia"]
   }
 ]
-module.exports = router;
+//module.exports = router;
 
 //view committees
 
@@ -153,4 +153,13 @@ router.delete("/:name", (req, res) => {
   }
 });
 
+// view committee
+router.get('/view_committee/', (req, res) => {
+  // const id=req.params.id
+    const name = req.body.name
+    const r = committee.find(committee => committee.name === name)
+   res.send(r)
+   
+});
+module.exports = router;
 
