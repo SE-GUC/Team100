@@ -32,7 +32,15 @@ event:Joi.string().required()
         Feedback.push(Feed)
         res.send(Feedback)
     })
-    
+
+    // view feedback
+    router.get('/read_Feedback/', (req, res) => {
+        //const id = req.params.id
+        const event_name= req.body.event
+        const f = Feedback.filter(Feedback => Feedback.event === event_name)
+        res.send(f)
+    })
+    module.exports=router
 
 
 
