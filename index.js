@@ -21,7 +21,7 @@ const express = require('express')
 	const library = require('./routes/api/libraries')
 	const subscribers = require('./routes/api/subscribers')
 	const announcements = require('./routes/api/announcements')
-	// const club = require('./routes/api/club')
+	 const brief_description = require('./routes/api/brief_descriptions')
 	
 
 	
@@ -47,7 +47,7 @@ const express = require('express')
 	 app.use('/api/messages', messages)
 	 app.use('/api/team_members', team_members)
 	 app.use('/api/achievements', achievements)
-	// app.use('/api/club', club)
+	 app.use('/api/brief_descriptions',  brief_description)
 	
 
 	

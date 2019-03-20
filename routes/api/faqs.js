@@ -77,8 +77,4 @@ router.delete('/:id', (req, res) => {
     }
 
 });
-<<<<<<< HEAD
 module.exports=router;
-=======
-module.exports=router;
->>>>>>> faq
