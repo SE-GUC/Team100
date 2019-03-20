@@ -8,13 +8,8 @@ const express = require('express')
 	 const events = require('./routes/api/events')
 	const users = require('./routes/api/users')
 	const albums = require('./routes/api/albums')
-<<<<<<< HEAD
-	// const photo = require('./routes/api/photo')
-	 const FAQs = require('./routes/api/faqs')
-=======
-	//const photo = require('./routes/api/photo')
+	const photo = require('./routes/api/photo')
 	const FAQs = require('./routes/api/faqs')
->>>>>>> faq
 	// const committee = require('./routes/api/committees')
 	 const descriptions = require('./routes/api/descriptions')
 	const MissionAndVision= require('./routes/api/missions_visions')
@@ -40,13 +35,8 @@ const express = require('express')
 	 app.use('/api/MissionAndVision', MissionAndVision)
 	 app.use('/api/Rating', Rating)
 	app.use('/api/users', users)
-<<<<<<< HEAD
-	// app.use('/api/photo', photo)
-	app.use('/api/FAQs', FAQs)
-=======
-	 //app.use('/api/photo', photo)
+	 app.use('/api/photo', photo)
 	 app.use('/api/FAQs', FAQs)
->>>>>>> faq
 	app.use('/api/albums', albums)
 	 app.use('/api/descriptions', descriptions)
 	 app.use('/api/subscribers', subscribers)
