@@ -1,187 +1,54 @@
-const express = require('express');
-const Joi = require('joi');
+const express = require("express");
 const router = express.Router();
-const app = express();
-app.use(express.json())
+const mongoose = require("mongoose");
 
-const events = [
-    { id: "1", club: "MUN", name: "10th anniversary", date:"11/11/2011", rating:"4", RatingCount:"5", rate:"2", photo:"https://www.pexels.com/search/kitten/",title:"10th anniversary",feedback:["gamed","gamed awi"],place:"Uni",description:"description",committee:"Marketing"},
-    { id: "2", club: "VGS", name: "recruitment", date:"11/11/2011", rating:"5", RatingCount:"5", rate:"2", photo:"https://www.pexels.com/search/kitten/",title:"recruitment",feedback:["not much","lazeez"],place:"BUE",description:"description",committee:"HR"},
-    { id: "3", club: "TIQ", name: "opening", date:"11/11/2011", rating:"3", RatingCount:"5", rate:"2", photo:"https://www.pexels.com/search/kitten/",title:"opening",feedback:["asd","asd"],place:"Hilton Hotel",description:"description",committee:"Fundraising"},
-    { id: "4", club: "MUN", name: "conference", date:"11/11/2011", rating:"4", RatingCount:"5", rate:"2", photo:"https://www.pexels.com/search/kitten/",title:"conference",feedback:["dsa","dsa"],place:"Kempinski Hotel",description:"description",committee:"Security Council"} 
-];
+const Event = require("../../models/Event");
+const validator = require("../../validations/eventValidations");
 
-//create
-router.post('/', (req, res)=>{
-    //const id = req.body.id
-    var club = req.body.club
-    var name = req.body.name
-    var date = req.body.date
-    var rating = 0
-    var RatingCount = 0
-    var rate = 0
-    var photo = req.body.photo
-    var title = req.body.title
-    var feedback = req.body.feedback
-    var place = req.body.place
-    var description = req.body.description
-    var committee = req.body.committee
+router.get("/", async (req, res) => {
+  const events = await Event.find();
+  res.json({ data: events });
+});
 
-    if(!club) return res.status(400).send({ err: 'Club field is required' });
-    if (typeof club !== 'string') return res.status(400).send({ err: 'Invalid value for club' });
+router.get("/eventbyid/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const exists = await Event.findById(id).then(exists => {
+      res.status(200).json({
+        Event: exists
+      });
+    });
+  } catch (error) {
+    res.send("event doesnt exist");
+  }
+});
 
-    if(!name) return res.status(400).send({ err: 'Name field is required' });
-    if (typeof name !== 'string') return res.status(400).send({ err: 'Invalid value for name' });
+router.get("/timeline/current", async (req, res) => {
+  var currentTime = new Date().getMonth() + 1;
+  var currentYear = new Date().getFullYear();
 
-    if(!date) return res.status(400).send({ err: 'Date field is required' });
-    if (typeof date !== 'string') return res.status(400).send({ err: 'Invalid value for date' });
+  console.log(currentYear);
+  const exists = await Event.find({
+    $and: [{ month: currentTime }, { year: currentYear }]
+  });
 
-    // if(!rating) return res.status(400).send({ err: 'Rating field is required' });
-    // if (typeof rating !== 'string') return res.status(400).send({ err: 'Invalid value for rating' });
+  //const exists = await Event.find("date":{now.getMonth()}, )
+  if (!exists) return res.send("no events happening this month");
+  else res.send({ data: exists });
+});
+//module.exports = router
 
-    if(!photo) return res.status(400).send({ err: 'Photo field is required' });
-    if (typeof photo !== 'string') return res.status(400).send({ err: 'Invalid value for photo' });
+router.get("/timeline/f_soon", async (req, res) => {
+  var currentMonth = new Date().getMonth();
+  var currentYear = new Date().getFullYear() - 1;
 
-    if(!title) return res.status(400).send({ err: 'Title field is required' });
-    if (typeof title !== 'string') return res.status(400).send({ err: 'Invalid value for title' });
+  console.log(currentYear);
+  const exists = await Event.find({
+    $and: [{ year: { $gt: currentYear } }, { description: "coming soon" }]
+  });
 
-    if(!feedback) return res.status(400).send({ err: 'Feedback field is required' });
-    if (typeof feedback !== 'string') return res.status(400).send({ err: 'Invalid value for feedback' });
-
-    if(!place) return res.status(400).send({ err: 'Place field is required' });
-    if (typeof place !== 'string') return res.status(400).send({ err: 'Invalid value for place' });
-
-    if(!description) return res.status(400).send({ err: 'Description field is required' });
-    if (typeof description !== 'string') return res.status(400).send({ err: 'Invalid value for description' });
-
-    if(!committee) return res.status(400).send({ err: 'Committee field is required' });
-    if (typeof committee !== 'string') return res.status(400).send({ err: 'Invalid value for committee' });
-
-    const schema = {
-        club: Joi.string().required(),
-        name: Joi.string().required(),
-        date: Joi.string().required(),
-        // rating: Joi.string(),
-        photo: Joi.string().required(),
-        title: Joi.string().required(),
-        feedback: Joi.string(),
-        place: Joi.string().required(),
-        description: Joi.string().required(),
-        committee: Joi.string().required()
-    }
-
-    const result = Joi.validate(req.body, schema)
-
-    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-    const event = {
-        id: events.length + 1,
-        club: club,
-        name: name,
-        date: date,
-        rating: rating,
-        RatingCount: RatingCount,
-        rate: rate,
-        photo: photo,
-        title: title,
-        feedback: feedback,
-        place: place,
-        description: description,
-        committee: committee,
-    }
-    events.push(event)
-    res.send(events)
-})
-//update
-router.put('/:id', (req, res) => {
-    const eventID = req.params.id
-    const event = events.find(event => event.id === eventID)
-
-    if(req.body.club !== undefined){
-        if(typeof req.body.club === 'string'){
-        event.club = req.body.club
-        }else{
-            return res.status(400).send({ err: 'Invalid value for club' });
-        }
-    }
-    if(req.body.name !== undefined){
-        if(typeof req.body.name === 'string'){
-        event.name = req.body.name
-        }else{
-            return res.status(400).send({ err: 'Invalid value for name' });
-        }
-    }
-    if(req.body.date !== undefined){
-        if(typeof req.body.date === 'string'){
-        event.date = req.body.date
-        }else{
-            return res.status(400).send({ err: 'Invalid value for date' });
-        }
-    }
-    if(req.body.photo !== undefined){
-        if(typeof req.body.photo === 'string'){
-        event.photo = req.body.photo
-        }else{
-            return res.status(400).send({ err: 'Invalid value for photo' });
-        }
-    }
-    if(req.body.title !== undefined){
-        if(typeof req.body.title === 'string'){
-        event.title = req.body.title
-        }else{
-            return res.status(400).send({ err: 'Invalid value for title' });
-        }
-    }
-    if(req.body.feedback !== undefined){
-        if(typeof req.body.feedback === 'string'){
-        event.feedback = req.body.feedback
-        }else{
-            return res.status(400).send({ err: 'Invalid value for feedback' });
-        }
-    }
-    if(req.body.place !== undefined){
-        if(typeof req.body.place === 'string'){
-        event.place = req.body.place
-        }else{
-            return res.status(400).send({ err: 'Invalid value for place' });
-        }
-    }
-    if(req.body.description !== undefined){
-        if(typeof req.body.description === 'string'){
-        event.description = req.body.description
-        }else{
-            return res.status(400).send({ err: 'Invalid value for description' });
-        }
-    }
-    if(req.body.committee !== undefined){
-        if(typeof req.body.committee === 'string'){
-        event.committee = req.body.committee
-        }else{
-            return res.status(400).send({ err: 'Invalid value for committee' });
-        }
-    }
-    res.send(events)
-})
-//read certain event
-router.get('/:id', (req, res)=>{
-    const eventID = req.params.id
-    const event = events.find(event => event.id === eventID)
-    res.send(event)
-})
-//read all events
-router.get('/',(req,res)=> {
-    res.send(events)
-})
-//delete
-router.delete('/:id', (req, res)=>{
-    const eventID = req.params.id
-    const event = events.find(event => event.id === eventID)
-    const index = events.indexOf(event)
-    if(event !== undefined && index !== undefined){
-    events.splice(index,1)
-    }
-    res.send(events)
-})
-
+  if (!exists) return res.send("no events happening this month");
+  else res.send({ data: exists });
+});
 
 module.exports = router;
