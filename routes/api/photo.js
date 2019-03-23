@@ -4,7 +4,7 @@ const Joi = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const photo = require("../../model/Photo");
+const photo = require("../../models/Photo");
 const validator = require("../../Validations/PhotoValidations");
 
 // add photo done

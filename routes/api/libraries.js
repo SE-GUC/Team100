@@ -8,7 +8,7 @@ app.use(express.json());
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Library = require("../../model/Library");
+const Library = require("../../models/Library");
 const validator = require("../../Validations/LibraryValidations");
 
 // done
