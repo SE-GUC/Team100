@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 
 const committee = require("../../models/Committee");
-const validator = require("../../validations/committeeValidation");
+const validator = require("../../validations/committeeValidations");
 //get committees
 router.get("/", async (req, res) => {
   const Committees = await committee.find();
