@@ -37,13 +37,16 @@ const EventSchema = new Schema({
     type: String
   },
   rating: {
-    type: Number
+    type: Number,
+    default: 0
   },
   ratingcount: {
-    type: Number
+    type: Number,
+    default: 0
   },
   rate: {
-    type: Number
+    type: Number,
+    default: 0
   }
 });
 

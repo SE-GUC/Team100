@@ -130,5 +130,54 @@ router.get("/timeline/f_soon", async (req, res) => {
   if (!exists) return res.send("no events happening this month");
   else res.send({ data: exists });
 });
+router.get("/rate/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const wantedevent = await Event.findById(id).then(wantedevent => {
+      res.status(200).json({
+        Rate: wantedevent.rate
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+//rate an event
+router.put("/rate/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const userRate = req.body.rate;
+    const eve = await Event.findById(id);
+    const oldRate = eve.rate;
+    const oldRating = eve.rating;
+    const oldRatingcount = eve.ratingcount;
+    const updatedRatingcount = oldRatingcount + 1;
+    const updatedRating = oldRating + userRate;
+    const updatedRate = updatedRating / updatedRatingcount;
+    const isValidated = validator.updateValidation(req.body);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+
+    Event.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          rate: updatedRate,
+          rating: updatedRating,
+          ratingcount: updatedRatingcount
+        }
+      },
+      { upsert: true },
+      function(err, user) {
+        return res.json(true);
+      }
+    );
+    res.json({ msg: "Event was rated successfully" });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
