@@ -6,7 +6,7 @@ const Announcement = require("../../models/Announcement");
 const validator = require("../../validations/announcementValidations");
 
 // Get announcements
-ß
+
 router.get("/", async (req, res) => {
   const announcements = await Announcement.find();
   res.json({ data: announcements });
