@@ -1,80 +1,82 @@
 const express = require("express");
-const Joi=require('joi');
-const router=express.Router();
-const faqs = [
-  {
-    id: "1",
-    question: "what clubs are included in this hub?",
-    answer: "GUCMUN,Nebny,VGS & TIQ"
-  },
-  {
-    id: "2",
-    question: "What university do these clubs belong to?",
-    answer: "German University in Cairo"
+const Joi = require("joi");
+const router = express.Router();
+const mongoose = require("mongoose");
+const Faq = require("../../models/Faq");
+const validator = require("../../validations/faqValidation");
+
+// creat a faq with mongo db
+router.post("/", async (req, res) => {
+  //if(user_type==mun_admin){
+  const faq1 = new Faq({
+    answer: req.body.answer,
+    question: req.body.question
+  });
+  const isValidated = validator.createValidation(req.body);
+  try {
+    if (isValidated.error) {
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    } else {
+      return faq1.save().then(newFaq => {
+        return res.status(201).json({
+          message: "New FAQ was created successfully",
+          Faq: newFaq
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error);
   }
-];
-// create a frequently asked question
-router.post("/", (req, res) => {
-  const id = req.body.id;
-  const question = req.body.question;
-  const answer = req.body.answer;
-  const FAQ = {
-    id: faqs.length + 1,
-    question: question,
-    answer: answer
-  };
-  const schema = {
-       question:Joi.string().required(),
-       answer:Joi.string().required()
+});
+// update a certain faq with mongo db
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  const updatedFaq = req.body;
+  const isValidated = validator.updateValidation(req.body);
+  if (isValidated.error) {
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
+  } else {
+    Faq.update({ _id: id }, { $set: updatedFaq })
+      .exec()
+      .then(() => {
+        res.status(200).json({
+          message: "FAQ is updated successsfully",
+          Faq: updatedFaq
+        });
+      });
   }
-	const result = Joi.validate(req.body, schema);
-	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-  faqs.push(FAQ);
-  res.send(faqs);
 });
 
-// get a certain faq
-router.get("/:id", (req, res) => {
-  const faqID = req.params.id
-  const y = faqs.find(y => y.id === faqID)
-  res.send(y);
+// delete a faq with mongo db
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedFaq = await Faq.findByIdAndRemove(id);
+    res.json({ msg: "FAQ was deleted successfully", data: deletedFaq });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // get all faqs
-router.get("/", (req, res) => {
-    res.send(faqs)
-})
-
-// update a certain faq answer
-router.put("/:id", (req, res) => {
-  const faqID = req.params.id;
-  const updatedAnswer = req.body.answer;
-  const x = faqs.find(x => x.id === faqID);
-  x.answer = updatedAnswer;
-  res.send(x);
+router.get("/", async (req, res) => {
+  const faqs = await Faq.find();
+  res.json({ data: faqs });
 });
 
-//update a certain faq question
-router.put("/question/faqs/:id", (req, res) => {
-  const faqID = req.params.id;
-  const updatedQuestion = req.body.question;
-  const x = faqs.find(x => x.id === faqID);
-  x.question = updatedQuestion;
-  res.send(x);
+// get a certain faq
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const wantedFaq = await Faq.findById(id);
+    res.json({ data: wantedFaq });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
-//delete faqs
-router.delete('/:id', (req, res) => {
-    const faqId = req.params.id 
-    const x = faqs.find(x => x.id === faqId)
-    const index = faqs.indexOf(x)
-    if(x && index!==null){
-      faqs.splice(index,1)
-      res.send(faqs)
-    }
-    else{
-      res.status(400).send({err: 'Invalid value for FAQ ID'});
-    }
-
-});
-module.exports=router;
+module.exports = router;

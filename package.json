@@ -1,24 +1,27 @@
 {
-  "name": "Team100",
+  "name": "express-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SE-GUC/Team100.git"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SE-GUC/Team100/issues"
-  },
-  "homepage": "https://github.com/SE-GUC/Team100#readme",
   "dependencies": {
+    "bcrypt": "^3.0.5",
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
-    "joi": "^14.3.1"
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.19",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }
