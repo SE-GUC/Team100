@@ -1,112 +1,107 @@
-// Dependencies
-const express = require('express');
-const Joi = require('joi');
-//const uuid = require('uuid');
+const express = require("express");
 const router = express.Router();
-const app = express();
-app.use(express.json())
+const mongoose = require("mongoose");
 
+const Announcement = require("../../models/Announcement");
+const validator = require("../../validations/announcementValidations");
 
-const announcements  = [
-    {
-        id: '1',
-        description: 'kittens event',
-        date: '11/11/2011',
-        tag:'#Event',
-        created_by: 'Mariam',
-        videos: 'https://www.pexels.com/search/kitten/',
-        photos: 'https://www.pexels.com/search/kitten/'
-    },
-    {
-        id: '2',
-        description: 'Cinnabon in the Platform!',
-        date: '10/10/2010',
-        tag:'#fun',
-        created_by: 'Doha',
-        videos: 'https://www.pexels.com/search/kitten/',
-        photos: 'https://www.pexels.com/search/kitten/'
-    },
-    {
-        id: '3',
-        description: 'Google event brought to you by VGS',
-        date: '9/9/2019',
-        tag:'#google',
-        created_by: 'Ziad',
-        videos: 'https://www.pexels.com/search/kitten/',
-        photos: 'https://www.pexels.com/search/kitten/'
-    }
-]
-//module.exports = router;
+// Get announcements
+ß
+router.get("/", async (req, res) => {
+  const announcements = await Announcement.find();
+  res.json({ data: announcements });
+});
+//get a single announcement
+
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const wantedAnnouncement = await Announcement.findById(id).then(
+      wantedAnnouncement => {
+        res.status(200).json({
+          Announcement: wantedAnnouncement
+        });
+      }
+    );
+  } catch (error) {
+    res.status(500).json({
+      message: "Announcement not found."
+    });
+  }
+});
 
 // Create an announcement
-router.post('/', (req, res) => {
-    const id = req.body.id
-    const description = req.body.description
-    const date = req.body.date
-    const tag = req.body.tag
-    const created_by = req.body.created_by
-    const videos = req.body.videos
-    const photos = req.body.photos
-    
-    const schema = {
-        description :Joi.string().required(),
-        tag :Joi.string().required(),
-        created_by : Joi.string().required(),
-        date : Joi.date().required(),
-        photos : Joi.string().required(),
-        videos : Joi.string().required(),
-    };
 
-    const result = Joi.validate(req.body, schema);
-    if (result.error) 
-    return res.status(400).send({error: result.error.details[0].message});
-  
-    const announcement = {
-        id: announcements.length +1,
-        description: description,
-        date: date,
-        tag: tag,
-        created_by: created_by,
-        videos: videos,
-        photos: photos,
-     }
-     announcements.push(announcement)
-     return res.json({data: announcements});
+router.post("/", async (req, res) => {
+  const { description, date, tag, created_by, videos, photos } = req.body;
+  const announcement = await Announcement.findOne();
+  const isValidated = validator.createValidation(req.body);
+  if (!isValidated.error) {
+    const newAnnouncement = new Announcement({
+      _id: mongoose.Types.ObjectId(),
+      description,
+      date,
+      tag,
+      created_by,
+      videos,
+      photos
+    });
+    newAnnouncement
+      .save()
+      .then(announcement => res.json({ data: announcement }))
+      .catch(err => res.json({ error: "Can not create announcement" }));
+  } else {
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
+  }
+});
 
-     //res.send(announcements)
-})
+// update an announcement
 
-// read an announcement
-router.get('/', (req, res) => {
-    res.send(announcements)
-})
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  const updateAnnouncement = req.body;
+  const isValidated = validator.updateValidation(req.body);
+  if (isValidated.error) {
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
+  } else {
+    Announcement.update({ _id: id }, { $set: updateAnnouncement })
+      .exec()
+      .then(() => {
+        res.status(200).json({
+          message: "Announcement is updated",
+          Announcement: updateAnnouncement
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          message: "Announcement not found."
+        });
+      });
+  }
+});
 
-// Delete an announcement 
-router.delete('/:id', (req, res) => {
-    const announcementID = req.params.id
-    const announcement = announcements.find(announcement => announcement.id === announcementID)
-    const index = announcements.indexOf(announcement)
-    announcements.splice(index,1)
-    res.send(announcements)
-})
-
-//update announcements
-router.put('/announcements_update/:id', (req, res) => {
-    const an_id = req.params.id
-    const announce = announcements.filter(announcements => announcements.id === an_id)[0]
-
-    const index= announcements.indexOf(announce)
-    if(announce&&index !== null){
-    const keys = Object.keys(req.body)
-    keys.forEach(key=> {
-        announce[key] = req.body[key]
-    })
-    announcements[index]= announce
-    res.json(announcements[index]) }
-    else{
-        res.status(400).send({ err: 'Invalid value for announcement id' });   
-
+// delete an announcement
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedAnnouncement = await Announcement.findByIdAndRemove(id);
+    if (!deletedAnnouncement) {
+      return res.status(404).send({ error: "Announcement does not exist" });
+    } else {
+      res.json({
+        msg: "Announcement was deleted successfully",
+        data: deletedAnnouncement
+      });
     }
-}
-)
+  } catch (error) {
+    res.status(500).json({
+      message: "Announcement not found."
+    });
+  }
+});
+
 module.exports = router;
