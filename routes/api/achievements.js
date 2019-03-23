@@ -1,101 +1,96 @@
-// Dependencies
-const express = require('express');
-const Joi = require('joi');
-//const uuid = require('uuid');
-const router = express.Router();
-const app = express();
-app.use(express.json())
+const express = require("express")
+const router = express.Router()
+const mongoose = require("mongoose")
 
-const achievements = [
-    { photo:"https://www.pexels.com/search/kitten/",text:"Awards", id: "1"},
-    { photo:"https://www.pexels.com/search/kitten/",text:"Certification",id: "2"}
-]
-module.exports=router;
+const Achievement = require("../../models/Achievement")
+const validator = require("../../validations/achievementValidations")
 
-//get all achievements
-router.get('/', (req, res) => {
-    res.send(achievements)
+router.post("/", async (req, res) => {
+  const achievement = new Achievement({
+    description: req.body.description,
+    photo: req.body.photo,
+    tag: req.body.tag
+  })
+  const isValidated = validator.createValidation(req.body)
+  try {
+    if (isValidated.error) {
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message })
+    } else {
+      return achievement.save().then(newAchievement => {
+        return res.status(201).json({
+          message: "New achievement was created successfully",
+          Achievement: newAchievement
+        })
+      })
+    }
+  } catch (error) {
+    console.log(error)
+  }
 })
 
-// Get a certain achievement
-router.get('/:id', (req, res) => {
-    const achievementId = req.params.id
-    const achievement = achievements.find(achievement => achievement.id === achievementId)
-    res.send(achievement)
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id
+  try {
+    const deletedAchievement = await Achievement.findByIdAndRemove(id).then(
+      deletedAchievement => {
+        res.status(200).json({
+          message: "Achievement deleted successfully",
+          Achievement: deletedAchievement
+        })
+      }
+    )
+  } catch (error) {
+    res.status(500).json({
+      message: "Achievement not found."
+    })
+  }
 })
 
-//Create an achievement
-router.post('/', (req, res) => {
-  const photo = req.body.photo
-  const text = req.body.text
-
-  const schema = {
-    photo: Joi.string().required(),
-    text: Joi.string().required(),
-}
-
-const result = Joi.validate(req.body, schema);
-
-if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-        
-  const achievement = {
-       id: achievements.length + 1,
-       photo: photo, 
-       text: text
-    } 
-    achievements.push(achievement)
-    res.send(achievements)
-    }    
-)
-
-//Update an achievement's text
-router.put('/achievementstext/:id', (req, res) => {
-    const achievementId = req.params.id 
-    const updatedText = req.body.text
-    const schema = {
-        text: Joi.string().required(),
-    }
-    
-    const result = Joi.validate(req.body, schema);
-    
-    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-
-    const achievement = achievements.find(achievement => achievement.id === achievementId)
-    achievement.text = updatedText
-    res.send(achievements) 
+router.get("/", async (req, res) => {
+  const achievements = await Achievement.find()
+  res.json({ data: achievements })
 })
 
-//update an achievement's photo
-router.put('/achievementsphoto/:id', (req, res) => {
-    const achievementId = req.params.id 
-    const updatedPhoto = req.body.photo
-    const schema = {
-        photo: Joi.string().required(),
-    }
-    
-    const result = Joi.validate(req.body, schema);
-    
-    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-    const achievement = achievements.find(achievement => achievement.id === achievementId)
-    achievement.photo = updatedPhoto
-    res.send(achievements)
+router.get("/:id", async (req, res) => {
+  const id = req.params.id
+  try {
+    const wantedAchievement = await Achievement.findById(id).then(
+      wantedAchievement => {
+        res.status(200).json({
+          Achievement: wantedAchievement
+        })
+      }
+    )
+  } catch (error) {
+    res.status(500).json({
+      message: "Achievement not found."
+    })
+  }
 })
-//Delete an achievement
-router.delete('/:id', (req, res) => {
-    const achievementId = req.params.id 
-    const achievement = achievements.find(achievement => achievement.id === achievementId)
-    const index = achievements.indexOf(achievement)
-    if (achievement && index!== null){
-        achievements.splice(index,1)
-        res.send(achievements)
-    }
-    else{
-        res.status(400).send({ err :'Invalid value for achievements id' });
 
-    }
-    
-    }
-)
+router.put("/:id", async (req, res) => {
+  const id = req.params.id
+  const updateAchievement = req.body
+  const isValidated = validator.updateValidation(req.body)
+  if (isValidated.error) {
+    return res.status(400).send({ error: isValidated.error.details[0].message })
+  } else {
+    Achievement.update({ _id: id }, { $set: updateAchievement })
+      .exec()
+      .then(() => {
+        res.status(200).json({
+          message: "Achievement is updated",
+          Achievement: updateAchievement
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          message: "Achievement not found."
+        })
+      })
+  }
+})
+
+module.exports = router
