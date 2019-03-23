@@ -1,62 +1,55 @@
-// Dependencies
-const express = require('express');
-const Joi = require('joi');
-//const uuid = require('uuid');
+const express = require("express");
 const router = express.Router();
-const app = express();
-app.use(express.json())
+const mongoose = require("mongoose");
+const Subscriber = require("../../models/Subscriber");
+const validator = require("../../validations/subscriberValidations");
 
+// get subscribers
+router.get("/", async (req, res) => {
+  const subscribers = await Subscriber.find();
+  res.json({ data: subscribers });
+});
+//get single subscriber
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const wantedSubscriber = await Subscriber.findById(id).then(
+      wantedSubscriber => {
+        res.status(200).json({
+          Subscriber: wantedSubscriber
+        });
+      }
+    );
+  } catch (error) {
+    res.status(500).json({
+      message: "Subscriber not found."
+    });
+  }
+});
 
-const subscribers = [
-    {
-        name: 'Yara',
-        email: 'yara@guc.com'
-    },
-    {
-        name: 'Doha',
-        email: 'doha@guc.com'
-    },
-    {
-        name: 'Ziad',
-        email: 'ziad@guc.com'
-    },
-    {
-        name: 'Sara',
-        email: 'yomna@guc.com'
-    }
-]
+// create a subscriber
+
+router.post("/", async (req, res) => {
+  const { name, email } = req.body;
+  const subscriber = await Subscriber.findOne({ email });
+  if (subscriber)
+    return res.status(400).json({ error: "Email already exists" });
+  const isValidated = validator.createValidation(req.body);
+  if (!isValidated.error) {
+    const newSubscriber = new Subscriber({
+      _id: mongoose.Types.ObjectId(),
+      name,
+      email
+    });
+    newSubscriber
+      .save()
+      .then(subscriber => res.json({ data: subscriber }))
+      .catch(err => res.json({ error: "Can not create subscriber" }));
+  } else {
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
+  }
+});
 
 module.exports = router;
-
-// Get all subscribers
-router.get('/', (req, res) => {
-    res.send(subscribers)
-})
-
-// Get a certain subscriber
-router.get('/:name', (req, res) => {
-    const subsName = req.params.name
-    const sbs = subscribers.find(sbs => sbs.name === subsName)
-    res.send(sbs)
-})
-
-// Create a subscribers
-router.post('/', (req, res) => {
-     const name = req.body.name
-     const email = req.body.email
-     const schema = {
-        name :Joi.string().required(),
-        email :Joi.string().required()
-    };
-    const result = Joi.validate(req.body, schema);
-    if (result.error) 
-    return res.status(400).send({error: result.error.details[0].message});
-     const subscriber = {
-         name: name,
-         email: email,
-      
-      }
-     subscribers.push(subscriber)
-     return res.json({data: subscribers});
-     //res.send(subscribers)
- })
