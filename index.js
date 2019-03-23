@@ -11,6 +11,7 @@ const committee = require("./routes/api/committees");
 const messages = require("./routes/api/messages");
 const FAQs = require("./routes/api/faqs");
 const events = require("./routes/api/events");
+const feedbacks = require('./routes/api/feedbacks');
 
 const app = express();
 
@@ -37,6 +38,8 @@ app.use("/api/committee", committee);
 app.use("/api/messages", messages);
 app.use("/api/FAQs", FAQs);
 app.use("/api/events", events);
+app.use('/api/feedbacks',feedbacks);
+
 
 
 app.use((req, res) =>
