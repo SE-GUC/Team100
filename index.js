@@ -14,6 +14,7 @@ const events = require("./routes/api/events");
 const feedbacks = require("./routes/api/feedbacks");
 const photo = require("./routes/api/photo");
 const libraries = require("./routes/api/libraries");
+const users = require('./routes/api/users');
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use("/api/events", events);
 app.use("/api/feedbacks", feedbacks);
 app.use("/api/photo", photo);
 app.use("/api/libraries", libraries);
+app.use('/api/users', users);
 
 app.use((req, res) =>
   res.status(404).send(`<h1>Can not find what you're looking for</h1>`)
