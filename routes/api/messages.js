@@ -5,7 +5,7 @@ const Joi = require("joi");
 const router = express.Router();
 const app = express();
 app.use(express.json());
-const validator = require("../../Validations/Messages");
+const validator = require("../../Validations/messageValidations");
 Message = require("../../Models/Message");
 
 module.exports = router;
