@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 
 // Require Router Handlers
 const achievements = require("./routes/api/achievements")
+const clubmuns = require("./routes/api/clubmuns")
 
 const app = express()
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // Direct to Route Handlers
 app.use("/api/achievements", achievements)
+app.use("/api/clubmuns", clubmuns)
 
 app.use((req, res) =>
   res.status(404).send(`<h1>Can not find what you're looking for</h1>`)
