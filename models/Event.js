@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 const EventSchema = new Schema({
   name_event: {
@@ -51,8 +51,8 @@ const EventSchema = new Schema({
   tag: {
     type: String
   }
-});
-EventSchema.index({name_event:"text", description:"text", tag:"text"});
+})
 
+EventSchema.index({ name_event: "text", description: "text", tag: "text" })
 
-module.exports = Event = mongoose.model("events", EventSchema);
+module.exports = Event = mongoose.model("events", EventSchema)
