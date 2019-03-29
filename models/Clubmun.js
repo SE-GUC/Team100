@@ -19,5 +19,6 @@ const ClubMunSchema = new Schema({
     required: true
   }
 })
+ClubMunSchema.index({mission:"text", description:"text", vision:"text"});
 
 module.exports = Clubmun = mongoose.model("clubmuns", ClubMunSchema)

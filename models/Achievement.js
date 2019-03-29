@@ -13,5 +13,5 @@ const achievement = new Schema({
     type: String
   }
 })
-
+achievement.index({description:"text", tag:"text"});
 module.exports = Achievement = mongoose.model("achievements", achievement)

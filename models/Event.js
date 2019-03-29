@@ -47,7 +47,12 @@ const EventSchema = new Schema({
   rate: {
     type: Number,
     default: 0
+  },
+  tag: {
+    type: String
   }
 });
+EventSchema.index({name_event:"text", description:"text", tag:"text"});
+
 
 module.exports = Event = mongoose.model("events", EventSchema);

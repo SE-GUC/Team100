@@ -16,5 +16,6 @@ const LibrarySchema = new Schema({
     required: true
   }
 });
+LibrarySchema.index({Academic_paper:"text", Resolution:"text"});
 
 module.exports = Library = mongoose.model("Library", LibrarySchema);

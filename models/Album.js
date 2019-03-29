@@ -19,5 +19,6 @@ const AlbumSchema = new Schema({
     default: Date.now
   }
 });
+AlbumSchema.index({title:"text", description:"text"});
 
 module.exports = Album = mongoose.model("albums", AlbumSchema);

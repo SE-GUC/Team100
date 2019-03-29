@@ -17,5 +17,6 @@ const Club_hubSchema = new Schema({
     required: true
   }
 });
+Club_hubSchema.index({ brief_description:"text", name:"text"});
 
 module.exports = mongoose.model("club_hub", Club_hubSchema);
