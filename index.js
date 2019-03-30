@@ -17,6 +17,8 @@ const libraries = require("./routes/api/libraries");
 const users = require("./routes/api/users");
 const club_hub = require("./routes/api/club_hub");
 const FormTemplate = require("./routes/api/FormTemplates");
+const RecruitmentForm = require("./routes/api/recruitmentforms");
+
 
 const app = express();
 
@@ -49,6 +51,8 @@ app.use("/api/libraries", libraries);
 app.use("/api/users", users);
 app.use("/api/club_hub", club_hub);
 app.use("/api/FormTemplates", FormTemplate);
+app.use("/api/recruitmentforms", RecruitmentForm);
+
 
 app.use((req, res) =>
   res.status(404).send(`<h1>Can not find what you're looking for</h1>`)
