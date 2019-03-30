@@ -14,6 +14,7 @@ module.exports = {
             gucian: Joi.boolean().required(),
             club: Joi.string(),
             committee_type: Joi.string(),
+            control: Joi.boolean().required(),
             user_type: Joi.string().required()
         }
         return Joi.validate(request, createSchema)
@@ -30,6 +31,7 @@ module.exports = {
             gucian: Joi.boolean(),
             club: Joi.string(),
             committee_type: Joi.string(),
+            control: Joi.boolean().required(),
             user_type: Joi.string()
         }
         return Joi.validate(request, updateSchema)
