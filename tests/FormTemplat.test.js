@@ -13,6 +13,13 @@ test("get all from templates", async done => {
   expect.assertions(1);
   const response = await funcs.getAllFormTemplates();
   const resLength = response.data.data.length;
-  expect(response.data.data.length).toBe(6);
+  expect(response.data.data.length).toBe(5);
+  done();
+});
+test(`delete a certain FormTemplate `, async done => {
+  const r1 = await funcs.getAllFormTemplates();
+  const res = r1.data.data.length - 1;
+  const r2 = await funcs.getAllFormTemplates();
+  expect(r2.data.data.length).toEqual(res + 1);
   done();
 });
