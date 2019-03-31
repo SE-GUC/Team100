@@ -41,7 +41,7 @@ test("create messages", async (done) => {
 
 //done
 test("delete a certain message", async (done) => {
-  id = "5c9dde1561e9d2137cac362c";
+  id = "5c9de26561e9d2137cac3630";
   const msg = await funcs.deleteCertainMessage(id);
   //console.log(msg.data);
   expect(msg.data.data._id).toEqual(id);
