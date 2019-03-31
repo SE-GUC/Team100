@@ -29,3 +29,22 @@ test("Update an achievement", async done => {
   expect(ach.data.Achievement.photo).toEqual("sprint33.com")
   done()
 })
+
+
+test ("get certain achievement", async(done)=> {
+  expect.assertions(1);
+  id= "5c95463cd492be51487191fe";
+  const achievement= await funcs.getCertainAchievement(id);
+  //console.log(achievement.data.Achievement._id);
+  expect(achievement.data.Achievement._id).toEqual(id);
+  done();
+});
+
+
+test ('get all achievements', async(done) => {
+  expect.assertions(1)
+    const response = await funcs.getAllAchievements();
+    const resLength= response.data.data.length;
+    expect(response.data.data.length).toBe(15);
+    done();
+})

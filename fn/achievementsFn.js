@@ -33,5 +33,22 @@ const functions = {
     )
     return ach
   }
-}
+};
+getCertainAchievement: async (id) => {
+  try {
+   const k= await axios.get(`http://localhost:6000/api/achievements/${id}`);
+    return k
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+getAllAchievements: async () => {
+  try {
+    return await axios.get("http://localhost:6000/api/achievements/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = functions
