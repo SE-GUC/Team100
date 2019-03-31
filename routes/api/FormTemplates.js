@@ -40,8 +40,6 @@ router.delete("/:id", async (req, res) => {
 });
 
 
-
-
 router.get("/", async (req, res) => {
   const FromTemp = await FormTemplate.find();
   res.json({ data: FromTemp });
