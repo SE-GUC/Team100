@@ -45,18 +45,13 @@ router.get("/", async (req, res) => {
   res.json({ data: message });
 });
 
-//get a specefic msg by id
+//get a specefic msg by cmmittee name
 
-router.get("/:id", async (req, res) => {
-  const messageId = req.params.id;
+router.get("/:committee", async (req, res) => {
   try {
-    const wantedMessage = await Message.findById(messageId).then(
-      wantedMessage => {
-        res.status(200).json({
-          Message: wantedMessage
-        });
-      }
-    );
+    const messageComm = req.params.committee;
+    const wantedMessage = await Message.findOne({ committee: messageComm });
+    res.status(200).json({ Message: wantedMessage });
   } catch (error) {
     console.log(error);
   }

@@ -65,7 +65,7 @@ router.get("/mission/:id", async (req, res) => {
   const id = await Clubmun.find();
   try {
     const wantedMission = await Clubmun.findById(id).then(wantedMission =>
-      res.status(200).json({ Clubmun: wantedMission.mission })
+      res.status(200).json({ x: wantedMission.mission })
     );
   } catch (error) {
     console.log(error);
@@ -77,7 +77,7 @@ router.get("/vision/:id", async (req, res) => {
   const id = await Clubmun.find();
   try {
     const wantedVision = await Clubmun.findById(id).then(wantedVision =>
-      res.status(200).json({ Clubmun: wantedVision.vision })
+      res.status(200).json({ x: wantedVision.vision })
     );
   } catch (error) {
     console.log(error);
@@ -90,7 +90,7 @@ router.get("/description/:id", async (req, res) => {
   try {
     const wantedDescription = await Clubmun.findById(id).then(
       wantedDescription =>
-        res.status(200).json({ Clubmun: wantedDescription.description })
+        res.status(200).json({ x: wantedDescription.description })
     );
   } catch (error) {
     console.log(error);

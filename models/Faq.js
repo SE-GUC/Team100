@@ -13,5 +13,6 @@ const FAQSchema = new Schema({
     required: true
   }
 });
+FAQSchema.index({ question: "text", answer: "text" });
 
 module.exports = Faq = mongoose.model("faqs", FAQSchema);

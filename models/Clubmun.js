@@ -19,5 +19,4 @@ const ClubMunSchema = new Schema({
     required: true
   }
 })
-
 module.exports = Clubmun = mongoose.model("clubmuns", ClubMunSchema)

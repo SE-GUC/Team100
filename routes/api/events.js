@@ -58,13 +58,8 @@ router.get("/:id", async (req, res) => {
     if (!wantedEvent) {
       return res.status(404).send({ error: "Event does not exist" });
     }
-    res.send(
-      "Event Name: " +
-        wantedEvent.name_event +
-        "<br>" +
-        "Description: " +
-        wantedEvent.description
-    );
+    res.json({data: wantedEvent.name_event, data1: wantedEvent.description
+    });
   } catch (error) {
     console.log(error);
   }
@@ -174,7 +169,12 @@ router.put("/rate/:id", async (req, res) => {
         return res.json(true);
       }
     );
-    res.json({ msg: "Event was rated successfully" });
+    res.json({
+      msg: "Event was rated successfully",
+      Rate: updatedRate,
+      Rating: updatedRating,
+      Ratingcount: updatedRatingcount
+    });
   } catch (error) {
     console.log(error);
   }

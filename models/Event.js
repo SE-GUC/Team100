@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 const EventSchema = new Schema({
   name_event: {
@@ -48,6 +48,8 @@ const EventSchema = new Schema({
     type: Number,
     default: 0
   }
-});
+})
 
-module.exports = Event = mongoose.model("events", EventSchema);
+EventSchema.index({ name_event: "text", description: "text" })
+
+module.exports = Event = mongoose.model("events", EventSchema)
