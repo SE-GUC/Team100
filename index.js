@@ -20,6 +20,7 @@ const users = require("./routes/api/users")
 const club_hub = require("./routes/api/club_hub")
 const FormTemplate = require("./routes/api/FormTemplates")
 const RecruitmentForm = require("./routes/api/recruitmentforms")
+const search = require("./routes/api/search")
 
 const app = express()
 
@@ -28,7 +29,11 @@ const db = require("./config/keys").mongoURI
 
 // Connect to mongo
 mongoose
-  .connect(db)
+  .connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.log(err))
 
@@ -55,6 +60,7 @@ app.use("/api/users", users)
 app.use("/api/club_hub", club_hub)
 app.use("/api/FormTemplates", FormTemplate)
 app.use("/api/recruitmentforms", RecruitmentForm)
+app.use("/api/search", search)
 
 app.use((req, res) => res.status(404).send(`<h1>Welcome to the HUB</h1>`))
 
