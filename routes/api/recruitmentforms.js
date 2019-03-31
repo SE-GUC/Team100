@@ -12,5 +12,34 @@ router.get("/", async (req, res) => {
     res.json({ data: message });
   });
 
-
+  router.get("/:id", async (req, res) => {
+    const id = req.params.id;
+    try {
+      const wantedForm = await RecruitmentForm.findById(id).then(
+        wantedForm => {
+          res.status(200).json({
+            RecruitmentForm: wantedForm
+          });
+        }
+      );
+    } catch (error) {
+      res.status(500).json({
+        message: "recruitment form response not found."
+      });
+    }
+  });
+  router.post("/", async (req, res) => {
+    try {
+      const isValidated = validator.createValidation(req.body);
+      if (isValidated.error)
+        return res
+          .status(400)
+          .send({ error: isValidated.error.details[0].message });
+      const newResponse = await RecruitmentForm.create(req.body);
+      res.json({ msg: "Your response has been saved", data: newResponse });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  
 module.exports = router;

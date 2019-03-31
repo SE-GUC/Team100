@@ -28,6 +28,17 @@ router.post("/", async (req, res) => {
     data: newForm
   });
 });
+// delete a FormTemplate with mongo db
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedForm = await FormTemplate.findByIdAndRemove(id);
+    res.json({ msg: "Form Template was deleted successfully", data: deletedForm});
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 
 router.get("/", async (req, res) => {
   const FromTemp = await FormTemplate.find();
