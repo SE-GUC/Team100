@@ -56,4 +56,3 @@ router.get("/:committee", async (req, res) => {
     console.log(error);
   }
 });
-

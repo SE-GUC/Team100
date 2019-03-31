@@ -1,0 +1,18 @@
+const funcs = require("../fn/FormTemplatesFn");
+
+test("get certain form template", async done => {
+  expect.assertions(1);
+  id = "5c9f77b288d18528fff4e0d4";
+  const form = await funcs.getCertainFormTemplate(id);
+  //console.log(achievement.data.Achievement._id);
+  expect(form.data.FormTemplate._id).toEqual(id);
+  done();
+});
+
+test("get all from templates", async done => {
+  expect.assertions(1);
+  const response = await funcs.getAllFormTemplates();
+  const resLength = response.data.data.length;
+  expect(response.data.data.length).toBe(6);
+  done();
+});
