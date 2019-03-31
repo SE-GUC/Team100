@@ -29,4 +29,21 @@ router.post("/", async (req, res) => {
   });
 });
 
+router.get("/", async (req, res) => {
+  const FromTemp = await FormTemplate.find();
+  res.json({ data: FromTemp });
+});
+
+router.get("/:id", async (req, res) => {
+  const FormId = req.params.id;
+  try {
+    const wantedForm = await FormTemplate.findById(FormId).then(wantedForm => {
+      res.status(200).json({
+        FormTemplate: wantedForm
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
