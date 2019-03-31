@@ -174,7 +174,12 @@ router.put("/rate/:id", async (req, res) => {
         return res.json(true);
       }
     );
-    res.json({ msg: "Event was rated successfully" });
+    res.json({
+      msg: "Event was rated successfully",
+      Rate: updatedRate,
+      Rating: updatedRating,
+      Ratingcount: updatedRatingcount
+    });
   } catch (error) {
     console.log(error);
   }
