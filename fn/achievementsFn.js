@@ -23,7 +23,7 @@ const functions = {
     }
   },
 
-  updateAchievement: async () => {
+   updateAchievement: async () => {
     const ach = await axios.put(
       "http://localhost:6000/api/achievements/5c9fd8686436535b34c86182",
       {
@@ -32,8 +32,8 @@ const functions = {
       }
     )
     return ach
-  }
-};
+  },
+
 getCertainAchievement: async (id) => {
   try {
    const k= await axios.get(`http://localhost:6000/api/achievements/${id}`);
@@ -41,7 +41,7 @@ getCertainAchievement: async (id) => {
   } catch (error) {
     console.log(error);
   }
-};
+},
 
 getAllAchievements: async () => {
   try {
@@ -49,6 +49,6 @@ getAllAchievements: async () => {
   } catch (error) {
     console.log(error);
   }
-};
-
+}
+}
 module.exports = functions

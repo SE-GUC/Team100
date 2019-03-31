@@ -45,6 +45,6 @@ test ('get all achievements', async(done) => {
   expect.assertions(1)
     const response = await funcs.getAllAchievements();
     const resLength= response.data.data.length;
-    expect(response.data.data.length).toBe(15);
+    expect(response.data.data.length).toBe(8);
     done();
 })
