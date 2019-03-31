@@ -1,62 +1,84 @@
-const express =require('express');
-const router=express.Router();
-const Joi=require('joi');
+const express = require("express");
+const router = express.Router();
+const Joi = require("joi");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
+const photo = require("../../models/Photo");
+const validator = require("../../Validations/PhotoValidations");
 
-const photo=[
-    {id:"1",album_id:"1",link:"https://www.pexels.com/search/kitten/",description : "kittens"},
-    {id:"2",album_id:"2",link:"https://www.pexels.com/search/kitten/", description : "cats"}
-
-]
-// add photo
-router.post("/", (req, res) => { 
-    const id = req.body.id;
-    const albumID = req.body.album_id;
-    const photoLink = req.body.link;
-    const descrip = req.body.description;
-    const ph = {
-      id: photo.length + 1,
-      album_id: albumID,
-      link: photoLink,
-      description: descrip
-    };
-    const schema = {
-        album_id:Joi.string().min(1).required(),
-        link:Joi.string().required()
-     }
- 
-     const result = Joi.validate(req.body, schema);
- 
-     if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-    photo.push(ph);
-    res.send(photo);
+// add photo done
+router.post("/", async (req, res) => {
+  const photoo = new photo({
+    album_ID: req.body.album_ID,
+    Link: req.body.Link,
+    Description: req.body.Description
   });
-  
-router.get('/view_photo/:id', (req, res) => {
-  const id = req.params.id
-  const s = photo.find(photo => photo.id === id)
-  res.send(s)
-})
+  const isValidated = validator.createValidation(req.body);
+  try {
+    if (isValidated.error) {
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    } else {
+      return photoo.save().then(newPhoto => {
+        return res.status(201).json({
+          message: "New Photo was uploaded successfully",
+          photo: newPhoto
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+// done bas lesa test
+router.get("/view_photo/:Link", async (req, res) => {
+  try {
+    const Link = req.params.Link;
+    // const wantedPhoto = await photo.find(Link).then(wantedPhoto =>
+    //   res.status(200).json({
+    //     Photo: wantedPhoto
+    //   })
+    // );
 
-//an admin should be able to update description about photos 
-router.put('/update_photodesc/:id', (req, res) => {
-  const photoId = req.params.id 
-  const updated_description = req.body.description
-  const p = photo.find(photo => photo.id === photoId)
-  p.description = updated_description
-  res.send(p)
-})
+    const wantedPhoto = await photo.findOne(req.body);
+    res.json({ data: wantedPhoto });
+  } catch (error) {
+    console.log(error);
+  }
+  // const wantedPhoto = await Photo.findOne(Link);
+  // res.json({ data: wantedPhoto });
+});
 
-//an admin should be able to delete photos
-router.delete('/delete_photo/:id', (req, res) => {
-  const pid = req.params.id 
-  const p = photo.find(photo => photo.id === pid)
-  const index = photo.indexOf(p)
-  if(p!== null && index!== null){
-  photo.splice(index,1)}
-  res.send(photo)
-})
+//an admin should be able to update description about photos  done not tested
+router.put("/update_photodesc/:Link", async (req, res) => {
+  try {
+    const Link = req.params.Link;
+    // const photo = await photo.findOne({ Link });
+    // if (!photo) return res.status(404).send({ error: "Photo does not exist" });
+    // const isValidated = validator.updateValidation(req.body);
+    // if (isValidated.error)
+    //   return res
+    //     .status(400)
+    //     .send({ error: isValidated.error.details[0].message });
+    const updatedPhoto = await Photo.updateOne(req.body);
+    res.json({ msg: "Description updated successfully" });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+});
 
-module.exports=router
-  
-  
+//an admin should be able to delete photos done
+router.delete("/delete_photo/:Link", async (req, res) => {
+  try {
+    const Link = req.params.Link;
+    const deletedphoto = await photo.findOneAndDelete(Link);
+    res.json({ msg: "photo was deleted successfully", data: deletedphoto });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+});
+module.exports = router;
