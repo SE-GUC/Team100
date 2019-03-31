@@ -11,10 +11,10 @@ const functions = {
   },
   updateCertainAlbum: async id => {
     const album = await axios.put(`http://localhost:6000/api/albums/${id}`, {
-        title: "session 12",
-        description: "abcde",
-        photo: ["5c96009d01119d16989aebfd"]
-      });
+      title: "session 12",
+      description: "abcde",
+      photo: ["5c96009d01119d16989aebfd"]
+    });
     return album;
   },
   postAlbum: async body => {

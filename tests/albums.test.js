@@ -4,21 +4,22 @@ const funcs = require("../fn/Albumfn");
 test("Get all albums", async done => {
   expect.assertions(1);
   const result = await funcs.getAllAlbums();
-  expect(result.data.data.length).toBe(3);
+  expect(result.data.data.length).toBe(10);
 });
 
 test("Get certain album", async done => {
   expect.assertions(1);
-  const id = "5c95fed79c054043a42c9397";
+  const id = "5ca122ecff71cc43f65e4702";
   const result = await funcs.getCertainAlbum(id);
-  expect(result.data.Album._id).toEqual(id);
+  console.log(result.data.data._id);
+  expect(result.data.data._id).toEqual(id);
 });
 
 test("Delete album", async done => {
   expect.assertions(1);
-  const id = "5c95fed79c054043a42c9397";
+  const id = "5ca1233eff71cc43f65e4703";
   const result = await funcs.deleteCertainAlbum(id);
-  expect(result.data.Album._id).toEqual(id);
+  expect(result.data.data._id).toEqual(id);
 });
 
 test("Create album", async done => {
