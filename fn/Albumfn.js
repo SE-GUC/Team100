@@ -11,7 +11,7 @@ const functions = {
   },
   updateCertainAlbum: async id => {
     const album = await axios.put(`http://localhost:6000/api/albums/${id}`, {
-      title: "session 12",
+      title: "Session 12",
       description: "abcde",
       photo: ["5c96009d01119d16989aebfd"]
     });
@@ -20,11 +20,10 @@ const functions = {
   postAlbum: async body => {
     try {
       const album = await axios.post(`http://localhost:6000/api/albums/`, {
-        title: "event 12",
+        title: "Event 12",
         description: "fcghbj",
         photo: ["5c96009d01119d16989aebfc"]
       });
-      console.log(album);
       return album;
     } catch (error) {
       console.log(error);
