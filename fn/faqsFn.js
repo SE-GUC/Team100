@@ -49,3 +49,4 @@ const functions = {
     return FAQ;
   }
 };
+module.exports = functions;
