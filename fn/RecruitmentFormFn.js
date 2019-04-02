@@ -23,7 +23,7 @@ const functions = {
         "email": "abc@abc.com",
         "major": "BI",
         "telephone_number": "123456",
-        "Year_of_Study": "1/2/2016",
+        "Year_of_Study": "2016",
         "Means_of_Transportation": "Bus",
         "Council_Office1": "ICJ",
         "Council_Office2": "CL",
