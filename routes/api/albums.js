@@ -1,12 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const Album = require("../../models/Album");
 const validator = require("../../validations/albumValidations");
-const Joi = require("joi");
-// Create the app
-//const app = express()
-// Use it with post
-//app.use(express.json())
 const router = express.Router();
 
 router.get("/", async (req, res) => {
