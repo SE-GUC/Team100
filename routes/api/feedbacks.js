@@ -11,10 +11,9 @@ router.get("/:id", async (req, res) => {
     if (!feedbacks)
       return res
         .status(404)
-        .send({ error: "There are no feedebacks for this event" });
+        .send({ error: "There are no feedbacks for this event" });
     res.json({ data: feedbacks });
   } catch (error) {
-    // We will be handling the error later
     console.log(error);
   }
 });
@@ -29,7 +28,6 @@ router.post("/", async (req, res) => {
     const newFeedback = await Feedback.create(req.body);
     res.json({ msg: "Feedback was created successfully", data: newFeedback });
   } catch (error) {
-    // We will be handling the error later
     console.log(error);
   }
 });

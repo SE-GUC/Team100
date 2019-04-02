@@ -28,5 +28,33 @@ router.post("/", async (req, res) => {
     data: newForm
   });
 });
+// delete a FormTemplate with mongo db
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedForm = await FormTemplate.findByIdAndRemove(id);
+    res.json({ msg: "Form Template was deleted successfully", data: deletedForm});
+  } catch (error) {
+    console.log(error);
+  }
+});
 
+
+router.get("/", async (req, res) => {
+  const FromTemp = await FormTemplate.find();
+  res.json({ data: FromTemp });
+});
+
+router.get("/:id", async (req, res) => {
+  const FormId = req.params.id;
+  try {
+    const wantedForm = await FormTemplate.findById(FormId).then(wantedForm => {
+      res.status(200).json({
+        FormTemplate: wantedForm
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
