@@ -1,12 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const Album = require("../../models/Album");
 const validator = require("../../validations/albumValidations");
-const Joi = require("joi");
-// Create the app
-//const app = express()
-// Use it with post
-//app.use(express.json())
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -21,7 +15,6 @@ router.get("/:id", async (req, res) => {
     if (!album) return res.status(404).send({ error: "Album does not exist" });
     res.json({ data: album });
   } catch (error) {
-    // We will be handling the error later
     console.log(error);
   }
 });
@@ -36,7 +29,6 @@ router.post("/", async (req, res) => {
     const newAlbum = await Album.create(req.body);
     res.json({ msg: "Album was created successfully", data: newAlbum });
   } catch (error) {
-    // We will be handling the error later
     console.log(error);
   }
 });
@@ -57,7 +49,6 @@ router.put("/:id", async (req, res) => {
         res.json({ msg: "Album updated successfully" });
       });
   } catch (error) {
-    // We will be handling the error later
     console.log(error);
   }
 });
@@ -68,7 +59,6 @@ router.delete("/:id", async (req, res) => {
     const deletedAlbum = await Album.findByIdAndRemove(id);
     res.json({ msg: "Album was deleted successfully", data: deletedAlbum });
   } catch (error) {
-    // We will be handling the error later
     console.log(error);
   }
 });
