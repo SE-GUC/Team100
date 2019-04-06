@@ -64,5 +64,5 @@ app.use("/api/search", search)
 
 app.use((req, res) => res.status(404).send(`<h1>Welcome to the HUB</h1>`))
 
-const port = process.env.PORT || 6000
+const port = process.env.PORT || 9000
 app.listen(port, () => console.log(`Server on ${port}`))
