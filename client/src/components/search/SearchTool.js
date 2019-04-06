@@ -26,7 +26,7 @@ class SearchTool extends Component {
         announcements: body.Announcements,
         faqs: body.FAQs,
         events: body.Events,
-        albums: body.Albums,
+        // albums: body.Albums,
         clubs: body.Clubs
       })
 
@@ -55,6 +55,36 @@ class SearchTool extends Component {
         </div>
       )
     })
+    const achievementsJSX = this.state.achievements.map(achievement => {
+      return (
+        <div key={achievement._id}>
+          <p>
+            <strong>{achievement["description"]}</strong>
+          </p>
+        </div>
+      )
+    })
+    const faqsJSX = this.state.faqs.map(faq => {
+      return (
+        <div key={faq._id}>
+          <p>
+            {/* <strong>{faq["created_by"]}</strong> */}
+            {faq.question}
+            {faq.answer}
+          </p>
+        </div>
+      )
+    })
+    const clubsJSX = this.state.clubs.map(club => {
+      return (
+        <div key={club._id}>
+          <p>
+            <strong>{club["name"]}</strong>
+            {club.brief_description}
+          </p>
+        </div>
+      )
+    })
 
     return (
       <div>
@@ -78,6 +108,30 @@ class SearchTool extends Component {
             <div>
               <h1>Events</h1>
               {eventsJSX}
+            </div>
+          </div>
+        ) : null}
+        {this.state.achievements.length > 0 ? (
+          <div>
+            <div>
+              <h1>Achievements</h1>
+              {achievementsJSX}
+            </div>
+          </div>
+        ) : null}
+        {this.state.faqs.length > 0 ? (
+          <div>
+            <div>
+              <h1>faqs</h1>
+              {faqsJSX}
+            </div>
+          </div>
+        ) : null}
+        {this.state.clubs.length > 0 ? (
+          <div>
+            <div>
+              <h1>Club</h1>
+              {clubsJSX}
             </div>
           </div>
         ) : null}
