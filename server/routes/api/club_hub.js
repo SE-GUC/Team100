@@ -12,8 +12,6 @@ router.get("/", async (req, res) => {
 })
 
 
-
-
 // Create Club_hub
 router.post("/", async (req, res) => {
   const club_hub = new Club_hub({
@@ -67,7 +65,7 @@ router.put("/:id", async (req, res) => {
       .status(400)
       .send({ error: isValidated.error.details[0].message });
   } else {
-    Club_hub.update({ _id: id }, { $set: updatedDescription })
+    Club_hub.update({ _id: id }, { $set: req.body })
       .exec()
       .then(() => {
         res.status(200).json({
