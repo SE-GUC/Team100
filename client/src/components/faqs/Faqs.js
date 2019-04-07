@@ -1,15 +1,71 @@
 import React, { Component } from 'react';
-
+import axios from '../../axiosInstance';
+//import Collapsible from "react-collapsible";
 
 
 class Faqs extends Component {
+  constructor() {
+    super ();
+    this.state = {
+      faqs:[],
+      question:"",
+      answer:""
+    };
+  }
+  componentDidMount() {
+    this.refreshFaqs();
+  }
+
+  refreshFaqs() {
+  
+    axios.get("/faqs")
+      .then(res => this.setState({faqs: res.data.data}))
+      .catch(err => console.log(err));
+  }
+  handleChangeQuestion = faq => {
+    this.setState({ question: faq.target.value });
+  };
+  handleChangeAnswer = faq => {
+    this.setState({ question: faq.target.value });
+  };
+  handleSubmit = async faq => {
+    faq.preventDefault();
+    const updatedFaq = {
+      question: faq.target.question.value,
+      answer: faq.target.answer.value
+    };
+    console.log(updatedFaq);
+    try {
+      await axios.put(`faqs/${faq.target.getAttribute("data-index")}`, updatedFaq);
+    }
+    catch (error){
+      console.log(error);
+    }
+  };
+
   render() {
     return (
       <div>
-      <h1>FAQS</h1>
-      </div>
-    );
-  }
+      <h2>FAQS</h2>
+       {
+          <ul>
+            {this.state.faqs.map(faq => (
+              <div key={faq._id}>
+                <li>
+                  {faq.question} {faq.answer}
+                </li>
+                <form onSubmit={this.handleSubmit} data-index={faq._id}>
+                  Q:<input type="text" name="question" defaultValue={faq.question}/>
+                  A:<input type="text" name="answer" defaultValue={faq.answer}/>
+                  <input type="submit" value="Submit" />
+                </form>
+              </div>
+            ))}
+     </ul>
+   }
+  </div>
+ );
+}
 }
 
 export default Faqs;
