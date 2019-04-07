@@ -33,7 +33,7 @@ const AnnouncementSchema = new Schema({
     select: false
   }
 });
-AnnouncementSchema.index({ description:"text", tag:"text"});
+AnnouncementSchema.index({ description: "text", title: "text" });
 
 module.exports = Announcement = mongoose.model(
   "Announcement",
