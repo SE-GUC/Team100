@@ -12,10 +12,9 @@ const AnnouncementSchema = new Schema({
     required: true
   },
   date: {
-    type: Date,
-    required: true
+    type: Date
   },
-  tag: {
+  title: {
     type: String,
     required: true
   },

@@ -4,8 +4,8 @@ module.exports = {
   createValidation: request => {
     const createSchema = {
       description: Joi.string().required(),
-      date: Joi.date().required(),
-      tag: Joi.string().required(),
+      date: Joi.date(),
+      title: Joi.string().required(),
       created_by: Joi.string().required(),
       videos: Joi.string(),
       photos: Joi.string()
@@ -18,7 +18,7 @@ module.exports = {
     const updateSchema = {
       description: Joi.string(),
       date: Joi.date(),
-      tag: Joi.string(),
+      title: Joi.string(),
       created_by: Joi.string(),
       videos: Joi.string(),
       photos: Joi.string()
