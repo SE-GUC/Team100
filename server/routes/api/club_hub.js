@@ -6,10 +6,11 @@ const Club_hub = require("../../models/Club_hub");
 const User = require("../../models/User");
 const validator = require("../../validations/club_hubValidations");
 
-router.get("/", async(req,res) => {
-  const clubs = await Club_hub.find();
-  res.json({ data:clubs })
+router.get("/", async (req, res) => {
+  const clubs = await Club_hub.find()
+  res.json({ data: clubs })
 })
+
 
 // Create Club_hub
 router.post("/", async (req, res) => {

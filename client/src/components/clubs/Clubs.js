@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AppRegistry, View } from "react";
 import { Fade } from "react-slideshow-image";
 import image from "../../images/image2vector.svg";
+import image1 from "../../images/download.jpg";
 
 
 const fadeProperties = {
@@ -11,7 +12,7 @@ const fadeProperties = {
   indicators: true
 };
 
-const fadeImages = [image];
+const fadeImages = [image, image1];
 
 class Clubs extends Component{
   constructor(){
@@ -21,30 +22,33 @@ class Clubs extends Component{
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.refreshClubs();
   }
 
-  refreshClubs(){
-    fetch("/api/club_hub/")
-    .then(res => res.json())
-    .then( club_hub => {
-  this.setState({ club_hub:club_hub.data})
-    });
+  refreshClubs() {
+    fetch("/api/club_hub")
+      .then(res => res.json())
+      .then(club_hub => {
+        console.log("clubs fetched..", club_hub);
+        this.setState({ club_hub: club_hub.data });
+      });
   }
-  render(){
-    return(
+
+  render() {
+    return (
       <Fade {...fadeProperties}>
-      <h1>Clubs</h1>
-      {this.state.club_hub.map((each,index) => (
-        <div>
-          <img key={index} style={{width:200, height:300}}
+        {this.state.club_hub.map((each, index) => (
+          <div>
+            <img key={index} style={{width:200, height:300}}
           src={fadeImages[index]}  alt="img"/>
-        </div>
-      ))}
-        </Fade>
-    )
+            <p>{each.brief_description}</p>
+          </div>
+        ))}
+      </Fade>
+    );
   }
 }
 
-export default Clubs
+export default Clubs;
+
