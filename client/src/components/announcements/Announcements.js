@@ -8,6 +8,7 @@ class Announcements extends Component {
     super(props, context);
 
     this.state = {
+      announcements: [],
       description: "",
       date: new Date(),
       title: "",
@@ -16,7 +17,29 @@ class Announcements extends Component {
       photos: ""
     };
   }
-
+  componentDidMount() {
+    this.getAnnouncements();
+  }
+  getAnnouncements() {
+    fetch("/api/announcements")
+      .then(res => res.json())
+      .then(announcements => {
+        this.setState({ announcements: announcements.data });
+        console.log(this.state);
+      });
+  } 
+//  onDelete = e => {
+//      axios
+//       .delete(
+//          "http://localhost:9000/api/announcements/" +
+//            e.target.getAttribute("data-index")
+//        )
+//        .then(res => {
+//          console.log();
+//          this.refreshAnnouncment();
+//        })
+//        .catch(err => console.log(err));
+//    };
   handleChangeDescription = event => {
     this.setState({ description: event.target.value });
   };
@@ -55,6 +78,22 @@ class Announcements extends Component {
     return (
       <div>
         <h1>Announcements</h1>
+        {this.state.announcements.map(ann => (
+            <div key={ann._id}>
+              <li>
+                <label>Description: </label>
+                {ann.description},<label>Date: </label>
+                {ann.date},<label>Title: </label>
+                {ann.title},<label>Created by: </label>
+                {ann.created_by},<label>Photos: </label>
+                {ann.photos},<label>Videos: </label>
+                {ann.videos}
+                {/* <button onClick={this.onDelete} data-index={ann._id}>
+                  Delete
+                </button> */}
+              </li>
+            </div>
+          ))}
         <Collapsible trigger="Create new announcement">
           <form onSubmit={this.handleSubmit}>
             <label>
@@ -104,102 +143,5 @@ class Announcements extends Component {
     );
   }
 }
-//render(<Announcements />);
 export default Announcements;
 
-// this.handleShow = this.handleShow.bind(this);
-// this.handleClose = this.handleClose.bind(this);
-
-{
-  /* <>
-          <Button variant="primary" onClick={this.handleShow}>
-            Create new announcement
-          </Button>
-
-          <Modal show={this.state.show} onHide={this.handleClose}>
-            <Modal.Header>
-              <Modal.Title>Create new announcement</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-             
-               <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1" />
-                  </InputGroup.Prepend>
-                  <FormControl
-                    placeholder="Title"
-                    aria-label="Title"
-                    aria-describedby="basic-addon1"
-                  />
-                </InputGroup>
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon2" />
-                  </InputGroup.Prepend>
-                  <FormControl
-                    placeholder="Description"
-                    aria-label="Description"
-                    aria-describedby="basic-addon2"
-                  />
-                </InputGroup>
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon3" />
-                  </InputGroup.Prepend>
-                  <FormControl
-                    placeholder="Club"
-                    aria-label="Club"
-                    aria-describedby="basic-addon3"
-                  />
-                </InputGroup>
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon4" />
-                  </InputGroup.Prepend>
-                  <FormControl
-                    placeholder="Please add photo's path"
-                    aria-label="Photo"
-                    aria-describedby="basic-addon4"
-                  />
-                </InputGroup>
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon5" />
-                  </InputGroup.Prepend>
-                  <FormControl
-                    placeholder="Please add video's path"
-                    aria-label="Video"
-                    aria-describedby="basic-addon5"
-                  />
-                </InputGroup>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={this.handleChange + this.handleSubmit + this.handleClose}>
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </> */
-}
-
-// handleClose() {
-//   this.setState({ show: false });
-// }
-
-// handleShow() {
-//   this.setState({ show: true });
-// }
-// state = {
-//   description: '',
-//   title: '',
-//   created_by: '',
-//   videos: '',
-//   photos: ''
-// }
-
-// handleChange = event => {
-//   this.setState({ description: event.target.value, title: event.target.value,created_by: event.target.value, videos: event.target.value, photos: event.target.value });
-// }
