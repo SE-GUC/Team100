@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Header from "./components/layout/Header"
-import Footer from "./components/layout/Footer"
+//import Footer from "./components/layout/Footer"
 //import { BrowserRouter as Router, Route } from "react-dom"
 //import Tools from "./components/Tools"
 import Announcements from "./components/announcements/Announcements"
@@ -17,7 +17,7 @@ class App extends Component {
         <SearchTool />
         <Clubs />
         <Faqs />
-        <Footer />
+        {/* <Footer /> */}
         <Announcements />
       </div>
     )
