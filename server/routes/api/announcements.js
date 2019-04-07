@@ -33,7 +33,7 @@ router.get("/:id", async (req, res) => {
 // Create an announcement
 
 router.post("/", async (req, res) => {
-  const { description, date, tag, created_by, videos, photos } = req.body;
+  const { description, date, title, created_by, videos, photos } = req.body;
   const announcement = await Announcement.findOne();
   const isValidated = validator.createValidation(req.body);
   if (!isValidated.error) {
@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
       _id: mongoose.Types.ObjectId(),
       description,
       date,
-      tag,
+      title,
       created_by,
       videos,
       photos
