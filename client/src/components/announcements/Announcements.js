@@ -27,19 +27,19 @@ class Announcements extends Component {
         this.setState({ announcements: announcements.data });
         console.log(this.state);
       });
-  } 
-//  onDelete = e => {
-//      axios
-//       .delete(
-//          "http://localhost:9000/api/announcements/" +
-//            e.target.getAttribute("data-index")
-//        )
-//        .then(res => {
-//          console.log();
-//          this.refreshAnnouncment();
-//        })
-//        .catch(err => console.log(err));
-//    };
+  }
+  onDelete = e => {
+    axios
+      .delete(
+        "http://localhost:9000/api/announcements/" +
+          e.target.getAttribute("data-index")
+      )
+      .then(res => {
+        console.log();
+        this.refreshAnnouncment();
+      })
+      .catch(err => console.log(err));
+  };
   handleChangeDescription = event => {
     this.setState({ description: event.target.value });
   };
@@ -79,21 +79,23 @@ class Announcements extends Component {
       <div>
         <h1>Announcements</h1>
         {this.state.announcements.map(ann => (
-            <div key={ann._id}>
-              <li>
-                <label>Description: </label>
-                {ann.description},<label>Date: </label>
-                {ann.date},<label>Title: </label>
-                {ann.title},<label>Created by: </label>
-                {ann.created_by},<label>Photos: </label>
-                {ann.photos},<label>Videos: </label>
-                {ann.videos}
-                {/* <button onClick={this.onDelete} data-index={ann._id}>
+          <div key={ann._id}>
+            <li>
+              <label>Description: </label>
+              {ann.description},<label>Date: </label>
+              {ann.date},<label>Title: </label>
+              {ann.title},<label>Created by: </label>
+              {ann.created_by},<label>Photos: </label>
+              {ann.photos},<label>Videos: </label>
+              {ann.videos}
+              {
+                <button onClick={this.onDelete} data-index={ann._id}>
                   Delete
-                </button> */}
-              </li>
-            </div>
-          ))}
+                </button>
+              }
+            </li>
+          </div>
+        ))}
         <Collapsible trigger="Create new announcement">
           <form onSubmit={this.handleSubmit}>
             <label>
@@ -144,4 +146,3 @@ class Announcements extends Component {
   }
 }
 export default Announcements;
-
