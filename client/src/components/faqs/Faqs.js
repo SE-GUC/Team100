@@ -63,7 +63,7 @@ class Faqs extends Component {
     }
   };
 
-onDelete = e => {
+  onDelete = e => {
     // console.log(e.target.getAttribute("data-index"))
     fetch(`/api/faqs/${e.target.getAttribute("data-index")}`, {
       method: "DELETE"
@@ -115,7 +115,6 @@ onDelete = e => {
             <li>
               <label> Question: </label>
               {f.question},
-              <n></n>
               <label> Answer: </label>
               {f.answer}
             </li>
