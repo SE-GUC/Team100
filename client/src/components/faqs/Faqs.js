@@ -1,28 +1,45 @@
 import React, { Component } from 'react';
 import axios from '../../axiosInstance';
-//import Collapsible from "react-collapsible";
+import Collapsible from "react-collapsible";
 
 
 class Faqs extends Component {
   constructor() {
-    super ();
+    super();
     this.state = {
-      faqs:[],
-      question:"",
-      answer:""
+      faqs: [],
+      question: "",
+      answer: ""
     };
   }
+
   componentDidMount() {
     this.refreshFaqs();
+    this.getFaqs();
   }
 
+  /////
+  getFaqs() {
+    fetch("/api/FAQs").then(res => res.json()).then(faqs => {
+      this.setState({ faqs: faqs.data });
+    })
+  }
+  /////
+  handleChangeQ = faqs => {
+    this.setState({ question: faqs.target.value });
+  };
+  handleChangeA = faqs => {
+    this.setState({ answer: faqs.target.value });
+  };
+
+
   refreshFaqs() {
-  
-  fetch("/api/faqs")
-  .then(res => res.json())
-  .then(faqs => {
-    this.setState({ faqs: faqs.data });
-  });
+
+    fetch("/api/faqs")
+      .then(res => res.json())
+      .then(faqs => {
+        this.setState({ faqs: faqs.data });
+      });
   }
   handleChangeQuestion = faq => {
     this.setState({ question: faq.target.value });
@@ -40,7 +57,22 @@ class Faqs extends Component {
     try {
       await axios.put(`faqs/${faq.target.getAttribute("data-index")}`, updatedFaq);
     }
-    catch (error){
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleS = async Faqs => {
+    Faqs.preventDefault();
+
+    const faq = {
+      question: this.state.question,
+      answer: this.state.answer,
+    };
+    console.log(faq);
+    try {
+      await axios.post(`FAQs/`, faq);
+    } catch (error) {
       console.log(error);
     }
   };
@@ -48,8 +80,8 @@ class Faqs extends Component {
   render() {
     return (
       <div>
-      <h2>FAQS</h2>
-       {
+        <h2>FAQS</h2>
+        {
           <ul>
             {this.state.faqs.map(faq => (
               <div key={faq._id}>
@@ -57,17 +89,51 @@ class Faqs extends Component {
                   {faq.question} {faq.answer}
                 </li>
                 <form onSubmit={this.handleSubmit} data-index={faq._id}>
-                  Q:<input type="text" name="question" defaultValue={faq.question}/>
-                  A:<input type="text" name="answer" defaultValue={faq.answer}/>
+                  Q:<input type="text" name="question" defaultValue={faq.question} />
+                  A:<input type="text" name="answer" defaultValue={faq.answer} />
                   <input type="submit" value="Submit" />
                 </form>
               </div>
             ))}
-     </ul>
-   }
-  </div>
- );
-}
+          </ul>
+        }
+
+        {this.state.faqs.map(f => (
+          <div key={f._id}>
+            <li>
+              <label> Question: </label>
+              {f.question},
+              <n></n>
+              <label> Answer: </label>
+              {f.answer}
+            </li>
+          </div>))}
+
+
+        <Collapsible trigger="Create a FAQ">
+          <form onSubmit={this.handleS}>
+            <label>
+              Question:
+              <input
+                type="text"
+                name="Question"
+                onChange={this.handleChangeQ}
+              />
+            </label>
+            <label>
+              Answer:
+              <input
+                type="text"
+                name="Answer"
+                onChange={this.handleChangeA}
+              />
+            </label>
+            <button type="submit">Add</button>
+          </form>
+        </Collapsible>
+      </div>
+    );
+  }
 }
 
 export default Faqs;
