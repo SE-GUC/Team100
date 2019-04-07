@@ -4,7 +4,6 @@ import { Fade } from "react-slideshow-image";
 import image from "../../images/image2vector.svg";
 import image1 from "../../images/download.jpg";
 
-
 const fadeProperties = {
   duration: 5000,
   transitionDuration: 500,
@@ -14,8 +13,8 @@ const fadeProperties = {
 
 const fadeImages = [image, image1];
 
-class Clubs extends Component{
-  constructor(){
+class Clubs extends Component {
+  constructor() {
     super();
     this.state = {
       club_hub: []
@@ -39,9 +38,13 @@ class Clubs extends Component{
     return (
       <Fade {...fadeProperties}>
         {this.state.club_hub.map((each, index) => (
-          <div>
-            <img key={index} style={{width:200, height:300}}
-          src={fadeImages[index]}  alt="img"/>
+          <div key={each._id}>
+            <img
+              key={index}
+              style={{ width: 200, height: 300 }}
+              src={fadeImages[index]}
+              alt="img"
+            />
             <p>{each.brief_description}</p>
           </div>
         ))}
@@ -51,4 +54,3 @@ class Clubs extends Component{
 }
 
 export default Clubs;
-
