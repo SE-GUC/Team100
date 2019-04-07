@@ -6,6 +6,11 @@ const Club_hub = require("../../models/Club_hub");
 const User = require("../../models/User");
 const validator = require("../../validations/club_hubValidations");
 
+router.get("/", async(req,res) => {
+  const clubs = await Club_hub.find();
+  res.json({ data:clubs })
+})
+
 // Create Club_hub
 router.post("/", async (req, res) => {
   const club_hub = new Club_hub({
@@ -59,7 +64,7 @@ router.put("/:id", async (req, res) => {
       .status(400)
       .send({ error: isValidated.error.details[0].message });
   } else {
-    Club_hub.update({ _id: id }, { $set: updatedDescription })
+    Club_hub.update({ _id: id }, { $set: req.body })
       .exec()
       .then(() => {
         res.status(200).json({
