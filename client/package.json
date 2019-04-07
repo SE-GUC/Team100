@@ -9,7 +9,8 @@
     "react-bootstrap": "^1.0.0-beta.6",
     "react-collapsible": "^2.6.0",
     "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "react-slideshow-image": "^1.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -17,6 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy":"http://localhost:9000",
   "eslintConfig": {
     "extends": "react-app"
   },
