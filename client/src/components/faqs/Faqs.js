@@ -18,9 +18,11 @@ class Faqs extends Component {
 
   refreshFaqs() {
   
-    axios.get("/faqs")
-      .then(res => this.setState({faqs: res.data.data}))
-      .catch(err => console.log(err));
+  fetch("/api/faqs")
+  .then(res => res.json())
+  .then(faqs => {
+    this.setState({ faqs: faqs.data });
+  });
   }
   handleChangeQuestion = faq => {
     this.setState({ question: faq.target.value });
