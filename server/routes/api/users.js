@@ -5,16 +5,26 @@ const Joi = require("joi");
 const bcrypt = require('bcrypt')
 const User = require("../../models/User");
 const validator = require("../../validations/userValidations");
+const tokenKey = require('../../config/keys').secretOrKey
+const jwt = require('jsonwebtoken')
+const passport = require('passport')
 
-// get all users
+//get all users
 router.get("/", async (req, res) => {
     const users = await User.find()
     res.json({ data: users })
 })
 
-//as a user i should be able t readmy information
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    // You can access the logged in user through req.user
+    // Add your authorization rules accordingly
+    const users = await User.find()
+    return res.json({ data: users })
+    // return res.json({data: req.user})
+})
 
-router.get("/get_user/:id", async (req, res) => {
+//as a user i should be able to read my information
+router.get("/:id", async (req, res) => {
     const id = req.params.id
     try {
         const u = await User.findById(id).then(
@@ -27,43 +37,34 @@ router.get("/get_user/:id", async (req, res) => {
     }
 })
 
-//create user
 router.post('/register', async (req, res) => {
-    const {
-        name,
-        email,
-        birth_date,
-        password,
-        major,
-        telephone,
-        photo,
-        gucian,
-        club,
-        committee_type,
-        user_type } = req.body
-    const user = await User.findOne({ email })
-    if (user) return res.status(400).json({ error: 'Email already exists' })
-
-    const salt = bcrypt.genSaltSync(10)
-    const hashedPassword = bcrypt.hashSync(password, salt)
-    const newUser = new User({
-        name,
-        email,
-        birth_date,
-        password: hashedPassword,
-        major,
-        telephone,
-        photo,
-        gucian,
-        club,
-        committee_type,
-        user_type
-    })
-    newUser
-        .save()
-        .then(user => res.json({ data: user }))
-        .catch(err => res.json({ error: 'Can not create user' }))
-})
+    try {
+        const isValidated = validator.registerValidation(req.body);
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message });
+        const { name, email, birth_date, password, major, telephone, photo, gucian, club, committee_type, user_type } = req.body;
+        const user = await User.findOne({ email });
+        if (user) return res.status(400).json({ email: 'Email already exists' });
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+        const newUser = new User({
+            name,
+            email,
+            birth_date,
+            password: hashedPassword,
+            major,
+            telephone,
+            photo,
+            gucian,
+            club,
+            committee_type,
+            user_type
+        });
+        await User.create(newUser);
+        res.json({ msg: 'User created successfully', data: newUser });
+    } catch (error) {
+        res.status(422).send({ error: 'Can not create user' });
+    }
+});
 
 //delete user
 router.delete('/delete_user/:id', async (req, res) => {
@@ -78,7 +79,7 @@ router.delete('/delete_user/:id', async (req, res) => {
 })
 
 //update user
-router.put("/update_user/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const user = await User.findById(id);
@@ -88,7 +89,7 @@ router.put("/update_user/:id", async (req, res) => {
             return res
                 .status(400)
                 .send({ error: isValidated.error.details[0].message });
-        User.update({ _id: id }, { $set: req.body })
+        User.updateOne({ _id: id }, { $set: req.body })
             .exec()
             .then(() => {
                 res.json({ msg: "User updated successfully" });
@@ -99,5 +100,29 @@ router.put("/update_user/:id", async (req, res) => {
     }
 });
 
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) return res.status(404).json({ email: 'Email does not exist' });
+        const match = bcrypt.compareSync(password, user.password);
+        if (match) {
+            const payload = {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            }
+            const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
+            return res.json({ token: `Bearer ${token}` })
+        }
+        else return res.status(400).send({ password: 'Wrong password' });
+    } catch (e) { }
+});
+
+
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const users = await User.find()
+    res.json({ data: users })
+});
 
 module.exports = router;

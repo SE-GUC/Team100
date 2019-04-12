@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const passport = require('passport')
 
 const Club_hub = require("../../models/Club_hub");
 const User = require("../../models/User");
@@ -11,9 +12,8 @@ router.get("/", async (req, res) => {
   res.json({ data: clubs })
 })
 
-
 // Create Club_hub
-router.post("/", async (req, res) => {
+router.post("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
   const club_hub = new Club_hub({
     name: req.body.name,
     brief_description: req.body.brief_description,
@@ -56,7 +56,7 @@ router.get("/:id", async (req, res) => {
 });
 // update an brief description
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
   const id = req.params.id;
   const updatedDescription = req.body;
   const isValidated = validator.updateValidation(req.body);

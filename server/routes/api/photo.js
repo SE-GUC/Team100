@@ -3,12 +3,13 @@ const router = express.Router();
 const Joi = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const passport = require('passport')
 
 const photo = require("../../models/Photo");
 const validator = require("../../Validations/PhotoValidations");
 
 // add photo done
-router.post("/", async (req, res) => {
+router.post("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
   const photoo = new photo({
     album_ID: req.body.album_ID,
     Link: req.body.Link,
@@ -52,7 +53,7 @@ router.get("/view_photo/:Link", async (req, res) => {
 });
 
 //an admin should be able to update description about photos  done not tested
-router.put("/update_photodesc/:Link", async (req, res) => {
+router.put("/update_photodesc/:Link", passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const Link = req.params.Link;
     // const photo = await photo.findOne({ Link });
@@ -71,7 +72,7 @@ router.put("/update_photodesc/:Link", async (req, res) => {
 });
 
 //an admin should be able to delete photos done
-router.delete("/delete_photo/:Link", async (req, res) => {
+router.delete("/delete_photo/:Link", passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const Link = req.params.Link;
     const deletedphoto = await photo.findOneAndDelete(Link);

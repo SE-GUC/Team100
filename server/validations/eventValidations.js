@@ -14,7 +14,7 @@ module.exports = {
       committee: Joi.string(),
       rating: Joi.number(),
       ratingcount: Joi.number(),
-      rate: Joi.number()
+      rate: Joi.number().max(5).min(0)
     };
 
     return Joi.validate(request, createSchema);
@@ -33,7 +33,7 @@ module.exports = {
       committee: Joi.string(),
       rating: Joi.number(),
       ratingcount: Joi.number(),
-      rate: Joi.number()
+      rate: Joi.number().max(5).min(0)
     };
 
     return Joi.validate(request, updateSchema);

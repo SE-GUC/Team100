@@ -5,12 +5,10 @@ module.exports = {
     const createSchema = {
       Academic_paper: Joi.string()
         .min(10)
-        .max(500)
-        .required(),
+        .max(500),
       Resolution: Joi.string()
         .min(10)
-        .max(500)
-        .required(),
+        .max(500),
       Year: Joi.number()
         .min(5)
         .max(3000)

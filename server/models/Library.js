@@ -5,11 +5,9 @@ const Schema = mongoose.Schema
 const LibrarySchema = new Schema({
   Academic_paper: {
     type: String,
-    required: true
   },
   Resolution: {
     type: String,
-    required: true
   },
   Year: {
     type: Number,
