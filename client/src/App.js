@@ -8,17 +8,28 @@ import SearchTool from "./components/search/SearchTool"
 import Faqs from "./components/faqs/Faqs"
 import "./App.css"
 import Clubs from "./components/clubs/Clubs"
+import Facebook from "./components/livefeed/Facebook"
+import Instagram from "./components/livefeed/Instagram"
+import Twitter from "./components/livefeed/Twitter"
+import Livefeed from "./components/livefeed/Livefeed"
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Header />
-        <SearchTool />
+        {/* <SearchTool />
         <Clubs />
-        <Faqs />
+        <Faqs /> */}
         {/* <Footer /> */}
-        <Announcements />
+        {/* <Announcements /> */}
+        <Livefeed />
+        {/* <Facebook />
+        <Instagram />
+        <Twitter /> */}
+
+
       </div>
     )
   }
