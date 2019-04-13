@@ -3,7 +3,7 @@ import axios from "../../axiosInstance"
 import Collapsible from "react-collapsible";
 //import { isNull } from "util";
 
-class Login extends Component {
+class UserLogin extends Component {
 
     handleChangeEmail = event => {
         this.setState({ email: event.target.value })
@@ -23,7 +23,9 @@ class Login extends Component {
         console.log(user);
         console.log(user.token)
         try {
-            await axios.post(`/users/login`, user);
+            console.log(process.env.REACT_APP_BASE_URL);
+            const response = await axios.post(`/users/login`, user);
+            axios.defaults.headers['Authorization'] = response.data.token;
             // this.refreshUsers();
         } catch (error) {
             console.log(error);
@@ -58,4 +60,4 @@ class Login extends Component {
         )
     }
 }
-export default Login
+export default UserLogin

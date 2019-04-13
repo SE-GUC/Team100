@@ -30,19 +30,19 @@ class Announcements extends Component {
       });
   }
 
-  refreshAnnouncements(){
+  refreshAnnouncements() {
     fetch("api/announcements")
-    .then(res => res.json())
-    .then(announcements => {
-      this.setState({ announcements: announcements.data });
-    })
+      .then(res => res.json())
+      .then(announcements => {
+        this.setState({ announcements: announcements.data });
+      })
   }
 
   onDelete = e => {
     axios
       .delete(
-        "http://localhost:9000/api/announcements/" +
-          e.target.getAttribute("data-index")
+        "http://localhost:5000/api/announcements/" +
+        e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();

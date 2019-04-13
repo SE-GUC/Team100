@@ -37,10 +37,8 @@ router.post("/", passport.authenticate('jwt', { session: false }), async (req, r
           });
         });
       }
-      // const newComm = await comm.create(req.body);
-      // res.json({ msg: "committee was created successfully", data: newComm });
     } catch (error) {
-      // We will be handling the error later
+
       console.log(error);
     }
   }
@@ -53,7 +51,7 @@ router.post("/", passport.authenticate('jwt', { session: false }), async (req, r
 
 //update committee
 router.put("/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  if (req.user.user_type === "mun_admin") {
+  if (req.user.user_type === "mun_admin" || req.user.control === true) {
     try {
       const id = req.params.id;
       const committee = await Committee.findById(id);
