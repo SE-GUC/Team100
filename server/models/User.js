@@ -39,11 +39,11 @@ const UserSchema = new Schema({
     },
     user_type: {
         type: String,
-        required: true
+        default: "user"
     },
     control: {
         type: Boolean,
-        required: true
+        default: false
     }
 });
 

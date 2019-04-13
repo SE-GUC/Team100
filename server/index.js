@@ -43,6 +43,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 app.use(passport.initialize())
 
+require('./config/passport')(passport)
+
 // Direct to Route Handlers
 app.use("/api/achievements", achievements)
 app.use("/api/clubmuns", clubmuns)
@@ -64,5 +66,5 @@ app.use("/api/search", search)
 
 app.use((req, res) => res.status(404).send(`<h1>Welcome to the HUB</h1>`))
 
-const port = process.env.PORT || 9000
+const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Server on ${port}`))

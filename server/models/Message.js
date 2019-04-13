@@ -16,12 +16,12 @@ const messagesSchema = new Schema({
     required: true
   },
   replied: {
-    type: String,
-    required: true
+    type: Boolean,
+    default: false,
   },
   time: {
     type: Date,
-    required: true
+    default: Date.now
   }
 });
 

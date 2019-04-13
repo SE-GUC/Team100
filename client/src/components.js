@@ -8,12 +8,14 @@ import SearchTool from "./components/search/SearchTool";
 import Faqs from "./components/faqs/Faqs";
 import "./App.css";
 import Clubs from "./components/clubs/Clubs";
+import UserLogin from "./components/users/UsersLogin";
 
 const AWGHub = () => {
   return (
     <div className="AWG Hub">
       <Header />
       <SearchTool />
+      <UserLogin />
       <Clubs />
       <Faqs />
       {/* <Footer /> */}

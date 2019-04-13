@@ -1,52 +1,67 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const passport = require('passport')
 
 const Event = require("../../models/Event");
 const validator = require("../../validations/eventValidations");
 
 //create
-router.post("/", async (req, res) => {
-  try {
-    const isValidated = validator.createValidation(req.body);
-    if (isValidated.error) {
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
+router.post("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if (req.user.user_type === "mun_admin") {
+    try {
+      const isValidated = validator.createValidation(req.body);
+      if (isValidated.error) {
+        return res
+          .status(400)
+          .send({ error: isValidated.error.details[0].message });
+      }
+      const newEvent = await Event.create(req.body);
+      res.json({ msg: "Event was created successfully", data: newEvent });
+    } catch (error) {
+      console.log(error);
     }
-    const newEvent = await Event.create(req.body);
-    res.json({ msg: "Event was created successfully", data: newEvent });
-  } catch (error) {
-    console.log(error);
+  }
+  else {
+    return res
+      .status(404)
+      .send({ error: "Unauthorized" });
   }
 });
 
 //update
-router.put("/:id", async (req, res) => {
-  const id = req.params.id;
-  const event = await Event.findByIdAndUpdate(id);
-  if (!event) {
-    return res.status(404).send({ error: "Event does not exist" });
+router.put("/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if (req.user.user_type === "mun_admin") {
+    const id = req.params.id;
+    const event = await Event.findByIdAndUpdate(id);
+    if (!event) {
+      return res.status(404).send({ error: "Event does not exist" });
+    }
+    const isValidated = validator.updateValidation(req.body);
+    if (isValidated.error) {
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    } else {
+      Event.updateOne({ _id: id }, { $set: req.body })
+        .exec()
+        .then(() => {
+          res.status(200).json({
+            message: "Event is updated successfully",
+            Event: req.body
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            message: "Error"
+          });
+        });
+    }
   }
-  const isValidated = validator.updateValidation(req.body);
-  if (isValidated.error) {
+  else {
     return res
-      .status(400)
-      .send({ error: isValidated.error.details[0].message });
-  } else {
-    Event.update({ _id: id }, { $set: req.body })
-      .exec()
-      .then(() => {
-        res.status(200).json({
-          message: "Event is updated successfully",
-          Event: req.body
-        });
-      })
-      .catch(err => {
-        res.status(500).json({
-          message: "Error"
-        });
-      });
+      .status(404)
+      .send({ error: "Unauthorized" });
   }
 });
 
@@ -58,7 +73,8 @@ router.get("/:id", async (req, res) => {
     if (!wantedEvent) {
       return res.status(404).send({ error: "Event does not exist" });
     }
-    res.json({data: wantedEvent.name_event, data1: wantedEvent.description
+    res.json({
+      data: wantedEvent.name_event, data1: wantedEvent.description
     });
   } catch (error) {
     console.log(error);
@@ -66,17 +82,24 @@ router.get("/:id", async (req, res) => {
 });
 
 //delete
-router.delete("/:id", async (req, res) => {
-  try {
-    const eventID = req.params.id;
-    const deletedEvent = await Event.findByIdAndRemove(eventID);
-    if (!deletedEvent) {
-      return res.status(404).send({ error: "Event does not exist" });
-    } else {
-      res.json({ msg: "Event was deleted successfully", data: deletedEvent });
+router.delete("/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if (req.user.user_type === "mun_admin") {
+    try {
+      const eventID = req.params.id;
+      const deletedEvent = await Event.findByIdAndRemove(eventID);
+      if (!deletedEvent) {
+        return res.status(404).send({ error: "Event does not exist" });
+      } else {
+        res.json({ msg: "Event was deleted successfully", data: deletedEvent });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
+  }
+  else {
+    return res
+      .status(404)
+      .send({ error: "Unauthorized" });
   }
 });
 
@@ -137,46 +160,50 @@ router.get("/rate/:id", async (req, res) => {
     console.log(error);
   }
 });
-//rate an event
-router.put("/rate/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const userRate = req.body.rate;
-    const eve = await Event.findById(id);
-    const oldRate = eve.rate;
-    const oldRating = eve.rating;
-    const oldRatingcount = eve.ratingcount;
-    const updatedRatingcount = oldRatingcount + 1;
-    const updatedRating = oldRating + userRate;
-    const updatedRate = updatedRating / updatedRatingcount;
-    const isValidated = validator.updateValidation(req.body);
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
 
-    Event.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          rate: updatedRate,
-          rating: updatedRating,
-          ratingcount: updatedRatingcount
-        }
-      },
-      { upsert: true },
-      function(err, user) {
-        return res.json(true);
-      }
-    );
-    res.json({
-      msg: "Event was rated successfully",
-      Rate: updatedRate,
-      Rating: updatedRating,
-      Ratingcount: updatedRatingcount
-    });
-  } catch (error) {
-    console.log(error);
+//rate an event
+router.put("/rate/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if (req.user.user_type === "user" || "mun_admin" || "hub_admin" || "team_members") {
+    try {
+      const id = req.params.id;
+      const userRate = req.body.rate;
+      const eve = await Event.findById(id);
+      const oldRating = eve.rating;
+      const oldRatingcount = eve.ratingcount;
+      const updatedRatingcount = oldRatingcount + 1;
+      const updatedRating = oldRating + userRate;
+      const updatedRate = updatedRating / updatedRatingcount;
+      const isValidated = validator.updateValidation(req.body);
+      if (isValidated.error)
+        return res
+          .status(400)
+          .send({ error: isValidated.error.details[0].message });
+
+      Event.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            rate: updatedRate,
+            rating: updatedRating,
+            ratingcount: updatedRatingcount
+          }
+        },
+        { upsert: true },
+      );
+      res.json({
+        msg: "Event was rated successfully",
+        Rate: updatedRate,
+        Rating: updatedRating,
+        Ratingcount: updatedRatingcount
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  else {
+    return res
+      .status(404)
+      .send({ error: "You have to sign in" });
   }
 });
 
