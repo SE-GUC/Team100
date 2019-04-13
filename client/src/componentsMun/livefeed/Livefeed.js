@@ -28,7 +28,7 @@ const styles = theme => ({
   },
 });
 
-class SimpleTabs extends React.Component {
+class LiveFeed extends React.Component {
   state = {
     value: 0,
   };
@@ -58,8 +58,8 @@ class SimpleTabs extends React.Component {
   }        
 }
 
-SimpleTabs.propTypes = {
+LiveFeed.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTabs);
+export default withStyles(styles)(LiveFeed);

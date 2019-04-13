@@ -18,6 +18,7 @@ class Announcements extends Component {
     };
   }
   componentDidMount() {
+    this.refreshAnnouncements();
     this.getAnnouncements();
   }
   getAnnouncements() {
@@ -28,6 +29,15 @@ class Announcements extends Component {
         console.log(this.state);
       });
   }
+
+  refreshAnnouncements(){
+    fetch("api/announcements")
+    .then(res => res.json())
+    .then(announcements => {
+      this.setState({ announcements: announcements.data });
+    })
+  }
+
   onDelete = e => {
     axios
       .delete(
@@ -36,7 +46,7 @@ class Announcements extends Component {
       )
       .then(res => {
         console.log();
-        this.refreshAnnouncment();
+        this.refreshAnnouncements();
       })
       .catch(err => console.log(err));
   };
@@ -69,6 +79,7 @@ class Announcements extends Component {
     console.log(Announcement);
     try {
       await axios.post(`announcements/`, Announcement);
+      this.refreshAnnouncements();
     } catch (error) {
       console.log(error);
     }

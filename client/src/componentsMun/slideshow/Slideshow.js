@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 //import { AppRegistry, View } from "react";
 import { Fade } from "react-slideshow-image";
-import image from "../../images/image2vector.svg";
-import image1 from "../../images/download.jpg";
+//import image1 from "../../images/1.jpg";
+import image2 from "../../images/2.jpg";
+import image3 from "../../images/3.jpg";
+import image4 from "../../images/image4.jpg";
+//import image5 from "../../images/image5.jpg";
 
 const fadeProperties = {
   duration: 5000,
@@ -11,9 +14,9 @@ const fadeProperties = {
   indicators: true
 };
 
-const fadeImages = [image, image1];
+const fadeImages = [image2, image3, image4];
 
-class Clubs extends Component {
+class Slideshow extends Component {
   constructor() {
     super();
     this.state = {
@@ -41,16 +44,14 @@ class Clubs extends Component {
           <div key={each._id}>
             <img
               key={index}
-              style={{ width: 200, height: 300 }}
+              style={{ width: 900, height: 400 }}
               src={fadeImages[index]}
               alt="img"
             />
-            <p>{each.brief_description}</p>
           </div>
         ))}
       </Fade>
     );
   }
 }
-
-export default Clubs;
+export default Slideshow;

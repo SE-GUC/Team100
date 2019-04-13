@@ -1,15 +1,16 @@
 import React, { Component } from "react"
-//import axios from "axios"
 import axios from "../../axiosInstance"
+//import { isNull } from "util";
+
 class SearchTool extends Component {
   state = {
-    // name: "",
     achievements: [],
     announcements: [],
     faqs: [],
     events: [],
     albums: [],
-    clubs: []
+    clubs: [],
+    x: ""
   }
 
   handleChange = event => {
@@ -26,12 +27,19 @@ class SearchTool extends Component {
         announcements: body.Announcements,
         faqs: body.FAQs,
         events: body.Events,
-        // albums: body.Albums,
-        clubs: body.Clubs
+        clubs: body.Clubs,
+        x: "",
       })
-
       console.log(this.state)
     })
+
+    if (this.state.achievements.length +
+      this.state.faqs.length +
+      this.state.announcements.length +
+      this.state.events.length +
+      this.state.clubs.length === 0)
+      this.setState({ x: "Sorry we cannot find what you are looking for" })
+
   }
 
   render() {
@@ -39,8 +47,9 @@ class SearchTool extends Component {
       return (
         <div key={announcement._id}>
           <p>
-            <strong>{announcement["created_by"]}</strong>
-            {announcement.description}
+            <strong>{announcement["title"] + ":"}</strong>
+            {announcement.description}. Created by:
+            {announcement.created_by}
           </p>
         </div>
       )
@@ -49,8 +58,9 @@ class SearchTool extends Component {
       return (
         <div key={event._id}>
           <p>
-            <strong>{event["name_event"]}</strong>
-            {event.description}
+            <strong>{event["name_event"] + ":"}</strong>
+            {event.description}. The event is created by:
+            {event.club}
           </p>
         </div>
       )
@@ -59,7 +69,8 @@ class SearchTool extends Component {
       return (
         <div key={achievement._id}>
           <p>
-            <strong>{achievement["description"]}</strong>
+            <strong>Achievement post by MUN : </strong>
+            {achievement["description"]}
           </p>
         </div>
       )
@@ -68,9 +79,8 @@ class SearchTool extends Component {
       return (
         <div key={faq._id}>
           <p>
-            {/* <strong>{faq["created_by"]}</strong> */}
-            {faq.question}
-            {faq.answer}
+            <strong>Q: </strong> {faq.question}
+            <strong>A: </strong> {faq.answer}
           </p>
         </div>
       )
@@ -79,7 +89,7 @@ class SearchTool extends Component {
       return (
         <div key={club._id}>
           <p>
-            <strong>{club["name"]}</strong>
+            <strong>{club["name"]}:</strong>
             {club.brief_description}
           </p>
         </div>
@@ -90,11 +100,15 @@ class SearchTool extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Search
+            Search here
             <input type="text" name="name" onChange={this.handleChange} />
           </label>
           <button type="submit">Search </button>
         </form>
+        <div>
+          <h1> </h1>
+          {this.state.x}
+        </div>
         {this.state.announcements.length > 0 ? (
           <div>
             <div>
@@ -122,7 +136,7 @@ class SearchTool extends Component {
         {this.state.faqs.length > 0 ? (
           <div>
             <div>
-              <h1>faqs</h1>
+              <h1>Faqs</h1>
               {faqsJSX}
             </div>
           </div>
