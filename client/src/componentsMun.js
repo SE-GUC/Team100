@@ -4,17 +4,22 @@ import React, { Component } from "react";
 //import { BrowserRouter as Router, Route } from "react-dom"
 //import Tools from "./components/Tools"
 // import Description from "./componentsMun/descriptions/Descriptions";
-import SlideShow from "./componentsMun/slideshow/Slideshow";
 import "./App.css";
 import Subscribers from "./componentsMun/subscribers/Subscribers";
+import Livefeed from "./componentsMun/livefeed/Livefeed";
+import Homepage from "./componentsMun/homepage/Homepage";
+
 
 const MunClub = () => {
   return (
     <div className="AWG Hub">
       {/* <Header /> */}
       {/* <Description /> */}
-      <SlideShow />
-      <Subscribers />
+      <Homepage />
+      {/* <SlideShow />
+      <Subscribers /> */}
+      
+
     </div>
   );
 };
