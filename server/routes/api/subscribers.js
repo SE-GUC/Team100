@@ -3,32 +3,47 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Subscriber = require("../../models/Subscriber");
 const validator = require("../../validations/subscriberValidations");
+const passport = require('passport')
 
 // get subscribers
-router.get("/", async (req, res) => {
-  const subscribers = await Subscriber.find();
-  res.json({ data: subscribers });
+router.get("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if (req.user.user_type === "mun_admin") {
+    const subscribers = await Subscriber.find();
+    res.json({ data: subscribers });
+  }
+  else {
+    return res
+      .status(404)
+      .send({ error: "Unauthorized" });
+  }
 });
+
 //get single subscriber
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    const wantedSubscriber = await Subscriber.findById(id).then(
-      wantedSubscriber => {
-        res.status(200).json({
-          Subscriber: wantedSubscriber
-        });
-      }
-    );
-  } catch (error) {
-    res.status(500).json({
-      message: "Subscriber not found."
-    });
+router.get("/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if (req.user.user_type === "mun_admin") {
+    const id = req.params.id;
+    try {
+      const wantedSubscriber = await Subscriber.findById(id).then(
+        wantedSubscriber => {
+          res.status(200).json({
+            Subscriber: wantedSubscriber
+          });
+        }
+      );
+    } catch (error) {
+      res.status(500).json({
+        message: "Subscriber not found."
+      });
+    }
+  }
+  else {
+    return res
+      .status(404)
+      .send({ error: "Unauthorized" });
   }
 });
 
 // create a subscriber
-
 router.post("/", async (req, res) => {
   const { name, email } = req.body;
   const subscriber = await Subscriber.findOne({ email });

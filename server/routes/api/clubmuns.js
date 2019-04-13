@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const passport = require('passport')
 
 const Clubmun = require("../../models/Clubmun");
 const validator = require("../../validations/clubmunValidations");
 
-router.post("/", async (req, res) => {
+router.post("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
   const info = new Clubmun({
     mission: req.body.mission,
     vision: req.body.vision,
@@ -31,7 +32,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
   const id = req.params.id;
   const updateInfo = req.body;
   const isValidated = validator.updateValidation(req.body);
