@@ -8,10 +8,7 @@ const achievement = new Schema({
   },
   photo: {
     type: String
-  },
-  tag: {
-    type: String
   }
 })
-achievement.index({ description: "text", tag: "text" })
+achievement.index({ description: "text" })
 module.exports = Achievement = mongoose.model("achievements", achievement)

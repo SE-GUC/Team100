@@ -9,28 +9,23 @@ import componentsMun from "./componentsMun";
 import Nebny from "./Nebny";
 import VGS from "./VGS";
 import Tiq from "./Tiq";
+import MenuAppBar from "./components/layout/MenuAppBar";
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+      {/* <Header/>  */ }
+        <MenuAppBar />
         <div className="nav ">
-          <NavLink exact to="/" activeClassName="active">
+        { /* <NavLink exact to="/" activeClassName="active">
             AWG Hub
           </NavLink>
           <NavLink to="/componentsMun" activeClassName="active">
             Mun Club
-          </NavLink>
-          <NavLink to="/Nebny" activeClassName="active">
-            Nebny Club
-          </NavLink>
-          <NavLink to="/VGS" activeClassName="active">
-            VGS Club
-          </NavLink>
-          <NavLink to="/Tiq" activeClassName="active">
-            Tiq Club
-          </NavLink>
+    </NavLink>*/}
+         
         </div>
         <Route
           render={({ location }) => (
@@ -39,9 +34,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={components} />
                   <Route path="/componentsMun" component={componentsMun} />
-                  <Route path="/Nebny" component={Nebny} />
-                  <Route path="/VGS" component={VGS} />
-                  <Route path="/Tiq" component={Tiq} />
+                  
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
