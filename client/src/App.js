@@ -9,8 +9,11 @@ import componentsMun from "./componentsMun";
 import Nebny from "./Nebny";
 import VGS from "./VGS";
 import Tiq from "./Tiq";
+import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from '../src/helpers/setAuthToken'
+
+import textfield from "./textfield";
 
 
 if (localStorage.token) {
@@ -40,6 +43,8 @@ class App extends Component {
                   <Route exact path="/" component={components} />
                   <Route path="/componentsMun" component={componentsMun} />
 
+                  <Route path="/textfield" component={textfield} />
+                  <Route path="/lib" component={lib} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
