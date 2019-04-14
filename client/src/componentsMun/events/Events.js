@@ -115,47 +115,47 @@ class Events extends Component {
     this.setState({ committee: event.target.value });
   };
 
-  refreshRates() {
-    axios.get("http://localhost:9000/api/events").then(res => {
-      this.setState({ Events: res.data.data });
-      console.log(res.data.data);
-    });
-  }
+  // refreshRates() {
+  //   axios.get("http://localhost:9000/api/events").then(res => {
+  //     this.setState({ Events: res.data.data });
+  //     console.log(res.data.data);
+  //   });
+  // }
 
-  onCreateRate = async Events => {
-    Events.preventDefault();
+  // onCreateRate = async Events => {
+  //   Events.preventDefault();
 
-    const event = {
-      rate: this.state.rate
-    };
-    console.log(event);
-    try {
-      await axios.put(
-        `events/${event.target.getAttribute("data-index")}`
-        //updatedEvent
-      );
-      this.refreshEvents();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  onCreateFeed = async Events => {
-    Events.preventDefault();
+  //   const event = {
+  //     rate: this.state.rate
+  //   };
+  //   console.log(event);
+  //   try {
+  //     await axios.put(
+  //       `events/${event.target.getAttribute("data-index")}`
+  //       //updatedEvent
+  //     );
+  //     this.refreshEvents();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // onCreateFeed = async Events => {
+  //   Events.preventDefault();
 
-    const event = {
-      feedback: this.state.feed
-    };
-    console.log(event);
-    try {
-      await axios.put(
-        `events/${event.target.getAttribute("data-index")}`
-        //updatedEvent
-      );
-      this.refreshEvents();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   const event = {
+  //     feedback: this.state.feed
+  //   };
+  //   console.log(event);
+  //   try {
+  //     await axios.put(
+  //       `events/${event.target.getAttribute("data-index")}`
+  //       //updatedEvent
+  //     );
+  //     this.refreshEvents();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   onCreate = async Events => {
     Events.preventDefault();
@@ -184,7 +184,7 @@ class Events extends Component {
       axios
         .delete(
           "http://localhost:5000/api/events/" +
-            e.target.getAttribute("data-index")
+          e.target.getAttribute("data-index")
         )
         .then(res => {
           console.log();
@@ -359,7 +359,7 @@ class Events extends Component {
           </ul>
         }
 
-        <Collapsible trigger="Give a feedback">
+        {/* <Collapsible trigger="Give a feedback">
           <form onSubmit={this.onCreateFeed}>
             <label>
               Event name:
@@ -403,7 +403,7 @@ class Events extends Component {
               {eve.rate}
             </li>
           </div>
-        ))}
+        ))} */}
 
         <h3>Events timeline</h3>
         <Timeline>
@@ -414,8 +414,8 @@ class Events extends Component {
                 <TimelineEvent
                   title={e1.name_event}
                   createdAt={e1.day + "/" + e1.month + "/" + e1.year}
-                  //   buttons={"See more details"}
-                  //   onIconClick={() => alert(e1.description)}
+                //   buttons={"See more details"}
+                //   onIconClick={() => alert(e1.description)}
                 >
                   {"Location: " + e1.location} <br />
                   {"Description: " + e1.description}
