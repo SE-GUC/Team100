@@ -31,7 +31,7 @@ const EventSchema = new Schema({
   },
   description: {
     type: String,
-    default: "coming soon"
+    default: "Coming soon"
   },
   committee: {
     type: String
@@ -47,6 +47,10 @@ const EventSchema = new Schema({
   rate: {
     type: Number,
     default: 0
+  },
+  feedback: {
+    type: [String],
+    default: "No feedbacks yet"
   }
 })
 
