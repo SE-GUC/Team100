@@ -14,7 +14,8 @@ module.exports = {
       committee: Joi.string(),
       rating: Joi.number(),
       ratingcount: Joi.number(),
-      rate: Joi.number().max(5).min(0)
+      rate: Joi.number().max(5).min(0),
+      feedback: Joi.array().default("No feedbacks yet")
     };
 
     return Joi.validate(request, createSchema);
@@ -33,7 +34,8 @@ module.exports = {
       committee: Joi.string(),
       rating: Joi.number(),
       ratingcount: Joi.number(),
-      rate: Joi.number().max(5).min(0)
+      rate: Joi.number().max(5).min(0),
+      feedback: Joi.array().default("No feedbacks yet")
     };
 
     return Joi.validate(request, updateSchema);
