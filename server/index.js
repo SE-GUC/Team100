@@ -66,5 +66,5 @@ app.use("/api/hierarchy", hierarchy)
 
 app.use((req, res) => res.status(404).send(`<h1>Welcome to the HUB</h1>`))
 
-const port = process.env.PORT || 9000
+const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Server on ${port}`))
