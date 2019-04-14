@@ -11,12 +11,14 @@ const AlbumSchema = new Schema({
     type: String
   },
   photo: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Photo"
+    type: [String]
   },
   uploaded_at: {
     type: Date,
     default: Date.now
+  },
+  type: {
+    type: String
   }
 });
 AlbumSchema.index({title:"text", description:"text"});

@@ -12,6 +12,7 @@ import { Timeline, TimelineEvent } from "react-event-timeline";
 import LiveFeed from "../livefeed/Livefeed";
 import Subscribers from "../subscribers/Subscribers"
 import Slideshow from "../slideshow/Slideshow"
+import Galleries from "../galleries/Galleries"
 import Hierarchy from "../aboutus/Hierarchy";
 import Achievements from "../aboutus/Achievements";
 import MV from "../aboutus/MV";
@@ -89,7 +90,7 @@ class SimpleTabs extends React.Component {
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/></TabContainer>}
-        {value === 1 && <TabContainer>Gallery</TabContainer>}
+        {value === 1 && <TabContainer><Galleries /></TabContainer>}
         {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
         {value === 3 && <TabContainer><ContactUs/></TabContainer>}
         {value === 4 && <TabContainer>
