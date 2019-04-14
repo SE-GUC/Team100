@@ -19,7 +19,7 @@ import MV from "../aboutus/MV";
 import Committees from "../committees/Committees"
 import Events from "../events/Events";
 import TL from "../../components/timeline/tl";
-
+import Descriptions from "../descriptions/Descriptions";
 
 function TabContainer(props) {
   return (
@@ -88,7 +88,7 @@ class SimpleTabs extends React.Component {
 
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><Slideshow /><Subscribers /><TL/></TabContainer>}
+        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/></TabContainer>}
         {value === 1 && <TabContainer><Galleries /></TabContainer>}
         {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
         {value === 3 && <TabContainer>Contact us</TabContainer>}

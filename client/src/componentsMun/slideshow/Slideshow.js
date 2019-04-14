@@ -6,6 +6,7 @@ import image2 from "../../images/2.jpg";
 import image3 from "../../images/3.jpg";
 import image4 from "../../images/image4.jpg";
 //import image5 from "../../images/image5.jpg";
+import axios from "../../axiosInstance";
 
 const fadeProperties = {
   duration: 5000,
@@ -29,12 +30,12 @@ class Slideshow extends Component {
   }
 
   refreshClubs() {
-    fetch("/api/club_hub")
-      .then(res => res.json())
-      .then(club_hub => {
-        console.log("clubs fetched..", club_hub);
-        this.setState({ club_hub: club_hub.data });
+    axios.get("http://localhost:5000/api/club_hub").then(res => {
+      console.log(res.data);
+      this.setState({
+        club_hub: res.data.data
       });
+    });
   }
 
   render() {
