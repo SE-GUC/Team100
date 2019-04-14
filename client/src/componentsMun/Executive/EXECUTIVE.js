@@ -82,7 +82,7 @@ class EXECUTIVE extends Component{
         console.log(updatedCommittee);
         try {
           await axios.put(`committee/${c.target.getAttribute("data-index")}`, updatedCommittee);
-          this.refreshCommittees();
+        
         }
         catch (error) {
           console.log(error);

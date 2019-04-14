@@ -54,7 +54,7 @@ class Committees extends Component {
     open: false
   }
   componentDidMount() {
-    this.refreshCommittees();
+
     axios.get("http://localhost:5000/api/committee")
       .then(res => {
         console.log(res.data)
@@ -92,14 +92,14 @@ class Committees extends Component {
 
 
 
-  refreshCommittees() {
+  // refreshCommittees() {
 
-    fetch("http://localhost:5000/api/committee")
-      .then(res => res.json())
-      .then(c => {
-        this.setState({ c: c.data });
-      });
-  }
+  //   fetch("http://localhost:5000/api/committee")
+  //     .then(res => res.json())
+  //     .then(c => {
+  //       this.setState({ c: c.data });
+  //     });
+  // }
   handleChangeName = c => {
     this.setState({ name: c.target.value });
   };
@@ -118,7 +118,6 @@ class Committees extends Component {
     console.log(updatedCommittee);
     try {
       await axios.put(`committee/${c.target.getAttribute("data-index")}`, updatedCommittee);
-      this.refreshCommittees();
     }
     catch (error) {
       console.log(error);
@@ -133,7 +132,7 @@ class Committees extends Component {
       )
       .then(res => {
         console.log();
-        this.refreshAnnouncements();
+       
       })
       .catch(err => console.log(err));
   };
@@ -285,7 +284,7 @@ class Committees extends Component {
           <AddIcon />
         </Fab>
 
-
+        <Button   href="/show"> Show Messages </Button>
 
 
       </ div >
