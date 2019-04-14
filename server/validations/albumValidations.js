@@ -5,7 +5,8 @@ module.exports = {
     const createSchema = {
       title: Joi.string().required(),
       description: Joi.string(),
-      photo: Joi.array()
+      photo: Joi.array(),
+      type: Joi.string()
     };
     return Joi.validate(request, createSchema);
   },
@@ -14,7 +15,8 @@ module.exports = {
     const updateSchema = {
       title: Joi.string(),
       description: Joi.string(),
-      photo: Joi.array()
+      photo: Joi.array(),
+      type: Joi.string()
     };
 
     return Joi.validate(request, updateSchema);

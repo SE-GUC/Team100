@@ -20,9 +20,13 @@ class Faqs extends Component {
 
   /////
   getFaqs() {
-    fetch("/api/FAQs").then(res => res.json()).then(faqs => {
-      this.setState({ faqs: faqs.data });
-    })
+    axios.get("http://localhost:5000/api/faqs/")
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          faqs: res.data.data
+        })
+      })
   }
   /////
   handleChangeQ = faqs => {
@@ -35,10 +39,11 @@ class Faqs extends Component {
 
   refreshFaqs() {
 
-    fetch("/api/faqs")
-      .then(res => res.json())
-      .then(faqs => {
-        this.setState({ faqs: faqs.data });
+    axios.get("http://localhost:5000/api/faqs/")
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+        })
       });
   }
   handleChangeQuestion = faq => {
@@ -64,10 +69,17 @@ class Faqs extends Component {
   };
 
   onDelete = e => {
-    // console.log(e.target.getAttribute("data-index"))
-    fetch(`/api/faqs/${e.target.getAttribute("data-index")}`, {
-      method: "DELETE"
-    }).then(res => this.refreshFaqs());
+    axios
+      .delete("http://localhost:5000/api/faqs/" +
+        e.target.getAttribute("data-index")
+      )
+      .then(
+        res => {
+          console.log();
+          this.refreshFaqs();
+        }
+      )
+      .catch(err => console.log(err))
   };
 
   handleS = async Faqs => {

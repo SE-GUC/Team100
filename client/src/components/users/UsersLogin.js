@@ -1,9 +1,17 @@
 import React, { Component } from "react"
 import axios from "../../axiosInstance"
 import Collapsible from "react-collapsible";
+import setAuthToken from '../../helpers/setAuthToken'
 //import { isNull } from "util";
 
 class UserLogin extends Component {
+    // constructor(props, context) {
+    //     super(props, context);
+
+    //     this.state = {
+    //         x: ""
+    //     };
+    // }
 
     handleChangeEmail = event => {
         this.setState({ email: event.target.value })
@@ -21,11 +29,14 @@ class UserLogin extends Component {
             email: this.state.email
         };
         console.log(user);
-        console.log(user.token)
+        // console.log(user.token)
         try {
             console.log(process.env.REACT_APP_BASE_URL);
             const response = await axios.post(`/users/login`, user);
-            axios.defaults.headers['Authorization'] = response.data.token;
+            const token = response.data.token
+            localStorage.setItem("token", response.data.token);
+            setAuthToken(token)
+            // axios.defaults.headers['Authorization'] = response.data.token;
             // this.refreshUsers();
         } catch (error) {
             console.log(error);
@@ -48,7 +59,7 @@ class UserLogin extends Component {
                         <label>
                             Password:
         <input
-                                type="text"
+                                type="password"
                                 name="password"
                                 onChange={this.handleChangePassword}
                             />

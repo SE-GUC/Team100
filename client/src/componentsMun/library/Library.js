@@ -26,9 +26,16 @@ class Library extends Component {
       .catch(err => console.log(err));
   }
   onDelete = e => {
-    fetch(`/api/libraries/${e.target.getAttribute("data-index")}`, {
-      method: "DELETE"
-    }).then(res => this.refreshLibraries());
+    axios
+      .delete(
+        "http://localhost:5000/api/libraries/" +
+        e.target.getAttribute("data-index")
+      )
+      .then(res => {
+        console.log();
+        this.refreshLibraries();
+      })
+      .catch(err => console.log(err));
   };
   handleChangeAcademicPaper = x => {
     this.setState({ Academic_paper: x.target.value });
