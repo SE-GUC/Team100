@@ -11,6 +11,8 @@ import VGS from "./VGS";
 import Tiq from "./Tiq";
 import MenuAppBar from "./components/layout/MenuAppBar";
 
+import textfield from "./textfield";
+
 
 class App extends Component {
   render() {
@@ -34,6 +36,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={components} />
                   <Route path="/componentsMun" component={componentsMun} />
+                  <Route path="/textfield" component={textfield} />
                   
                 </Switch>
               </CSSTransition>

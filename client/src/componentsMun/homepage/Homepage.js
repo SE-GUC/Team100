@@ -13,6 +13,7 @@ import Slideshow from "../slideshow/Slideshow"
 import Hierarchy from "../aboutus/Hierarchy";
 import Achievements from "../aboutus/Achievements";
 import MV from "../aboutus/MV";
+import Committees from "../committees/Committees"
 
 
 function TabContainer(props) {
@@ -57,6 +58,7 @@ class SimpleTabs extends React.Component {
             <Tab label="Contact us" />
             <Tab label="About us" />
             <Tab label="Events" />
+            <Tab label="Committes" />
 
           </Tabs>
         </AppBar>
@@ -70,6 +72,8 @@ class SimpleTabs extends React.Component {
           <Achievements/>
         </TabContainer>}
         {value === 5 && <TabContainer>Events</TabContainer>}
+        {value === 6 && <TabContainer><Committees /></TabContainer>}
+
 
 
       </div>

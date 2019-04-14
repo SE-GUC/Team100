@@ -12,6 +12,16 @@ router.get("/", async (req, res) => {
   res.json({ data: Committees });
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const wantedComm = await Committee.findById(id);
+    res.json({ data: wantedComm });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //create committee with if condition
 router.post("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if (req.user.user_type === "mun_admin") {
