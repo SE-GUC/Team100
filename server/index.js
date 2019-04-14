@@ -5,7 +5,6 @@ const passport = require("passport")
 
 // Require Router Handlers
 const achievements = require("./routes/api/achievements")
-const clubmuns = require("./routes/api/clubmuns")
 const announcements = require("./routes/api/announcements")
 const subscribers = require("./routes/api/subscribers")
 const albums = require("./routes/api/albums")
@@ -21,6 +20,7 @@ const club_hub = require("./routes/api/club_hub")
 const FormTemplate = require("./routes/api/formtemplates")
 const RecruitmentForm = require("./routes/api/recruitmentforms")
 const search = require("./routes/api/search")
+const hierarchy = require("./routes/api/hierarchy")
 
 const app = express()
 
@@ -47,7 +47,6 @@ require('./config/passport')(passport)
 
 // Direct to Route Handlers
 app.use("/api/achievements", achievements)
-app.use("/api/clubmuns", clubmuns)
 app.use("/api/announcements", announcements)
 app.use("/api/subscribers", subscribers)
 app.use("/api/albums", albums)
@@ -63,6 +62,7 @@ app.use("/api/club_hub", club_hub)
 app.use("/api/formtemplates", FormTemplate)
 app.use("/api/recruitmentforms", RecruitmentForm)
 app.use("/api/search", search)
+app.use("/api/hierarchy", hierarchy)
 
 app.use((req, res) => res.status(404).send(`<h1>Welcome to the HUB</h1>`))
 

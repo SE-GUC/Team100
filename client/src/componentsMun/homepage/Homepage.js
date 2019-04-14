@@ -10,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import LiveFeed from "../livefeed/Livefeed";
 import Subscribers from "../subscribers/Subscribers"
 import Slideshow from "../slideshow/Slideshow"
+import Hierarchy from "../aboutus/Hierarchy";
+import Achievements from "../aboutus/Achievements";
+import MV from "../aboutus/MV";
 
 
 function TabContainer(props) {
@@ -61,7 +64,11 @@ class SimpleTabs extends React.Component {
         {value === 1 && <TabContainer>Gallery</TabContainer>}
         {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
         {value === 3 && <TabContainer>Contact us</TabContainer>}
-        {value === 4 && <TabContainer>About us</TabContainer>}
+        {value === 4 && <TabContainer>
+          <MV/>
+          <Hierarchy/>
+          <Achievements/>
+        </TabContainer>}
         {value === 5 && <TabContainer>Events</TabContainer>}
 
 

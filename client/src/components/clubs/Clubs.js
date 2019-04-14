@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 //import { AppRegistry, View } from "react";
 import { Fade } from "react-slideshow-image";
-import image from "../../images/image2vector.svg";
-import image1 from "../../images/download.jpg";
+import gucmun from "../../images/image2vector.svg";
+import nebny from "../../images/download.jpg";
 
 const fadeProperties = {
   duration: 5000,
@@ -11,7 +11,7 @@ const fadeProperties = {
   indicators: true
 };
 
-const fadeImages = [image, image1];
+const fadeImages = [nebny, gucmun];
 
 class Clubs extends Component {
   constructor() {

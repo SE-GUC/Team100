@@ -5,7 +5,10 @@ module.exports = {
     const createSchema = {
       name: Joi.string().required(),
       brief_description: Joi.string().required(),
-      logo: Joi.string().required()
+      logo: Joi.string().required(),
+      mission:Joi.string(),
+      vision:Joi.string()
+
     };
 
     return Joi.validate(request, createSchema);
@@ -15,7 +18,9 @@ module.exports = {
     const updateSchema = {
       name: Joi.string(),
       brief_description: Joi.string(),
-      logo: Joi.string()
+      logo: Joi.string(),
+      mission:Joi.string(),
+      vision:Joi.string()
     };
 
     return Joi.validate(request, updateSchema);

@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import axios from "../../axiosInstance"
 //import { isNull } from "util";
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Form , FormControl,Button} from 'react-bootstrap';
 
 class SearchTool extends Component {
   state = {
@@ -98,13 +99,11 @@ class SearchTool extends Component {
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Search here
-            <input type="text" name="name" onChange={this.handleChange} />
-          </label>
-          <button type="submit">Search </button>
-        </form>
+        <Form onSubmit={this.handleSubmit}>
+        <input type="text" name="name" onChange={this.handleChange} />
+      <Button type="submit" variant="outline-success">Search</Button>
+    </Form>
+       
         <div>
           <h1> </h1>
           {this.state.x}
