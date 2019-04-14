@@ -12,14 +12,7 @@ class Subscribers extends React.Component {
       email: ""
     };
   }
-  refreshSubscribers() {
-    fetch("api/subscribers")
-      .then(res => res.json())
-      .then(subscribers => {
-        this.setState({ subscribers: subscribers.data });
-        //console.log(this.state)
-      });
-  }
+
   handleChangeName = event => {
     this.setState({ name: event.target.value });
   };
@@ -36,11 +29,19 @@ class Subscribers extends React.Component {
     console.log(Subscriber);
     try {
       await axios.post(`/subscribers/`, Subscriber);
-      this.refreshSubscribers();
-    } catch (error) {}
+    } catch (error) {
+      this.setState({ error });
+    }
   };
 
   render() {
+    if (this.state.error) {
+      return (
+        <label>
+          Sorry, you have already Subscribed with this email before.{" "}
+        </label>
+      );
+    }
     return (
       <div>
         <h1>Subscribers</h1>
@@ -48,7 +49,12 @@ class Subscribers extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               Name:
-              <input type="text" name="Name" onChange={this.handleChangeName} />
+              <input
+                type="text"
+                name="Name"
+                onChange={this.handleChangeName}
+                required={true}
+              />
             </label>
             <label>
               Email:
@@ -56,9 +62,18 @@ class Subscribers extends React.Component {
                 type="text"
                 name="email"
                 onChange={this.handleChangeEmail}
+                required={true}
               />
             </label>
-            <button type="submit">Register</button>
+            <button
+              onClick={() => {
+                alert(
+                  "Your have successfully subscribed to our mailing services!"
+                );
+              }}
+            >
+              Subscribe
+            </button>
           </form>
         </Collapsible>
       </div>
