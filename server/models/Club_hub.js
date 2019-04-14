@@ -15,7 +15,15 @@ const Club_hubSchema = new Schema({
   logo: {
     type: String,
     required: true
+  },
+  mission:{
+    type: String
+
+  },
+  vision:{
+    type: String
   }
+
 });
 Club_hubSchema.index({ brief_description:"text", name:"text"});
 

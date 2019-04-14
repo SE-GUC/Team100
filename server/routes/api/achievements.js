@@ -10,8 +10,7 @@ router.post("/", passport.authenticate('jwt', { session: false }), async (req, r
   if (req.user.user_type === "mun_admin") {
     const achievement = new Achievement({
       description: req.body.description,
-      photo: req.body.photo,
-      tag: req.body.tag
+      photo: req.body.photo
     })
     const isValidated = validator.createValidation(req.body)
     try {

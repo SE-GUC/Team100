@@ -9,10 +9,8 @@ module.exports = {
         .required(),
       photo: Joi.string()
         .min(3)
-        .max(100),
-      tag: Joi.string()
-        .min(1)
-        .max(3000)
+        .max(100)
+     
     }
 
     return Joi.validate(request, createSchema)
@@ -24,10 +22,7 @@ module.exports = {
         .max(500),
       photo: Joi.string()
         .min(3)
-        .max(100),
-      tag: Joi.string()
-        .min(1)
-        .max(3000)
+        .max(100)
     }
 
     return Joi.validate(request, updateSchema)

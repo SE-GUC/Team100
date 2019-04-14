@@ -17,7 +17,10 @@ router.post("/", passport.authenticate('jwt', { session: false }), async (req, r
   const club_hub = new Club_hub({
     name: req.body.name,
     brief_description: req.body.brief_description,
-    logo: req.body.logo
+    logo: req.body.logo,
+    mission:req.body.mission,
+    vision:req.body.vision
+
   });
   const isValidated = validator.createValidation(req.body);
   try {

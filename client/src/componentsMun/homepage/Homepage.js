@@ -11,6 +11,10 @@ import LiveFeed from "../livefeed/Livefeed";
 import Subscribers from "../subscribers/Subscribers"
 import Slideshow from "../slideshow/Slideshow"
 import Galleries from "../galleries/Galleries"
+import Hierarchy from "../aboutus/Hierarchy";
+import Achievements from "../aboutus/Achievements";
+import MV from "../aboutus/MV";
+import Committees from "../committees/Committees"
 
 
 function TabContainer(props) {
@@ -55,6 +59,7 @@ class SimpleTabs extends React.Component {
             <Tab label="Contact us" />
             <Tab label="About us" />
             <Tab label="Events" />
+            <Tab label="Committes" />
 
           </Tabs>
         </AppBar>
@@ -62,8 +67,14 @@ class SimpleTabs extends React.Component {
         {value === 1 && <TabContainer><Galleries /></TabContainer>}
         {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
         {value === 3 && <TabContainer>Contact us</TabContainer>}
-        {value === 4 && <TabContainer>About us</TabContainer>}
+        {value === 4 && <TabContainer>
+          <MV/>
+          <Hierarchy/>
+          <Achievements/>
+        </TabContainer>}
         {value === 5 && <TabContainer>Events</TabContainer>}
+        {value === 6 && <TabContainer><Committees /></TabContainer>}
+
 
 
       </div>
