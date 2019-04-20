@@ -74,7 +74,8 @@ router.get("/:id", async (req, res) => {
     if (!wantedEvent) {
       return res.status(404).send({ error: "Event does not exist" });
     }
-    res.json({data: wantedEvent.name_event, data1: wantedEvent.description
+    res.json({
+      data: wantedEvent.name_event, data1: wantedEvent.description
     });
   } catch (error) {
     console.log(error);
@@ -109,14 +110,14 @@ router.delete(
 
 //get all mun events
 router.get("/", async (req, res) => {
-  try{
-  const events = await Event.find({
-    club: "MUN" || "mun"
-  });
-  res.json({ data: events });
-}catch(error){
-  console.log(error)
-}
+  try {
+    const events = await Event.find({
+      club: "MUN" || "mun"
+    });
+    res.json({ data: events });
+  } catch (error) {
+    console.log(error)
+  }
 });
 
 
@@ -139,7 +140,6 @@ router.get("/timeline/current", async (req, res) => {
   var currentTime = new Date().getMonth() + 1;
   var currentYear = new Date().getFullYear();
 
-  console.log(currentYear);
   const exists = await Event.find({
     $and: [{ month: currentTime }, { year: currentYear }]
   });
@@ -155,7 +155,6 @@ router.get("/timeline/f_soon", async (req, res) => {
   var currentMonth = new Date().getMonth();
   var currentYear = new Date().getFullYear() - 1;
 
-  console.log(currentYear);
   const exists = await Event.find({
     $and: [{ year: { $gt: currentYear } }, { description: "coming soon" }]
   });

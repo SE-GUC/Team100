@@ -67,7 +67,8 @@ class UserLogin extends Component {
             const response = await axios.post(`/users/register`, user);
             const token = response.data.token
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("user", response.data.id);
+            localStorage.setItem("id", response.data.id);
+            localStorage.setItem("type", response.data.user_type)
             setAuthToken(token);
             this.setState({
                 id: response.data.id,
@@ -92,7 +93,8 @@ class UserLogin extends Component {
             const response = await axios.post(`/users/login`, user);
             const token = response.data.token;
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("user", response.data.id);
+            localStorage.setItem("id", response.data.id);
+            localStorage.setItem("type", response.data.user_type)
             setAuthToken(token);
             this.setState({
                 id: response.data.id,
@@ -108,18 +110,38 @@ class UserLogin extends Component {
     }
     show = event => {
         event.preventDefault();
-        axios.get(`users/${localStorage.getItem("user")}`).then(user => {
+        axios.get(`users/${localStorage.getItem("id")}`).then(user => {
             this.setState({ user: user.data.User });
             var x = user.data.User;
             console.log(x);
         });
     };
 
-    // delete = event => {
-    //     event.preventDefault()
-    //     axios.delete(`users/${localStorage.getItem("user")}`)
-    //     localStorage.clear();
-    // }
+    delete = event => {
+        event.preventDefault()
+        axios.delete(`users/${localStorage.getItem("id")}`).then(user => {
+            this.setState({ user: user.data.deletedUser })
+        }
+        )
+        //   console.log(response.data)
+        console.log("Deleted successfully")
+        localStorage.clear();
+    }
+
+    // onDelete = e => {
+    //     axios
+    //       .delete(`users/${localStorage.getItem("user")}` +
+    //         e.target.getAttribute("data-index")
+    //       )
+    //       .then(
+    //         res => {
+    //           localStorage.clear()
+    //           console.log("Deleted successfully");
+    //         }
+    //       )
+    //       .catch(err => console.log(err))
+    //   };
+
 
     render() {
         const { user } = this.state;
@@ -239,14 +261,14 @@ class UserLogin extends Component {
                     </form>
                 ) : null
                 }
-                {/* {localStorage.length > 0 ? (
+                {localStorage.length > 0 ? (
                     <form onSubmit={this.delete}>
                         <label>
                             <button type="submit">Delete your account</button>
                         </label>
                     </form>
                 ) : null
-                } */}
+                }
                 {localStorage.length > 0 ? (
                     <form onSubmit={this.show}>
                         <label>
