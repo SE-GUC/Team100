@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import axios from "../../axiosInstance"
+import React, { Component } from "react";
+import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
-import setAuthToken from '../../helpers/setAuthToken'
+import setAuthToken from "../../helpers/setAuthToken";
 //import { isNull } from "util";
 
 class UserLogin extends Component {
@@ -9,19 +9,25 @@ class UserLogin extends Component {
         super(props, context);
 
         this.state = {
+            x: "",
+            user: {},
             id: "",
             name: "",
-            user_type: ""
+            user_type: "",
+            major: "",
+            committee_type: "",
+            gucian: "",
+            control: ""
         };
     }
 
     handleChangeEmail = event => {
-        this.setState({ email: event.target.value })
-    }
+        this.setState({ emailr: event.target.value });
+    };
 
     handleChangePassword = event => {
-        this.setState({ password: event.target.value })
-    }
+        this.setState({ passwordr: event.target.value });
+    };
 
     handleEnterEmail = event => {
         this.setState({ email: event.target.value })
@@ -35,45 +41,44 @@ class UserLogin extends Component {
     handleChangeMajor = event => {
         this.setState({ major: event.target.value })
     }
-    handleChangePhone = event => {
-        this.setState({ telephone: event.target.value })
-    }
-    handleChangeBirthdate = event => {
-        this.setState({ birthdate: event.target.value })
-    }
+    // handleChangePhone = event => {
+    //     this.setState({ telephone: event.target.value })
+    // }
+    // handleChangeBirthdate = event => {
+    //     this.setState({ birthdate: event.target.value })
+    // }
     handleChangeGucian = event => {
         this.setState({ gucian: event.target.value })
     }
-
     register = async event => {
         event.preventDefault()
         const user = {
-            password: this.state.password,
-            email: this.state.email,
+            password: this.state.passwordr,
+            email: this.state.emailr,
             name: this.state.name,
             // birthdate: this.state.birthdate,
             major: this.state.major,
             gucian: this.state.gucian,
-            telephone: this.state.telephone
+            // telephone: this.state.telephone
         }
         //  console.log(user)
         try {
-            //   console.log(process.env.REACT_APP_BASE_URL);
-            await axios.post(`/users/register`, user);
-            // const token = response.data.token
-            // localStorage.setItem("token", response.data.token);
-            // localStorage.setItem("user", response.data.id);
-            // setAuthToken(token);
-            // this.setState({
-            //     id: response.data.id,
-            //     user_type: response.data.user_type
-            // });
-            // console.log(this.state)
+            console.log(process.env.REACT_APP_BASE_URL);
+            const response = await axios.post(`/users/register`, user);
+            const token = response.data.token
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("user", response.data.id);
+            setAuthToken(token);
+            this.setState({
+                id: response.data.id,
+                user_type: response.data.user_type
+            });
+            console.log(response.data)
+            console.log(this.state)
         } catch (error) {
             console.log(error);
         }
     }
-
     handleSubmit = async event => {
         event.preventDefault();
 
@@ -85,7 +90,7 @@ class UserLogin extends Component {
         try {
             console.log(process.env.REACT_APP_BASE_URL);
             const response = await axios.post(`/users/login`, user);
-            const token = response.data.token
+            const token = response.data.token;
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("user", response.data.id);
             setAuthToken(token);
@@ -93,50 +98,50 @@ class UserLogin extends Component {
                 id: response.data.id,
                 user_type: response.data.user_type
             });
-            console.log(this.state)
+            console.log(response)
         } catch (error) {
             console.log(error);
         }
-    };
+    }
     logout() {
         localStorage.clear();
     }
     show = event => {
-        event.preventDefault()
-        axios.get(`users/${localStorage.getItem("user")}`).then(res => {
-            const body = res.data
-            console.log(body)
+        event.preventDefault();
+        axios.get(`users/${localStorage.getItem("user")}`).then(user => {
+            this.setState({ user: user.data.User });
+            var x = user.data.User;
+            console.log(x);
+        });
+    };
 
-        })
-    }
-
-    // information = req => {
-    //     this.setState({ id: req.user.id })
+    // delete = event => {
+    //     event.preventDefault()
+    //     axios.delete(`users/${localStorage.getItem("user")}`)
+    //     localStorage.clear();
     // }
 
-    // show = async event => {
-    //     event.preventDefault();
-    //     const { query } = this.state;
-    //     if (query === '') {
-    //         return
-    //     }
-    //     const cachedHits = localStorage.getItem(query)
-    //     if (cachedHits) {
-    //         this.setState({ hits: JSON.parse(cachedHits) })
-    //     }
-    //     // console.log(process.env.REACT_APP_BASE_URL);
-    //     axios.get(`/users/${this.cachedHits.id}`).then(res => {
-
-    //     })
-    //     // this.setState({
-    //     //     user: localStorage.getItem("token")
-    //     // })
-    //     // console.log(this.localStorage)
-    //     // let token = localStorage.getItem("token");
-    //     // console.log(token.name)
-    // };
-
     render() {
+        const { user } = this.state;
+        let userProfile = '';
+        if (user) {
+            userProfile = <p>
+                {user.name}<br />
+                {user.email}<br />
+                {/* {user.major}<br />
+                {user.gucian}<br />
+                {user.committee_type}<br />
+                {user.club}<br />
+        {user.telephone}<br />*/}
+                {user.user_type}<br />
+            </p>
+
+            // <h2> {user.name} <br /> {user.email}  <br />
+            //      {user.major}  <br />
+            //     {user.committee_type}  <br />
+            //     {user.user_type}
+            // </h2>
+        }
         return (
             <div>
                 {localStorage.length === 0 ? (
@@ -189,14 +194,14 @@ class UserLogin extends Component {
                                     onChange={this.handleChangeName}
                                 />
                             </label>
-                            <label>
+                            {/* <label>
                                 Telephone:
                         <input
                                     type="number"
                                     name="number"
                                     onChange={this.handleChangePhone}
                                 />
-                            </label>
+                            </label> */}
                             <label>
                                 Major:
                         <input
@@ -234,6 +239,14 @@ class UserLogin extends Component {
                     </form>
                 ) : null
                 }
+                {/* {localStorage.length > 0 ? (
+                    <form onSubmit={this.delete}>
+                        <label>
+                            <button type="submit">Delete your account</button>
+                        </label>
+                    </form>
+                ) : null
+                } */}
                 {localStorage.length > 0 ? (
                     <form onSubmit={this.show}>
                         <label>
@@ -243,21 +256,9 @@ class UserLogin extends Component {
                     </form>
                 ) : null
                 }
+                {userProfile}
             </div>
         )
     }
-    // render() {
-    //     if (this.props.handleSubmit) {
-    //         return (
-    //             <div>
-    //                 <form onSubmit={this.logout}>
-    //                     <label>
-    //                         <button type="submit">Logout</button>
-    //                     </label>
-    //                 </form>
-    //             </div>
-    //         )
-    //     }
-    // }
 }
-export default UserLogin
+export default UserLogin;

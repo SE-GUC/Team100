@@ -61,8 +61,18 @@ router.post('/register', async (req, res) => {
             photo,
             gucian
         });
+        const payload = {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email
+        }
         await User.create(newUser);
-        res.json({ msg: 'User created successfully', data: newUser });
+        const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
+        res.json({
+            msg: 'User created successfully',
+            token: `Bearer ${token}`,
+            id: newUser.id
+        });
     } catch (error) {
         res.status(422).send({ error: 'Can not create user' });
     }
