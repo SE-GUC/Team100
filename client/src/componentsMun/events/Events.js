@@ -4,24 +4,15 @@ import "./Events.css";
 import { Timeline, TimelineEvent } from "react-event-timeline";
 // import Popup from "reactjs-popup";
 import {
-  Grid,
-  Tooltip,
-  IconButton,
   Typography,
   Paper,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   CardContent,
   CardActions,
   Button,
-  AppBar,
-  Tabs,
-  Tab,
   Card,
   Fab
 } from "@material-ui/core";
+import Rating from "material-ui-rating";
 import Icon from "@material-ui/core/Icon";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
@@ -66,7 +57,7 @@ class Events extends Component {
   }
 
   refreshEvents() {
-    axios.get("http://localhost:5000/api/events").then(res => {
+    axios.get("/events").then(res => {
       console.log(res.data);
       this.setState({
         events: res.data.data
@@ -75,7 +66,7 @@ class Events extends Component {
   }
 
   refreshCurrentMonthEvents() {
-    axios.get("http://localhost:5000/api/events/timeline/current").then(res => {
+    axios.get("events/timeline/current").then(res => {
       console.log(res.data);
       this.setState({
         e: res.data.data
@@ -115,47 +106,25 @@ class Events extends Component {
     this.setState({ committee: event.target.value });
   };
 
-  // refreshRates() {
-  //   axios.get("http://localhost:9000/api/events").then(res => {
-  //     this.setState({ Events: res.data.data });
-  //     console.log(res.data.data);
-  //   });
-  // }
+  updateFeedback = event => {
+    this.setState({ feedback: event.target.value });
+  };
 
-  // onCreateRate = async Events => {
-  //   Events.preventDefault();
-
-  //   const event = {
-  //     rate: this.state.rate
-  //   };
-  //   console.log(event);
-  //   try {
-  //     await axios.put(
-  //       `events/${event.target.getAttribute("data-index")}`
-  //       //updatedEvent
-  //     );
-  //     this.refreshEvents();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // onCreateFeed = async Events => {
-  //   Events.preventDefault();
-
-  //   const event = {
-  //     feedback: this.state.feed
-  //   };
-  //   console.log(event);
-  //   try {
-  //     await axios.put(
-  //       `events/${event.target.getAttribute("data-index")}`
-  //       //updatedEvent
-  //     );
-  //     this.refreshEvents();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  updateRate = async (value, eventId) => {
+    console.log(value, eventId);
+    const Rate = {
+      rate: value
+    };
+    try {
+      await axios.put(`events/rate/${eventId}`, Rate).then(res => {
+        console.log(res.data);
+      });
+      this.refreshEvents();
+    } catch (error) {
+      console.log(error);
+    }
+    // this.state({ rate: event.currentTarget.value });
+  };
 
   onCreate = async Events => {
     Events.preventDefault();
@@ -179,13 +148,10 @@ class Events extends Component {
     }
   };
 
-  onDelete = async e => {
+  onDelete = async id => {
     try {
-      axios
-        .delete(
-          "http://localhost:5000/api/events/" +
-          e.target.getAttribute("data-index")
-        )
+      await axios
+        .delete(`events/${id}`)
         .then(res => {
           console.log();
           this.refreshEvents();
@@ -196,23 +162,35 @@ class Events extends Component {
     }
   };
 
-  onUpdate = async event => {
-    event.preventDefault();
+  onUpdate = async id => {
+    this.handleClose();
+
     const updatedEvent = {
-      name_event: event.target.name.value,
-      club: event.target.club.value,
-      year: event.target.year.value,
-      month: event.target.month.value,
-      day: event.target.day.value,
-      location: event.target.location.value,
-      description: event.target.description.value,
-      committee: event.target.committee.value
+      name_event: this.state.name_event,
+      club: this.state.club,
+      year: this.state.year,
+      month: this.state.month,
+      day: this.state.day,
+      location: this.state.location,
+      description: this.state.description,
+      committee: this.state.committee
     };
-    console.log(updatedEvent);
+
+    await axios.put(`events/${id}`, updatedEvent);
+    this.refreshEvents();
+  };
+
+  onCreateFeed = async event => {
+    event.preventDefault();
+
+    const feed = {
+      feedback: this.state.feedback
+    };
+    console.log(feed);
     try {
       await axios.put(
-        `events/${event.target.getAttribute("data-index")}`,
-        updatedEvent
+        "events/feedback/" + event.target.getAttribute("data-index"),
+        feed
       );
       this.refreshEvents();
     } catch (error) {
@@ -302,108 +280,174 @@ class Events extends Component {
                         {"Committee: " + event.committee} <br />
                         {"Rate: " + event.rate} <br />
                         {"Feedback: " + event.feedback} <br />
-                        {"Photo: " + event.photo}
+                        {/* {"Photo: " + event.photo} <br/> */}
+                        <Collapsible trigger="Give a feedback">
+                          <form
+                            onSubmit={this.onCreateFeed}
+                            data-index={event._id}
+                          >
+                            <label>
+                              Feedback:
+                              <input
+                                type="text"
+                                name="feedback"
+                                onChange={this.updateFeedback}
+                              />
+                            </label>
+                            <input type="submit" value="Submit" />
+                          </form>
+                        </Collapsible>
+                        <Rating
+                          value={0}
+                          max={5}
+                          onChange={v => this.updateRate(v, event._id)}
+                        />
                       </Typography>
                     </CardContent>
-                    {/* <CardActions> */}
-                    {/* <Button color="primary" aria-label="Delete" onClick={this.onDelete} data-index={event._id}>
-                        <DeleteIcon/>
-                        </Button> */}
-                    {/* <Fab color="secondary" aria-label="Edit" onClick={this.handleShow}>
-                        <EditIcon/>
-                        </Fab> */}
-                    {/* </CardActions> */}
+                    <CardActions>
+                      {" "}
+                      <Fab
+                        color="primary"
+                        aria-label="Delete"
+                        onClick={() => this.onDelete(event._id)}
+                      >
+                        <DeleteIcon />
+                      </Fab>
+                      <Fab
+                        color="secondary"
+                        aria-label="Edit"
+                        onClick={this.handleShow}
+                      >
+                        <EditIcon />
+                      </Fab>
+                    </CardActions>
                   </Card>
                 </Paper>
 
-                <button onClick={this.onDelete} data-index={event._id}>
-                  DELETE
-                </button>
-                <form onSubmit={this.onUpdate} data-index={event._id}>
-                  Event Name:
-                  <input
-                    type="text"
-                    name="name"
-                    defaultValue={event.name_event}
-                  />
-                  Club:
-                  <input type="text" name="club" defaultValue={event.club} />
-                  Year:
-                  <input type="text" name="year" defaultValue={event.year} />
-                  Month:
-                  <input type="text" name="month" defaultValue={event.month} />
-                  Day:
-                  <input type="text" name="day" defaultValue={event.day} />
-                  Location:
-                  <input
-                    type="text"
-                    name="location"
-                    defaultValue={event.location}
-                  />
-                  Description:
-                  <input
-                    type="text"
-                    name="description"
-                    defaultValue={event.description}
-                  />
-                  Committee:
-                  <input
-                    type="text"
-                    name="committee"
-                    defaultValue={event.committee}
-                  />
-                  <input type="submit" value="Submit" />
-                </form>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                  <Modal.Header closeButton>
+                    Fill in the following boxes
+                  </Modal.Header>
+                  <Modal.Body>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Event Name
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeName}
+                        defaultValue={event.name_event}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Club
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeClub}
+                        defaultValue={event.club}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Year
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeYear}
+                        defaultValue={event.year}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Month
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeMonth}
+                        defaultValue={event.month}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Day
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeDay}
+                        defaultValue={event.day}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Location
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeLocation}
+                        defaultValue={event.location}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Description
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeDescription}
+                        defaultValue={event.description}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                    <InputGroup size="sm" className="Events">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-sm">
+                          Committee
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <FormControl
+                        onChange={this.changeCommittee}
+                        defaultValue={event.committee}
+                        aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm"
+                      />
+                    </InputGroup>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="contained"
+                      onClick={() => this.onUpdate(event._id)}
+                    >
+                      Update
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                
               </div>
             ))}
           </ul>
         }
-
-        {/* <Collapsible trigger="Give a feedback">
-          <form onSubmit={this.onCreateFeed}>
-            <label>
-              Event name:
-              <input type="text" name="name" defaultValue={"Chairty"} />
-            </label>
-            <label>
-              feedback:
-              <input
-                type="text"
-                name="feedback"
-                defaultValue={"No feedbacks yet"}
-              />
-            </label>
-            <button type="submit">Add</button>
-          </form>
-        </Collapsible>
-        <Collapsible trigger="Rate">
-          <form onSubmit={this.onCreateRate}>
-            <label>
-              Event name:
-              <input type="text" name="name" defaultValue={"Occasions"} />
-            </label>
-            <label>
-              rate:
-              <input type="text" name="rate" defaultValue={"1"} />
-            </label>
-            <button type="submit">Add</button>
-          </form>
-        </Collapsible>
-
-        <h3>Ratings and feedbacks</h3>
-
-        {this.state.events.map(eve => (
-          <div key={eve._id}>
-            <li>
-              <label>Event: </label>
-              {eve.name_event},<label>By: </label>
-              {eve.club},<label>On: </label>
-              {eve.day},{eve.month},{eve.year},<label>Feedback: </label>
-              {eve.feedback} ,<label>Rating: </label>
-              {eve.rate}
-            </li>
-          </div>
-        ))} */}
 
         <h3>Events timeline</h3>
         <Timeline>
@@ -414,8 +458,8 @@ class Events extends Component {
                 <TimelineEvent
                   title={e1.name_event}
                   createdAt={e1.day + "/" + e1.month + "/" + e1.year}
-                //   buttons={"See more details"}
-                //   onIconClick={() => alert(e1.description)}
+                  //   buttons={"See more details"}
+                  //   onIconClick={() => alert(e1.description)}
                 >
                   {"Location: " + e1.location} <br />
                   {"Description: " + e1.description}
