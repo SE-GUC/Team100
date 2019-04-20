@@ -23,6 +23,57 @@ class UserLogin extends Component {
         this.setState({ password: event.target.value })
     }
 
+    handleEnterEmail = event => {
+        this.setState({ email: event.target.value })
+    }
+    handleEnterPassword = event => {
+        this.setState({ password: event.target.value })
+    }
+    handleChangeName = event => {
+        this.setState({ name: event.target.value })
+    }
+    handleChangeMajor = event => {
+        this.setState({ major: event.target.value })
+    }
+    handleChangePhone = event => {
+        this.setState({ telephone: event.target.value })
+    }
+    handleChangeBirthdate = event => {
+        this.setState({ birthdate: event.target.value })
+    }
+    handleChangeGucian = event => {
+        this.setState({ gucian: event.target.value })
+    }
+
+    register = async event => {
+        event.preventDefault()
+        const user = {
+            password: this.state.password,
+            email: this.state.email,
+            name: this.state.name,
+            // birthdate: this.state.birthdate,
+            major: this.state.major,
+            gucian: this.state.gucian,
+            telephone: this.state.telephone
+        }
+        //  console.log(user)
+        try {
+            //   console.log(process.env.REACT_APP_BASE_URL);
+            await axios.post(`/users/register`, user);
+            // const token = response.data.token
+            // localStorage.setItem("token", response.data.token);
+            // localStorage.setItem("user", response.data.id);
+            // setAuthToken(token);
+            // this.setState({
+            //     id: response.data.id,
+            //     user_type: response.data.user_type
+            // });
+            // console.log(this.state)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     handleSubmit = async event => {
         event.preventDefault();
 
@@ -96,6 +147,29 @@ class UserLogin extends Component {
                         <input
                                     type="text"
                                     name="email"
+                                    onChange={this.handleEnterEmail}
+                                />
+                            </label>
+                            <label>
+                                Password:
+                        <input
+                                    type="password"
+                                    name="password"
+                                    onChange={this.handleEnterPassword}
+                                />
+                            </label>
+                            <button type="submit">Login</button>
+                        </form>
+                    </Collapsible>
+                ) : null}
+                {localStorage.length === 0 ? (
+                    <Collapsible trigger="Register">
+                        <form onSubmit={this.register}>
+                            <label>
+                                Email:
+                        <input
+                                    type="text"
+                                    name="email"
                                     onChange={this.handleChangeEmail}
                                 />
                             </label>
@@ -107,7 +181,47 @@ class UserLogin extends Component {
                                     onChange={this.handleChangePassword}
                                 />
                             </label>
-                            <button type="submit">Login</button>
+                            <label>
+                                Name:
+                        <input
+                                    type="text"
+                                    name="name"
+                                    onChange={this.handleChangeName}
+                                />
+                            </label>
+                            <label>
+                                Telephone:
+                        <input
+                                    type="number"
+                                    name="number"
+                                    onChange={this.handleChangePhone}
+                                />
+                            </label>
+                            <label>
+                                Major:
+                        <input
+                                    type="text"
+                                    name="major"
+                                    onChange={this.handleChangeMajor}
+                                />
+                            </label>
+                            {/* <label>
+                                Birthdate:
+                        <input
+                                    type="date"
+                                    name="date"
+                                    onChange={this.handleChangeBirthdate}
+                                />
+                            </label> */}
+                            <label>
+                                GUCIAN:
+                        <input
+                                    type="boolean"
+                                    name="gucian"
+                                    onChange={this.handleChangeGucian}
+                                />
+                            </label>
+                            <button type="submit">Sign up</button>
                         </form>
                     </Collapsible>
                 ) : null}
