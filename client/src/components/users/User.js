@@ -27,7 +27,7 @@ class User extends React.Component  {
     console.log(this.state.users)
   }
   refreshUsers() {
-    axios.get("http://localhost:5000/api/users/").then(res => {
+    axios.get("http://localhost:5000/api/users").then(res => {
       console.log(res.data);
       this.setState({
         users: res.data.data

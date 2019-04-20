@@ -11,7 +11,15 @@ class Profile extends React.Component  {
 
     this.state = {
       show: false,
-      users:[]
+      photo:"",
+      name: "",
+      email:"",
+      club:"",
+      major:"",
+      telephone: "",
+      committee_type:"",
+      user_type: "",
+      birthdate:""
     };
   }
 
@@ -23,16 +31,12 @@ class Profile extends React.Component  {
     this.setState({ show: true });
   }
   componentDidMount() {
-    this.refreshUsers();
-    console.log(this.state.users)
-  }
-  refreshUsers() {
-    axios.get(`http://localhost:5000/api/users/${localStorage.getItem("user")}`).then(res => {
-      console.log(res.data);
-   this.setState({ users: res.data.User });
-
+    axios.get(`users/${localStorage.getItem("user")}`).then(res=>{
+        this.setState({ photo: res.data.User.photo, name: res.data.User.name, email:res.data.User.email, telephone:res.data.User.telephone, club:res.data.User.club, committee_type:res.data.User.committee_type, major:res.data.User.major,  birthdate:res.data.User.birthdate, user_type:res.data.User.user_type, })
+        console.log(this.state.name, this.state.photo, this.state.major,this.state.club,this.state.email,this.state.telephone, this.state.committee_type, this.state.user_type, this.state.birthdate)
     });
   }
+ 
   render() {
 
     return (
@@ -47,9 +51,10 @@ class Profile extends React.Component  {
           </Modal.Header>
           <Modal.Body>
           <ListGroup>
-          {this.state.users.map(user => ( <ListGroup.Item><Image style = {{height:"10rem", width:"10rem"}} src={user.photo} roundedCircle />
-<h1>{user.name}</h1> <h3>{user.email}</h3><h5>{user.club}</h5><h4>{user.major}</h4><Button variant="danger" onClick={()=> this.deleteUser(user._id)}>Delete my account</Button></ListGroup.Item>))}
-          </ListGroup>
+
+          <ListGroup.Item> <Image style = {{height:"10rem", width:"10rem"}} src={this.state.photo} roundedCircle /><h1>{this.state.name}</h1> <h3>{this.state.email}</h3><h3>{this.state.club}</h3><h3>{this.state.major}</h3><h3>{this.state.birthdate}</h3><h3>{this.state.telephone}</h3><h3>{this.state.user_type}</h3><h3>{this.state.committee_type}</h3><Button variant="danger" >Delete</Button></ListGroup.Item>
+</ListGroup>
+
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
@@ -63,34 +68,6 @@ class Profile extends React.Component  {
       </>
     );
   }
- 
-
-  deleteUser(id){
-    axios.delete(`http://localhost:5000/api/users/${localStorage.getItem("user")}`).then(res => {
-      console.log(res.data);
-     this.refreshUsers();
-    });
-  }
-//   updateUser(id){
-//     axios.put(`http://localhost:5000/api/users/update/${id}`,{control: "true"}).then(res => {
-//       console.log(res.data);
-//      this.refreshUsers();
-//     });
-//   }
-//   updateUser1(id){
-//     axios.put(`http://localhost:5000/api/users/update/${id}`,{control: "false"}).then(res => {
-//       console.log(res.data);
-//      this.refreshUsers();
-//     });
-//   }
-// show = event => {
-//     event.preventDefault();
-//     axios.get(`users/${localStorage.getItem("user")}`).then(user => {
-//         this.setState({ users: user.data.User });
-//         var x = user.data.User;
-//         console.log(x);
-//     });
-// };
 
 }
 
