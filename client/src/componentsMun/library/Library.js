@@ -59,10 +59,7 @@ class Library extends Component {
   }
   onDelete = e => {
     axios
-      .delete(
-        "api/libraries/" +
-          e.target.getAttribute("data-index")
-      )
+      .delete("api/libraries/" + e.target.getAttribute("data-index"))
       .then(res => {
         console.log();
         this.refreshLibraries();
@@ -155,28 +152,34 @@ class Library extends Component {
           <ul>
             {this.state.libraries.map(c => (
               <div className="center" key={c._id}>
-        
                 <Paper>
                   <Card>
                     <CardContent>
                       <Typography variant="h6" component="h2" color="primary">
-                             <a style={{ cursor: 'pointer' }} onClick={() => { window.location.href = `//${c.Academic_paper}`; } } />
-          
-          {c.Academic_paper}
-      
-      <a  style={{ cursor: 'pointer' }} onClick={() => { window.location.href = `//${c.Resolution}`; } }>
-          {c.Resolution}
-      </a> <br />
+                        <a
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            window.location.href = `//${c.Academic_paper}`;
+                          }}
+                        />
+                        {c.Academic_paper}
+                        <a
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            window.location.href = `//${c.Resolution}`;
+                          }}
+                        >
+                          {c.Resolution}
+                        </a>{" "}
+                        <br />
                         {c.Year} <br />
                       </Typography>
                       <button onClick={this.onDelete} data-index={c._id}>
-                  Delete
-               </button>
+                        Delete
+                      </button>
                     </CardContent>
                   </Card>
                 </Paper>
-
-              
               </div>
             ))}
           </ul>
@@ -187,5 +190,3 @@ class Library extends Component {
 }
 
 export default Library;
-
-
