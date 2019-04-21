@@ -44,7 +44,6 @@ class App extends Component {
                   <Route path="/componentsMun" component={componentsMun} />
 
                   <Route path="/textfield" component={textfield} />
-                  <Route path="/lib" component={lib} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
