@@ -5,8 +5,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { Fab } from "@material-ui/core";
 import Collapsible from "react-collapsible";
 import TextField from "@material-ui/core/TextField";
-import Icon from "@material-ui/core/Icon";
-import editicon from "../../images/editicon.png";
+import MenuItem from '@material-ui/core/MenuItem';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
 class UserAdd extends React.Component {
     constructor(props, context) {
@@ -14,16 +18,13 @@ class UserAdd extends React.Component {
 
         this.state = {
             show: false,
-            photo: "",
             name: "",
             email: "",
-            club: "",
+            club: "mun",
             major: "",
-            telephone: "",
             committee_type: "",
             user_type: "",
-            // birthdate: "",
-            control: "",
+            control: false,
             gucian: ""
         };
     }
@@ -40,7 +41,7 @@ class UserAdd extends React.Component {
                 birthdate: res.data.User.birthdate,
                 user_type: res.data.User.user_type,
                 control: res.data.User.control,
-                gucian: res.data.User.control
+                gucian: res.data.User.gucian
             });
             console.log(
                 this.state.name,
@@ -94,23 +95,18 @@ class UserAdd extends React.Component {
             name: this.state.name,
             email: this.state.email,
             major: this.state.major,
-            telephone: this.state.telephone,
             user_type: this.state.user_type,
             password: this.state.password,
             club: this.state.club,
-            committee_type: this.state.club,
+            committee_type: this.state.committee_type,
             control: this.state.control,
-            gucian: this.state.control
+            gucian: this.state.gucian
         };
         console.log(User);
         try {
-            const response = await axios.post(`users/add`, User).then(res => {
-                // this.handleClose();
+            await axios.post(`users/add`, User).then(res => {
                 this.refreshUser();
-                this.setState({
-                    id: response.data.id,
-                    user_type: response.data.user_type
-                });
+                console.log("Added successfully")
             });
         } catch (error) {
             console.log(error);
@@ -120,14 +116,6 @@ class UserAdd extends React.Component {
     render() {
         return (
             <Collapsible trigger="Click here to add new user">
-                {/* // trigger={
-                //     <img
-                //         style={{ width: 45, height: 45 }}
-                //         src={editicon}
-                //         alt="img"
-                //     />
-                // } */}
-
                 <form>
                     <TextField
                         id="outlined-name"
@@ -156,25 +144,18 @@ class UserAdd extends React.Component {
                     />
                     <TextField
                         id="outlined-name"
-                        label="Telephone"
-                        defaultValue={this.state.telephone}
-                        onChange={this.handleChangeTelephone}
+                        label="Major"
+                        defaultValue={this.state.major}
+                        onChange={this.handleChangeMajor}
                         margin="normal"
                         variant="outlined"
                     />
+
                     <TextField
                         id="outlined-name"
                         label="Club"
                         defaultValue={this.state.club}
                         onChange={this.handleChangeClub}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="User Type"
-                        defaultValue={this.state.user_type}
-                        onChange={this.handleChangeUserType}
                         margin="normal"
                         variant="outlined"
                     />
@@ -186,30 +167,45 @@ class UserAdd extends React.Component {
                         margin="normal"
                         variant="outlined"
                     />
-                    <TextField
-                        id="outlined-name"
-                        label="Control"
-                        defaultValue={this.state.control}
-                        onChange={this.handleChangeControl}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="Major"
-                        defaultValue={this.state.major}
-                        onChange={this.handleChangeMajor}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="Gucian"
-                        defaultValue={this.state.gucian}
+
+
+                    <FormLabel component="legend">Gucian</FormLabel>
+                    <RadioGroup
+                        aria-label="Gucian"
+                        name="Gucian"
+                        value={this.state.gucian}
                         onChange={this.handleChangeGucian}
-                        margin="normal"
-                        variant="outlined"
-                    />
+                    >
+                        <FormControlLabel value="true" control={<Radio />} label="True" />
+                        <FormControlLabel value="false" control={<Radio />} label=" False" />
+
+                    </RadioGroup>
+                    <FormLabel component="legend">User Type</FormLabel>
+                    <RadioGroup
+                        aria-label="User Type"
+                        name="User Type"
+                        value={this.state.user_type}
+                        onChange={this.handleChangeUserType}
+                    >
+                        <FormControlLabel value="user" control={<Radio />} label="User" />
+                        <FormControlLabel value="mun_admin" control={<Radio />} label="MUN member" />
+                        <FormControlLabel value="mun_member" control={<Radio />} label="MUN admin" />
+
+                    </RadioGroup>
+                    <FormLabel component="legend">Control</FormLabel>
+                    <RadioGroup
+                        aria-label="Control"
+                        name="Control"
+                        value={this.state.control}
+                        onChange={this.handleChangeControl}
+                    >
+                        <FormControlLabel value="true" control={<Radio />} label="True" />
+                        <FormControlLabel value="false" control={<Radio />} label=" False" />
+
+                    </RadioGroup>
+
+
+
                     <Button
                         variant="dark"
                         onClick={() => this.handleSubmit()}
