@@ -21,6 +21,7 @@ import Events from "../events/Events";
 import TL from "../../components/timeline/tl";
 import Descriptions from "../descriptions/Descriptions";
 import ContactUs from "../contactus/ContactUs";
+import Library from "../library/Library";
 
 function TabContainer(props) {
   return (
@@ -86,6 +87,8 @@ class SimpleTabs extends React.Component {
             <Tab label="About us" />
             <Tab label="Events" />
             <Tab label="Committes" />
+            <Tab label="Library" />
+
 
           </Tabs>
         </AppBar>
@@ -100,6 +103,7 @@ class SimpleTabs extends React.Component {
         </TabContainer>}
         {value === 5 && <TabContainer><Events/></TabContainer>}
         {value === 6 && <TabContainer><Committees /></TabContainer>}
+        {value === 7 && <TabContainer><Library /></TabContainer>}
 
 
         {/* <h3>Events within the month</h3>

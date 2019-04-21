@@ -22,9 +22,6 @@ const MunClub = () => {
       {/* <SlideShow />
       <Subscribers /> */}
       <div className="nav ">
-        <NavLink exact to="./lib" activeClassName="active">
-           MUN's Library
-        </NavLink>
       </div>
       <Route
         render={({ location }) => (
@@ -32,7 +29,6 @@ const MunClub = () => {
             <CSSTransition key={location.key} timeout={300} classNames="fade">
               <Switch>
                 <Route exact path="/" component={components} />
-                <Route path="./lib" component={lib} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
