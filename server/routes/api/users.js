@@ -61,8 +61,19 @@ router.post('/register', async (req, res) => {
             photo,
             gucian
         });
+        const payload = {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email
+        }
         await User.create(newUser);
-        res.json({ msg: 'User created successfully', data: newUser });
+        const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
+        res.json({
+            msg: 'User created successfully',
+            token: `Bearer ${token}`,
+            id: newUser.id,
+            user_type: newUser.user_type
+        });
     } catch (error) {
         res.status(422).send({ error: 'Can not create user' });
     }
@@ -194,7 +205,11 @@ router.post('/login', async (req, res) => {
                 email: user.email
             }
             const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
-            return res.json({ token: `Bearer ${token}` })
+            return res.json({
+                token: `Bearer ${token}`,
+                id: user.id,
+                user_type: user.user_type
+            })
         }
         else return res.status(400).send({ password: 'Wrong password' });
     } catch (e) { }

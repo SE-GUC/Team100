@@ -49,22 +49,26 @@ class Subscribers extends React.Component {
         <h1>Subscribers</h1>
         {
           <ul>
-            <Collapsible trigger="Click here to view subscribers list">
-              {this.state.subscribers.map(subscriber => (
-                <div className="center" key={subscriber._id}>
-                  <Paper>
-                    <Card>
-                      <CardContent>
-                        <Typography variant="h6" component="h2" color="primary">
-                          {"Subscriber Name: " + subscriber.name} <br />
-                          {"Email: " + subscriber.email} <br />
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Paper>
-                </div>
-              ))}
-            </Collapsible>
+            {localStorage.type === "mun_admin" ? (
+              <Collapsible trigger="Click here to view subscribers list">
+                {this.state.subscribers.map(subscriber => (
+                  <div className="center" key={subscriber._id}>
+                    <Paper>
+                      <Card>
+                        <CardContent>
+                          <Typography variant="h6" component="h2" color="primary">
+                            {"Subscriber Name: " + subscriber.name} <br />
+                            {"Email: " + subscriber.email} <br />
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Paper>
+                  </div>
+                ))}
+              </Collapsible>
+            ) : null
+            }
+
           </ul>
         }
         <Modal.Dialog>
