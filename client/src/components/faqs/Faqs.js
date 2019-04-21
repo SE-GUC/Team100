@@ -58,8 +58,9 @@ class Faqs extends Component {
   }
 
   componentDidMount() {
-    this.refreshFaqs();
     this.getFaqs();
+    this.refreshFaqs();
+
   }
 
   /////

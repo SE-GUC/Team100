@@ -1,4 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
+import {withRouter} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -77,7 +78,7 @@ class SimpleTabs extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { value } = this.state;
 
     return (
@@ -100,7 +101,7 @@ class SimpleTabs extends React.Component {
          { /*<Nav.Link href='../forms/recruitment' >
             Recruitment Form
         </Nav.Link>*/}
-        <Recruitment/>
+        <button onClick={ () => history.push('/componentsMun/Forms') }>Recruitment Form</button>
         </TabContainer>}
         {value === 1 && <TabContainer>
           <MV/>
@@ -147,4 +148,4 @@ SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTabs);
+export default withRouter(withStyles(styles)(SimpleTabs));

@@ -40,7 +40,7 @@ class Descriptions extends Component {
          <Typography variant="h5" font="Arial" noWrap>
            Description
          </Typography>
-         <Typography variant="h7" colors="red" font="Arial">
+         <Typography variant="body1" colors="red" font="Arial">
            {this.state.mun.brief_description}
          </Typography>
        </div>

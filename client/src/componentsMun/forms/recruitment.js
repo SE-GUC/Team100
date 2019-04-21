@@ -5,6 +5,7 @@ import axios from "../../axiosInstance";
 import TextField from "material-ui/TextField";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Collapsible from "react-collapsible";
 
 const styles = theme => ({
   container: {
@@ -226,9 +227,9 @@ class recruitment extends Component {
           </Button>
         </form>
 
-        <Button onClick={this.getForms()}> View All Submissions</Button>
+       
 
-        <h3>All Responses</h3>
+        <Collapsible trigger="All Responses" onClick={this.getForms()}  >
         {this.state.forms.map(ach => (
           <div key={ach._id}>
             <li>
@@ -239,6 +240,7 @@ class recruitment extends Component {
             </li>
           </div>
         ))}
+        </Collapsible>
       </div>
     );
   }

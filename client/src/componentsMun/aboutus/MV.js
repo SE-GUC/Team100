@@ -42,17 +42,17 @@ class MV extends Component {
    return (
      <div className="field">
        <div key={this.state.mun._id} >
-         <Typography variant="h5" font="Arial" noWrap>
+         <Typography variant="h6" font="Arial" noWrap>
            Vision
          </Typography>
 
-         <Typography variant="h7" colors="red" font="Arial">
+         <Typography variant="body1" colors="red" font="Arial">
            {this.state.mun.vision}
          </Typography>
-         <Typography variant="h5" font="Arial">
+         <Typography variant="h6" font="Arial">
            Mission
          </Typography>
-         <Typography variant="h7" font="Roboto">
+         <Typography variant="body1" font="Roboto">
            {this.state.mun.mission}
          </Typography>
        </div>

@@ -12,6 +12,7 @@ import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from '../src/helpers/setAuthToken'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import textfield from "./textfield";
+import recruitment from "./componentsMun/forms/recruitment";
 
 
 if (localStorage.token) {
@@ -40,7 +41,8 @@ class App extends Component {
               <CSSTransition key={location.key} timeout={300} classNames="fade">
                 <Switch>
                   <Route exact path="/" component={components} />
-                  <Route path="/componentsMun" component={componentsMun} />
+                  <Route exact path="/componentsMun" component={componentsMun} />
+                  <Route path="/componentsMun/Forms" component={recruitment} />
 
                   <Route path="/textfield" component={textfield} />
                 </Switch>

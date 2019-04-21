@@ -134,7 +134,8 @@ class Achievements extends Component {
                       <DeleteIcon />
                     </Button>
                   </Fab>
-                </CardActions>
+                  </CardActions>
+
               </Card>
 
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
-import VoxeetConference from '@voxeet/react-components';
+import VoxeetConference from './VoxeetConference';
+//import './livestream.css'
 
 class livestream extends Component {
   constructor(props) {

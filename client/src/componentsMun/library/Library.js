@@ -1,6 +1,8 @@
-import React, { Component } from "react";
 import axios from "axios";
+import React, { Component } from "react";
 import Collapsible from "react-collapsible";
+import Link from '@material-ui/core/Link';
+import { Nav} from 'react-bootstrap';
 
 class Library extends Component {
   constructor() {
@@ -82,11 +84,16 @@ class Library extends Component {
           <ul>
             {this.state.libraries.map(l => (
               <div key={l._id}>
-                <li>
-                  {l.Academic_paper} {"   "}
-                  {l.Resolution} {"     "}
+               
+               <a style={{ cursor: 'pointer' }} onClick={() => window.location.href= l.Academic_paper } />
+          
+    {l.Academic_paper}
+
+<a  style={{ cursor: 'pointer' }} onClick={() => { window.location.href = `//${l.Resolution}`; } }>
+    {l.Resolution}
+</a>
                   {l.Year}
-                </li>
+         
                 <button onClick={this.onDelete} data-index={l._id}>
                   DELETE
                 </button>
