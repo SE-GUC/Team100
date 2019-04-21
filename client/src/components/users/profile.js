@@ -76,7 +76,7 @@ class Profile extends React.Component {
     return (
       <>
         {localStorage.length > 0 ? (
-          <Button variant="primary" onClick={this.handleShow}>
+          <Button variant="info" size="sm" onClick={this.handleShow}>
             Show my profile
       </Button>
         ) : null
@@ -124,6 +124,4 @@ class Profile extends React.Component {
   }
 
 }
-
-
 export default Profile;

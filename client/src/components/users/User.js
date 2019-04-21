@@ -1,6 +1,5 @@
-
 import React, { Component } from "react";
-import { Modal, Button, ListGroup, Image} from "react-bootstrap";
+import { Modal, Button, ListGroup, Image } from "react-bootstrap";
 import axios from "../../axiosInstance";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -27,15 +26,6 @@ class User extends React.Component {
   handleShow() {
     this.setState({ show: true });
   }
-
-  createShow() {
-    this.setState({ show: true });
-  }
-  closeShow() {
-    this.setState({ show: true });
-  }
-
-
   componentDidMount() {
     this.refreshUsers();
     console.log(this.state.users)
@@ -48,44 +38,11 @@ class User extends React.Component {
       });
     });
   }
-  changeName = event => {
-    this.setState({ name: event.target.value });
-  };
-  changeEmail = event => {
-    this.setState({ email: event.target.value });
-  };
-  changePassword = event => {
-    this.setState({ password: event.target.value });
-  };
-  changeMajor = event => {
-    this.setState({ major: event.target.value });
-  };
-  changeGucian = event => {
-    this.setState({ gucian: event.target.value });
-  };
-  changeClub = event => {
-    this.setState({ club: event.target.value });
-  };
-  changeUsertype = event => {
-    this.setState({ user_type: event.target.value });
-  };
-  changeCommittee = event => {
-    this.setState({ committee_type: event.target.value });
-  };
-  changeControl = event => {
-    this.setState({ control: event.target.value });
-  };
-  // addUser = async event => {
-  //   event.preventDefault()
-  //   const user = {
-
-  //   }
-  // }
   render() {
     return (
       <>
         {localStorage.type === "mun_admin" ? (
-          <Button variant="primary" onClick={this.handleShow}>
+          <Button variant="info" size="sm" onClick={this.handleShow}>
             View, update or delete users
         </Button>
         ) : null
@@ -109,14 +66,12 @@ class User extends React.Component {
                   >
                     <DeleteIcon />
                   </Fab>
-
                   {user.user_type === "mun_member" ? (
                     <Button variant="success" onClick={() => this.updateUser(user._id)}>Authorize  as an admin</Button>
                   ) : null}
                   {user.user_type === "mun_member" ? (
                     <Button variant="dark" onClick={() => this.updateUser1(user._id)}>Unauthorize </Button>
                   ) : null}
-
                 </ListGroup.Item>
                 )
               )
