@@ -2,33 +2,13 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import "./Events.css";
 import { Timeline, TimelineEvent } from "react-event-timeline";
-// import Popup from "reactjs-popup";
-import {
-  Typography,
-  Paper,
-  CardContent,
-  CardActions,
-  Button,
-  Card,
-  Fab
-} from "@material-ui/core";
+import { Typography, Paper, CardContent, CardActions, Button, Card, Fab } from "@material-ui/core";
 import Rating from "material-ui-rating";
-import Icon from "@material-ui/core/Icon";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
-import {
-  InputGroup,
-  Dropdown,
-  Modal,
-  ModalTitle,
-  ModalBody,
-  FormControl,
-  ModalFooter
-} from "react-bootstrap";
+import { InputGroup, Modal, FormControl } from "react-bootstrap";
 import Collapsible from "react-collapsible";
-import DropdownItem from "react-bootstrap/DropdownItem";
-import ModalHeader from "react-bootstrap/ModalHeader";
 
 class Events extends Component {
   constructor() {
@@ -37,7 +17,8 @@ class Events extends Component {
     this.state = {
       events: [],
       e: [],
-      show: false
+      show: false,
+      x: ""
     };
   }
 
@@ -123,7 +104,6 @@ class Events extends Component {
     } catch (error) {
       console.log(error);
     }
-    // this.state({ rate: event.currentTarget.value });
   };
 
   onCreate = async Events => {
@@ -163,6 +143,7 @@ class Events extends Component {
   };
 
   onUpdate = async id => {
+    // console.log(id);
     this.handleClose();
 
     const updatedEvent = {
@@ -197,6 +178,12 @@ class Events extends Component {
       console.log(error);
     }
   };
+
+  changeValue = async id => {
+    this.handleShow();
+    await this.setState({ x: id })
+    // console.log(this.state.x)
+  }
 
   render() {
     return (
@@ -244,7 +231,7 @@ class Events extends Component {
                 type="text"
                 name="description"
                 onChange={this.changeDescription}
-                defaultValue="Coming soon"
+                // defaultValue="Coming soon"
               />
             </label>
             <label>
@@ -316,14 +303,14 @@ class Events extends Component {
                       <Fab
                         color="secondary"
                         aria-label="Edit"
-                        onClick={this.handleShow}
+                        onClick={()=> this.changeValue(event._id)}
                       >
                         <EditIcon />
                       </Fab>
                     </CardActions>
                   </Card>
                 </Paper>
-
+                
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
                     Fill in the following boxes
@@ -337,7 +324,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeName}
-                        defaultValue={event.name_event}
+                        // defaultValue={event.name_event}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -350,7 +337,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeClub}
-                        defaultValue={event.club}
+                        // defaultValue={event.club}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -363,7 +350,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeYear}
-                        defaultValue={event.year}
+                        // defaultValue={event.year}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -376,7 +363,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeMonth}
-                        defaultValue={event.month}
+                        // defaultValue={event.month}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -389,7 +376,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeDay}
-                        defaultValue={event.day}
+                        // defaultValue={event.day}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -402,7 +389,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeLocation}
-                        defaultValue={event.location}
+                        // defaultValue={event.location}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -415,7 +402,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeDescription}
-                        defaultValue={event.description}
+                        // defaultValue={event.description}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -428,7 +415,7 @@ class Events extends Component {
                       </InputGroup.Prepend>
                       <FormControl
                         onChange={this.changeCommittee}
-                        defaultValue={event.committee}
+                        // defaultValue={event.committee}
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                       />
@@ -437,7 +424,7 @@ class Events extends Component {
                   <Modal.Footer>
                     <Button
                       variant="contained"
-                      onClick={() => this.onUpdate(event._id)}
+                      onClick={() => this.onUpdate(this.state.x)}
                     >
                       Update
                     </Button>
