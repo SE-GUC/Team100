@@ -6,7 +6,7 @@ import Header from "./components/layout/Header";
 import Announcements from "./components/announcements/Announcements";
 import Faqs from "./components/faqs/Faqs";
 import User from "./components/users/User";
-import Profile from "./components/users/profile";
+import Profile from "./components/users/Profile";
 import "./App.css";
 import Clubs from "./components/clubs/Clubs";
 import UserLogin from "./components/users/UsersLogin";

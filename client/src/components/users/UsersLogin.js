@@ -3,6 +3,7 @@ import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
 import setAuthToken from "../../helpers/setAuthToken";
 //import { isNull } from "util";
+import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 
 class UserLogin extends Component {
     constructor(props, context) {
@@ -108,63 +109,37 @@ class UserLogin extends Component {
     logout() {
         localStorage.clear();
     }
-    show = event => {
-        event.preventDefault();
-        axios.get(`users/${localStorage.getItem("id")}`).then(user => {
-            this.setState({ user: user.data.User });
-            var x = user.data.User;
-            console.log(x);
-        });
-    };
+    // show = event => {
+    //     event.preventDefault();
+    //     axios.get(`users/${localStorage.getItem("id")}`).then(user => {
+    //         this.setState({ user: user.data.User });
+    //         var x = user.data.User;
+    //         console.log(x);
+    //     });
+    // };
 
-    delete = event => {
-        event.preventDefault()
-        axios.delete(`users/${localStorage.getItem("id")}`).then(user => {
-            this.setState({ user: user.data.deletedUser })
-        }
-        )
-        //   console.log(response.data)
-        console.log("Deleted successfully")
-        localStorage.clear();
-    }
-
-    // onDelete = e => {
-    //     axios
-    //       .delete(`users/${localStorage.getItem("user")}` +
-    //         e.target.getAttribute("data-index")
-    //       )
-    //       .then(
-    //         res => {
-    //           localStorage.clear()
-    //           console.log("Deleted successfully");
-    //         }
-    //       )
-    //       .catch(err => console.log(err))
-    //   };
-
-
+    // delete = event => {
+    //     event.preventDefault()
+    //     axios.delete(`users/${localStorage.getItem("id")}`).then(user => {
+    //         this.setState({ user: user.data.deletedUser })
+    //     }
+    //     )
+    //     //   console.log(response.data)
+    //     console.log("Deleted successfully")
+    //     localStorage.clear();
+    // }
     render() {
-        const { user } = this.state;
-        let userProfile = '';
-        if (user) {
-            userProfile = <p>
-                {user.name}<br />
-                {user.email}<br />
-                {/* {user.major}<br />
-                {user.gucian}<br />
-                {user.committee_type}<br />
-                {user.club}<br />
-        {user.telephone}<br />*/}
-                {user.user_type}<br />
-            </p>
-
-            // <h2> {user.name} <br /> {user.email}  <br />
-            //      {user.major}  <br />
-            //     {user.committee_type}  <br />
-            //     {user.user_type}
-            // </h2>
-        }
+        // const { user } = this.state;
+        // let userProfile = '';
+        // if (user) {
+        //     userProfile = <p>
+        //         {user.name}<br />
+        //         {user.email}<br />
+        //         {user.user_type}<br />
+        //     </p>
+        // }
         return (
+
             <div>
                 {localStorage.length === 0 ? (
                     <Collapsible trigger="Login">
@@ -191,65 +166,90 @@ class UserLogin extends Component {
                 ) : null}
                 {localStorage.length === 0 ? (
                     <Collapsible trigger="Register">
-                        <form onSubmit={this.register}>
-                            <label>
-                                Email:
-                        <input
-                                    type="text"
-                                    name="email"
-                                    onChange={this.handleChangeEmail}
-                                />
-                            </label>
-                            <label>
-                                Password:
-                        <input
-                                    type="password"
-                                    name="password"
-                                    onChange={this.handleChangePassword}
-                                />
-                            </label>
-                            <label>
-                                Name:
-                        <input
-                                    type="text"
-                                    name="name"
-                                    onChange={this.handleChangeName}
-                                />
-                            </label>
-                            {/* <label>
-                                Telephone:
-                        <input
-                                    type="number"
-                                    name="number"
-                                    onChange={this.handleChangePhone}
-                                />
-                            </label> */}
-                            <label>
-                                Major:
-                        <input
-                                    type="text"
-                                    name="major"
-                                    onChange={this.handleChangeMajor}
-                                />
-                            </label>
-                            {/* <label>
-                                Birthdate:
-                        <input
-                                    type="date"
-                                    name="date"
-                                    onChange={this.handleChangeBirthdate}
-                                />
-                            </label> */}
-                            <label>
-                                GUCIAN:
-                        <input
-                                    type="boolean"
-                                    name="gucian"
-                                    onChange={this.handleChangeGucian}
-                                />
-                            </label>
-                            <button type="submit">Sign up</button>
-                        </form>
+
+                        <Modal.Dialog>
+                            <Modal.Header>
+                                <Modal.Title>Sign up!</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <InputGroup size="sm" className="Register">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Email
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeEmail}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Password
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangePassword}
+                                        required={true}
+                                        type="password"
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Name
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeName}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Major
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeMajor}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            GUCIAN
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeGucian}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="warning" onClick={this.register}>
+                                    Register
+                                </Button>
+                            </Modal.Footer>
+                        </Modal.Dialog>
                     </Collapsible>
                 ) : null}
 
@@ -261,15 +261,15 @@ class UserLogin extends Component {
                     </form>
                 ) : null
                 }
-                {localStorage.length > 0 ? (
+                {/* {localStorage.length > 0 ? (
                     <form onSubmit={this.delete}>
                         <label>
                             <button type="submit">Delete your account</button>
                         </label>
                     </form>
                 ) : null
-                }
-                {localStorage.length > 0 ? (
+                } */}
+                {/* {localStorage.length > 0 ? (
                     <form onSubmit={this.show}>
                         <label>
                             <button type="submit">Show profile</button>
@@ -278,7 +278,7 @@ class UserLogin extends Component {
                     </form>
                 ) : null
                 }
-                {userProfile}
+                {userProfile} */}
             </div>
         )
     }
