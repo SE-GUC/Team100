@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import Header from "./components/layout/Header"
-import "./App.css"
+import React, { Component } from "react";
+import Header from "./components/layout/Header";
+import "./App.css";
 import { NavLink, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -11,13 +11,13 @@ import VGS from "./VGS";
 import Tiq from "./Tiq";
 import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
-import setAuthToken from '../src/helpers/setAuthToken'
+import setAuthToken from "../src/helpers/setAuthToken";
+import Show from "./Show";
 
 import textfield from "./textfield";
 
-
 if (localStorage.token) {
-  setAuthToken(localStorage.token)
+  setAuthToken(localStorage.token);
 }
 
 class App extends Component {
@@ -27,13 +27,12 @@ class App extends Component {
         {/* <Header/>  */}
         <MenuAppBar />
         <div className="nav ">
-          { /* <NavLink exact to="/" activeClassName="active">
+          {/* <NavLink exact to="/" activeClassName="active">
             AWG Hub
           </NavLink>
           <NavLink to="/componentsMun" activeClassName="active">
             Mun Club
     </NavLink>*/}
-
         </div>
         <Route
           render={({ location }) => (
@@ -42,6 +41,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={components} />
                   <Route path="/componentsMun" component={componentsMun} />
+                  <Route path="/Show" component={Show} />
 
                   <Route path="/textfield" component={textfield} />
                   <Route path="/lib" component={lib} />
