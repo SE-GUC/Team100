@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import Header from "./components/layout/Header"
-import "./App.css"
 import { NavLink, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -9,10 +8,9 @@ import componentsMun from "./componentsMun";
 import Nebny from "./Nebny";
 import VGS from "./VGS";
 import Tiq from "./Tiq";
-import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from '../src/helpers/setAuthToken'
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import textfield from "./textfield";
 
 
@@ -23,6 +21,7 @@ if (localStorage.token) {
 class App extends Component {
   render() {
     return (
+      <MuiThemeProvider>
       <div className="App">
         {/* <Header/>  */}
         <MenuAppBar />
@@ -44,13 +43,13 @@ class App extends Component {
                   <Route path="/componentsMun" component={componentsMun} />
 
                   <Route path="/textfield" component={textfield} />
-                  <Route path="/lib" component={lib} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
           )}
         />
       </div>
+      </MuiThemeProvider>
     );
   }
 }

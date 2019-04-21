@@ -139,7 +139,6 @@ router.get("/timeline/current", async (req, res) => {
   var currentTime = new Date().getMonth() + 1;
   var currentYear = new Date().getFullYear();
 
-  console.log(currentYear);
   const exists = await Event.find({
     $and: [{ month: currentTime }, { year: currentYear }]
   });
@@ -155,7 +154,6 @@ router.get("/timeline/f_soon", async (req, res) => {
   var currentMonth = new Date().getMonth();
   var currentYear = new Date().getFullYear() - 1;
 
-  console.log(currentYear);
   const exists = await Event.find({
     $and: [{ year: { $gt: currentYear } }, { description: "coming soon" }]
   });

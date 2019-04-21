@@ -2,16 +2,22 @@ import React, { Component } from "react";
 //import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types";
+import { Grid } from "@material-ui/core";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import Fab from "@material-ui/core/Fab";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import Button from "@material-ui/core/Button";
 
 const styles = {
   card: {
+    display: "inline-block",
     minWidth: 275
   },
   bullet: {
@@ -20,7 +26,7 @@ const styles = {
     transform: "scale(0.8)"
   },
   title: {
-    fontSize: 14
+    fontSize: 25
   },
   pos: {
     marginBottom: 12
@@ -53,7 +59,7 @@ class Achievements extends Component {
     axios
       .delete(
         "http://localhost:5000/api/achievements/" +
-        e.target.getAttribute("data-index")
+          e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
@@ -86,28 +92,65 @@ class Achievements extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+    const { spacing } = this.state;
+
     return (
+
       <div>
         <h1>Achievements</h1>
+        <br />
+        <br />
+        <Grid container className={classes.root} spacing={40}>
+          <Grid
+            container
+            className={classes.demo}
+            justify="center"
+            spacing={16}
+          >
         {this.state.achievements.map(ach => (
+           <Card className={Card} display="inline-block">
+           <CardContent>
+
           <div key={ach._id}>
-            <li>
-              <label>Description: </label>
-              {ach.description},<label>Photo: </label>
+          <Typography
+                      variant="body1"
+                      color="textSecondary"
+                      gutterBottom
+                    >
+
+              Description: 
+              {ach.description},
+              <br/>
+             Photo: 
               {ach.photo}
-              {
-                <button onClick={this.onDelete} data-index={ach._id}>
-                  Delete
-               </button>
-              }
-            </li>
-          </div>
+              </Typography>
+              </div>
+
+              </CardContent>
+              <CardActions>
+                  <Fab color="primary" aria-label="Delete">
+                    <Button onClick={this.onDelete} data-index={ach._id}>
+                      <DeleteIcon />
+                    </Button>
+                  </Fab>
+                </CardActions>
+              </Card>
+
+
+             
         ))}
+        
+</Grid>
+</Grid>
+<br/>
+<br/>
+<br/>
         <Collapsible trigger="Create new achievement">
           <form onSubmit={this.handleSubmit}>
             <label>
               Description:
-             <input
+              <input
                 type="text"
                 name="description"
                 onChange={this.handleChangeDescription}
@@ -116,7 +159,7 @@ class Achievements extends Component {
 
             <label>
               Photo:
-             <input
+              <input
                 type="text"
                 name="photo"
                 onChange={this.handleChangePhoto}
@@ -129,7 +172,7 @@ class Achievements extends Component {
     );
   }
 }
-
+Achievements.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 export default withStyles(styles)(Achievements);
-
-

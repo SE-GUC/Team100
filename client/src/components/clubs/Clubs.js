@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Fade } from "react-slideshow-image";
 import gucmun from "../../images/image2vector.svg";
 import nebny from "../../images/download.jpg";
+import VGS from "../../images/VGS.png";
+import TIQ from "../../images/TIQ.png";
 
 const fadeProperties = {
   duration: 5000,
@@ -11,7 +13,7 @@ const fadeProperties = {
   indicators: true
 };
 
-const fadeImages = [nebny, gucmun];
+const fadeImages = [nebny, gucmun,VGS,TIQ];
 
 class Clubs extends Component {
   constructor() {
@@ -41,7 +43,7 @@ class Clubs extends Component {
           <div key={each._id}>
             <img
               key={index}
-              style={{ width: 200, height: 300 }}
+              style={{ width: 300, height: 300 }}
               src={fadeImages[index]}
               alt="img"
             />

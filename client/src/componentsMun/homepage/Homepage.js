@@ -1,26 +1,31 @@
-import React, { Component } from "react"
-import axios from "../../axiosInstance";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
+import { withStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import React from "react";
+import axios from "../../axiosInstance";
+import TL from "../../components/timeline/tl";
+import Achievements from "../aboutus/Achievements";
+import Hierarchy from "../aboutus/Hierarchy";
+import MV from "../aboutus/MV";
+import Committees from "../committees/Committees";
+import ContactUs from "../contactus/ContactUs";
+import Descriptions from "../descriptions/Descriptions";
+import Events from "../events/Events";
+import Galleries from "../galleries/Galleries";
+import LiveFeed from "../livefeed/Livefeed";
+import Slideshow from "../slideshow/Slideshow";
+import Subscribers from "../subscribers/Subscribers";
+import LiveStream from "../livestream/livestream";
 // import Livefeed from ".componentsMun/livefeed/Livefeed";
 import "./Homepage.css";
-import { Timeline, TimelineEvent } from "react-event-timeline";
-import LiveFeed from "../livefeed/Livefeed";
-import Subscribers from "../subscribers/Subscribers"
-import Slideshow from "../slideshow/Slideshow"
-import Galleries from "../galleries/Galleries"
-import Hierarchy from "../aboutus/Hierarchy";
-import Achievements from "../aboutus/Achievements";
-import MV from "../aboutus/MV";
-import Committees from "../committees/Committees"
-import Events from "../events/Events";
-import TL from "../../components/timeline/tl";
-import Descriptions from "../descriptions/Descriptions";
-import ContactUs from "../contactus/ContactUs";
+import Recruitment from '../forms/recruitment';
+import { Link } from '@material-ui/core';
+import {Nav} from 'react-bootstrap';
+import Library from '../library/Library'
+
 
 function TabContainer(props) {
   return (
@@ -80,27 +85,35 @@ class SimpleTabs extends React.Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Home" />
+            <Tab label="About us" />
+            <Tab label="Committes" />
+            <Tab label="Library" />
+            <Tab label="Events" />
             <Tab label="Gallery" />
             <Tab label="Livefeed" />
-            <Tab label="Contact us" />
-            <Tab label="About us" />
-            <Tab label="Events" />
-            <Tab label="Committes" />
+            <Tab label="livestream" />
+
 
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/></TabContainer>}
-        {value === 1 && <TabContainer><Galleries /></TabContainer>}
-        {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
-        {value === 3 && <TabContainer><ContactUs/></TabContainer>}
-        {value === 4 && <TabContainer>
+        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/> <ContactUs/>
+         { /*<Nav.Link href='../forms/recruitment' >
+            Recruitment Form
+        </Nav.Link>*/}
+        <Recruitment/>
+        </TabContainer>}
+        {value === 1 && <TabContainer>
           <MV/>
           <Hierarchy/>
           <Achievements/>
         </TabContainer>}
-        {value === 5 && <TabContainer><Events/></TabContainer>}
-        {value === 6 && <TabContainer><Committees /></TabContainer>}
-
+        {value === 2 && <TabContainer><Committees /></TabContainer>}
+        {value === 3 && <TabContainer><Library/></TabContainer>}
+        {value === 4 && <TabContainer><Events/></TabContainer>}
+        {value === 5 && <TabContainer><Galleries /></TabContainer>}
+        {value === 6 && <TabContainer><LiveFeed /></TabContainer>}
+        {value === 7 && <TabContainer><LiveStream /></TabContainer>}
+        
 
         {/* <h3>Events within the month</h3>
         <Timeline>
@@ -125,6 +138,7 @@ class SimpleTabs extends React.Component {
           ))}
         </Timeline> */}
       </div>
+
     );
   }        
 }

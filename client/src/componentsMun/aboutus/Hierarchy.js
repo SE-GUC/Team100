@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import hierarchy from "../../images/hierarchy.jpg";
 import japboard from "../../images/japboard.jpg";
 
-import $ from "jquery";
-const orgchart = require("orgchart");
 
 
 const fadeImages = [hierarchy,japboard];

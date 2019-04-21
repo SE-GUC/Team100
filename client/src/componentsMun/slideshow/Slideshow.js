@@ -5,7 +5,7 @@ import { Fade } from "react-slideshow-image";
 import image2 from "../../images/2.jpg";
 import image3 from "../../images/3.jpg";
 import image4 from "../../images/image4.jpg";
-//import image5 from "../../images/image5.jpg";
+import image5 from "../../images/image5.jpg";
 import axios from "../../axiosInstance";
 
 const fadeProperties = {
@@ -15,7 +15,7 @@ const fadeProperties = {
   indicators: true
 };
 
-const fadeImages = [image2, image3, image4];
+const fadeImages = [image2, image3, image4,image5];
 
 class Slideshow extends Component {
   constructor() {
@@ -30,7 +30,7 @@ class Slideshow extends Component {
   }
 
   refreshClubs() {
-    axios.get("http://localhost:5000/api/club_hub").then(res => {
+    axios.get("/club_hub").then(res => {
       console.log(res.data);
       this.setState({
         club_hub: res.data.data
