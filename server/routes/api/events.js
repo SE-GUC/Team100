@@ -74,9 +74,7 @@ router.get("/:id", async (req, res) => {
     if (!wantedEvent) {
       return res.status(404).send({ error: "Event does not exist" });
     }
-    res.json({
-      data: wantedEvent.name_event, data1: wantedEvent.description
-    });
+    res.json({ data: wantedEvent.name_event, data1: wantedEvent.description });
   } catch (error) {
     console.log(error);
   }
@@ -120,7 +118,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 //get by id
 router.get("/eventbyid/:id", async (req, res) => {
   const id = req.params.id;
@@ -140,7 +137,9 @@ router.get("/timeline/current", async (req, res) => {
   var currentTime = new Date().getMonth() + 1;
   var currentYear = new Date().getFullYear();
 
+  // console.log(currentTime);
   const exists = await Event.find({
+    club: "MUN" || "mun",
     $and: [{ month: currentTime }, { year: currentYear }]
   });
 
@@ -149,7 +148,6 @@ router.get("/timeline/current", async (req, res) => {
   else res.send({ data: exists });
 });
 //module.exports = router
-
 
 router.get("/timeline/f_soon", async (req, res) => {
   var currentMonth = new Date().getMonth();
@@ -228,27 +226,39 @@ router.put(
         const updatedRating = oldRating + userRate;
         const updatedRate = updatedRating / updatedRatingcount;
         const isValidated = validator.updateValidation(req.body);
-        if (isValidated.error)
+        if (!eve) {
+          return res.status(404).send({ error: "Event does not exist" });
+        }
+        if (isValidated.error) {
           return res
             .status(400)
             .send({ error: isValidated.error.details[0].message });
-        Event.findByIdAndUpdate(
-          id,
-          {
-            $set: {
-              rate: updatedRate,
-              rating: updatedRating,
-              ratingcount: updatedRatingcount
+        } else {
+          Event.update(
+            { _id: id },
+            {
+              $set: {
+                rate: updatedRate,
+                rating: updatedRating,
+                ratingcount: updatedRatingcount
+              }
             }
-          },
-          { upsert: true }
-        );
-        res.json({
-          msg: "Event was rated successfully",
-          Rate: updatedRate,
-          Rating: updatedRating,
-          Ratingcount: updatedRatingcount
-        });
+          )
+            .exec()
+            .then(() => {
+              res.status(200).json({
+                message: "Event is rated successfully",
+                Rate: updatedRate,
+                Rating: updatedRating,
+                Ratingcount: updatedRatingcount
+              });
+            })
+            .catch(err => {
+              res.status(500).json({
+                message: "Error"
+              });
+            });
+        }
       } catch (error) {
         console.log(error);
       }
