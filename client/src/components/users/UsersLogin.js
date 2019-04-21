@@ -109,35 +109,7 @@ class UserLogin extends Component {
     logout() {
         localStorage.clear();
     }
-    // show = event => {
-    //     event.preventDefault();
-    //     axios.get(`users/${localStorage.getItem("id")}`).then(user => {
-    //         this.setState({ user: user.data.User });
-    //         var x = user.data.User;
-    //         console.log(x);
-    //     });
-    // };
-
-    // delete = event => {
-    //     event.preventDefault()
-    //     axios.delete(`users/${localStorage.getItem("id")}`).then(user => {
-    //         this.setState({ user: user.data.deletedUser })
-    //     }
-    //     )
-    //     //   console.log(response.data)
-    //     console.log("Deleted successfully")
-    //     localStorage.clear();
-    // }
     render() {
-        // const { user } = this.state;
-        // let userProfile = '';
-        // if (user) {
-        //     userProfile = <p>
-        //         {user.name}<br />
-        //         {user.email}<br />
-        //         {user.user_type}<br />
-        //     </p>
-        // }
         return (
 
             <div>

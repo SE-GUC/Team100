@@ -189,62 +189,64 @@ class Events extends Component {
     return (
       <div>
         <h2>Events</h2>
-        <Collapsible
-          trigger={
-            <Fab color="primary" aria-label="Add">
-              <AddIcon />
-            </Fab>
-          }
-        >
-          <form onSubmit={this.onCreate}>
-            <label>
-              Name:
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible
+            trigger={
+              <Fab color="primary" aria-label="Add">
+                <AddIcon />
+              </Fab>
+            }
+          >
+            <form onSubmit={this.onCreate}>
+              <label>
+                Name:
               <input type="text" name="name" onChange={this.changeName} />
-            </label>
-            <label>
-              Club:
+              </label>
+              <label>
+                Club:
               <input type="text" name="club" onChange={this.changeClub} />
-            </label>
-            <label>
-              Year:
+              </label>
+              <label>
+                Year:
               <input type="text" name="year" onChange={this.changeYear} />
-            </label>
-            <label>
-              Month:
+              </label>
+              <label>
+                Month:
               <input type="text" name="month" onChange={this.changeMonth} />
-            </label>
-            <label>
-              Day:
+              </label>
+              <label>
+                Day:
               <input type="text" name="day" onChange={this.changeDay} />
-            </label>
-            <label>
-              Location:
+              </label>
+              <label>
+                Location:
               <input
-                type="text"
-                name="location"
-                onChange={this.changeLocation}
-              />
-            </label>
-            <label>
-              Description:
+                  type="text"
+                  name="location"
+                  onChange={this.changeLocation}
+                />
+              </label>
+              <label>
+                Description:
               <input
-                type="text"
-                name="description"
-                onChange={this.changeDescription}
+                  type="text"
+                  name="description"
+                  onChange={this.changeDescription}
                 // defaultValue="Coming soon"
-              />
-            </label>
-            <label>
-              Committee:
+                />
+              </label>
+              <label>
+                Committee:
               <input
-                type="text"
-                name="committee"
-                onChange={this.changeCommittee}
-              />
-            </label>
-            <input type="submit" value="Add" />
-          </form>
-        </Collapsible>
+                  type="text"
+                  name="committee"
+                  onChange={this.changeCommittee}
+                />
+              </label>
+              <input type="submit" value="Add" />
+            </form>
+          </Collapsible>
+        ) : null}
         {
           <ul>
             {this.state.events.map(event => (
@@ -291,26 +293,29 @@ class Events extends Component {
                         />
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      {" "}
-                      <Fab
-                        color="primary"
-                        aria-label="Delete"
-                        onClick={() => this.onDelete(event._id)}
-                      >
-                        <DeleteIcon />
-                      </Fab>
-                      <Fab
-                        color="secondary"
-                        aria-label="Edit"
-                        onClick={()=> this.changeValue(event._id)}
-                      >
-                        <EditIcon />
-                      </Fab>
-                    </CardActions>
+                    {localStorage.type === "mun_admin" ? (
+                      <CardActions>
+                        {" "}
+                        <Fab
+                          color="primary"
+                          aria-label="Delete"
+                          onClick={() => this.onDelete(event._id)}
+                        >
+                          <DeleteIcon />
+                        </Fab>
+                        <Fab
+                          color="secondary"
+                          aria-label="Edit"
+                          onClick={() => this.changeValue(event._id)}
+                        >
+                          <EditIcon />
+                        </Fab>
+                      </CardActions>
+                    ) : null}
+
                   </Card>
                 </Paper>
-                
+
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
                     Fill in the following boxes
@@ -430,7 +435,7 @@ class Events extends Component {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-                
+
               </div>
             ))}
           </ul>
@@ -445,8 +450,8 @@ class Events extends Component {
                 <TimelineEvent
                   title={e1.name_event}
                   createdAt={e1.day + "/" + e1.month + "/" + e1.year}
-                  //   buttons={"See more details"}
-                  //   onIconClick={() => alert(e1.description)}
+                //   buttons={"See more details"}
+                //   onIconClick={() => alert(e1.description)}
                 >
                   {"Location: " + e1.location} <br />
                   {"Description: " + e1.description}

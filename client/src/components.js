@@ -7,7 +7,7 @@ import Announcements from "./components/announcements/Announcements";
 import Faqs from "./components/faqs/Faqs";
 import User from "./components/users/User";
 import Profile from "./components/users/profile";
-// import UserAdd from "./components/users/UserAdd";
+import UserAdd from "./components/users/UserAdd";
 import "./App.css";
 import Clubs from "./components/clubs/Clubs";
 import UserLogin from "./components/users/UsersLogin";
@@ -20,10 +20,10 @@ const AWGHub = () => {
   return (
     <div className="AWG Hub">
       <UserLogin />
-      <User /> <br />
+      <Profile /> <br />
       <br />
-      <Profile />
-      {/* <UserAdd /> */}
+      <User />
+      <UserAdd />
       <Divider variant="middle" />
       <Clubs />
       <Divider variant="middle" />
