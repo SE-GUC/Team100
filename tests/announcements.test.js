@@ -1,60 +1,51 @@
 const funcs = require("../fn/Announcementfn");
+const Announcement = require("../models/Announcement");
+let announcementID = null;
 
-test("Get all announcements", async done => {
-  expect.assertions(1);
-  const response = await funcs.getAnnouncements();
-  expect(response.data.data.length).toEqual(19);
+test("get announcements", async done => {
+  const annBefore = await funcs.getAnnouncements();
+  const s = {
+    description: "aglaain",
+    date: "2019-02-28T22:00:00.000Z",
+    created_by: "new",
+    videos: "hi",
+    photos: "hi",
+    tag: "#hi"
+  };
+
+  const newA = await funcs.createAnnouncement(s);
+  const annId = newA.data.data._id;
+  announcementID = Announcement.findOne({ _id: annId });
+  const annAfter = await funcs.getAnnouncements();
+  expect(annAfter.data.data.length).toEqual(annBefore.data.data.length + 1);
+  expect(announcementID).toBeDefined();
+  //funcs.deleteAnnouncement(announcementID);
+
   done();
 });
-test("Get an announcement", async done => {
-  expect.assertions(1);
-  id = "5c950b25d6d3eb29fe027502";
-  const announcement = await funcs.getAnAnnouncement(id);
-  expect(announcement.data.Announcement._id).toEqual(id);
-  done();
-});
-test("create an announcement", async done => {
-  expect.assertions(6);
-  const testAnnouncement = {
+
+test("create announcement", async done => {
+  expect.assertions(7);
+  const s = {
     description: "hi",
     date: "2019-02-28T22:00:00.000Z",
-    tag: "hi",
     created_by: "hi",
     videos: "hi",
-    photos: "hi"
+    photos: "hi",
+    tag: "#hi"
   };
-  const ann = await funcs.createAnnouncement(testAnnouncement);
-  expect(ann.data.data.description).toEqual("hi");
-  expect(ann.data.data.date).toEqual("2019-02-28T22:00:00.000Z");
-  expect(ann.data.data.tag).toEqual("hi");
-  expect(ann.data.data.created_by).toEqual("hi");
-  expect(ann.data.data.videos).toEqual("hi");
-  expect(ann.data.data.photos).toEqual("hi");
-  done();
-});
-test("Delete an announcement", async done => {
-  expect.assertions(1);
-  id = "5ca0d56a51f9e3247dd9f525";
-  const announcement = await funcs.deleteAnnouncement(id);
-  expect(announcement.data.data._id).toEqual(id);
-  done();
-});
-test("Update an announcement", async done => {
-  expect.assertions(6);
-  const testAnnouncement = {
-    description: "yo #fun",
-    date: "2019-02-28T22:00:00.000Z",
-    tag: "lay",
-    created_by: "LOLy",
-    videos: "NOy",
-    photos: "BYEy"
-  };
-  const response = await funcs.updateAnnouncement(testAnnouncement);
-  expect(response.data.Announcement.description).toEqual("yo #fun");
-  expect(response.data.Announcement.date).toEqual("2019-02-28T22:00:00.000Z");
-  expect(response.data.Announcement.tag).toEqual("lay");
-  expect(response.data.Announcement.created_by).toEqual("LOLy");
-  expect(response.data.Announcement.videos).toEqual("NOy");
-  expect(response.data.Announcement.photos).toEqual("BYEy");
+  const ann = await funcs.createAnnouncement(s);
+  const annID = ann.data.data._id;
+  console.log(ann.data.data);
+  const getA = Announcement.findOne({ _id: annID });
+  expect(ann.data.data.description).toEqual(s.description);
+  expect(ann.data.data.date).toEqual(s.date);
+  expect(ann.data.data.created_by).toEqual(s.created_by);
+  expect(ann.data.data.videos).toEqual(s.videos);
+  expect(ann.data.data.photos).toEqual(s.photos);
+  expect(ann.data.data.tag).toEqual(s.tag);
+
+  expect(getA).toBeDefined();
+
   done();
 });
