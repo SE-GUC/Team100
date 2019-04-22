@@ -1,102 +1,66 @@
 const funcs = require("../fn/Eventfn");
+const Event = require("../models/Event");
 
-test("Get comming soon events", async done => {
-  expect.assertions(1);
-  const response = await funcs.getComingSoonEvent();
-  expect(response.data.data.length).toEqual(1);
-  done();
-});
-test("get rate of an event", async done => {
-  expect.assertions(1);
-  id = "5c95468b9566a387d47f9000";
-  const rate = await funcs.getEventRate(id);
-  //console.log(achievement.data.Achievement._id);
-  expect(rate.data.Rate).toBe(1.3333333333333333);
-  done();
-});
+test("get events", async done => {
+  const evBefore = await funcs.getevents();
 
-test("Rate a specific event", async done => {
-  expect.assertions(1);
-  ratings = await funcs.rateEvent();
-  expect(ratings.data.Rate).toBe(
-    ratings.data.Rating / ratings.data.Ratingcount
-  );
-  // expect(ach.data.Achievement.photo).toEqual("sprint33.com")
-  done();
-});
-
-test("Update an event", async (done) => {
-  expect.assertions(1)
-  ev = await funcs.updateEvents()
-  console.log(ev.data.Event)
-  expect(ev.data.Event.description).toEqual("update description")
-
-  done()
-});
-
-test('getting certain event', async (done) => {
-  expect.assertions(2)
-  id = "5c95382be4793067bcc3f232"
-  const r = await funcs.getCertainEvent(id);
-  console.log(r.data.data)
-  expect(response.data.data.name_event).toEqual("10th anniversary");
-  expect(response.data.data.description).toEqual("mun");
-  done();
-});
-
-test('Delete an event', async (done) => {
-  id = "5c9526e90e68c6675c06d3c6"
-  const e = await funcs.deleteEvents(id);
-  expect(e.data.data._id).toEqual(id);
-  done();
-});
-
-test("create events", async (done) => {
-  expect.assertions(13);
-  const event = {
-    name_event: "concert",
-    club: "MUN",
+  const newEvent = {
+    name_event: "Speach",
+    club: "ndnlan",
     year: 2019,
-    month: 5,
-    day: 5,
-    photo: "photoooTesting",
-    location: "locationTesting",
-    description: "Trial",
-    rating: 5,
+    month: 2,
+    day: 2,
+    photo: "adjklans",
+    location: "GUC",
+    description: "nnnn",
     committee: "HR",
-    rating: 5,
-    ratingcount: 10,
-    rate: 10
+    rating: 5
   };
-  const a = await funcs.createEvents(event);
-  // console.log(a.data);
-  expect(a.data.data.name_event).toEqual("concert");
-  expect(a.data.data.club).toEqual("MUN");
-  expect(a.data.data.year).toEqual(2019);
-  expect(a.data.data.month).toEqual(5);
-  expect(a.data.data.day).toEqual(5);
-  expect(a.data.data.photo).toEqual("photoooTesting");
-  expect(a.data.data.location).toEqual("locationTesting");
-  expect(a.data.data.description).toEqual("Trial");
-  expect(a.data.data.rating).toEqual(5);
-  expect(a.data.data.committee).toEqual("HR");
-  expect(a.data.data.rating).toEqual(5);
-  expect(a.data.data.ratingcount).toEqual(10);
-  expect(a.data.data.rate).toEqual(10);
+  const newE = await funcs.createEvents(newEvent);
+  const EvID = newE.data.data._id;
+  const getE = Event.findOne({ _id: EvID });
+  const evAfter = await funcs.getevents();
+  console.log(evAfter.data);
+  expect(evAfter.data.data.length).toEqual(evBefore.data.data.length + 1);
+  expect(getE).toBeDefined();
+
+  // await funcs.deleteCommittees(CommID);
+
   done();
 });
 
+test("create events", async done => {
+  expect.assertions(11);
+  const ev = {
+    name_event: "event",
+    club: "ndnlan",
+    year: 2019,
+    month: 2,
+    day: 2,
+    photo: "adjklans",
+    location: "GUC",
+    description: "nnnn",
+    committee: "HR",
+    rating: 5
+  };
+  const e = await funcs.createEvents(ev);
+  const eventID = e.data.data._id;
 
-test("get an event", async done => {
-  id = "5c953831e4793067bcc3f233";
-  const e = await funcs.getEvent(id);
-  expect(e.data.Event._id).toEqual(id);
-  done();
-})
+  const getE = Event.findOne({ _id: eventID });
+  expect(e.data.data.name_event).toEqual(ev.name_event);
+  expect(e.data.data.description).toEqual(ev.description);
+  expect(e.data.data.club).toEqual(ev.club);
+  expect(e.data.data.year).toEqual(ev.year);
+  expect(e.data.data.month).toEqual(ev.month);
+  expect(e.data.data.day).toEqual(ev.day);
+  expect(e.data.data.photo).toEqual(ev.photo);
+  expect(e.data.data.location).toEqual(ev.location);
+  expect(e.data.data.committee).toEqual(ev.committee);
+  expect(e.data.data.rating).toEqual(ev.rating);
 
-test("Get events happening this month", async done => {
-  //expect.assertions(1);
-  const response = await funcs.currentEvents();
-  expect(response.data.data.length).toEqual(0);
+  expect(getE).toBeDefined();
+
+  // await funcs.deleteEvents(eventID);
+
   done();
-})
+});
