@@ -12,7 +12,7 @@ import Tiq from "./Tiq";
 import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from "../src/helpers/setAuthToken";
-import Show from "./show";
+import show from "./show";
 
 import textfield from "./textfield";
 
@@ -41,10 +41,9 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={components} />
                   <Route path="/componentsMun" component={componentsMun} />
-                  <Route path="/Show" component={Show} />
+                  <Route path="/show" component={show} />
 
                   <Route path="/textfield" component={textfield} />
-                  <Route path="/lib" component={lib} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
