@@ -35,20 +35,21 @@ class Announcements extends Component {
       .then(res => res.json())
       .then(announcements => {
         this.setState({ announcements: announcements.data });
-      })
+      });
   }
 
   onDelete = e => {
     axios
       .delete(
         "http://localhost:5000/api/announcements/" +
-        e.target.getAttribute("data-index")
+          e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
         this.refreshAnnouncements();
+        alert(res.data.msg);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert("Unauthorized"));
   };
   handleChangeDescription = event => {
     this.setState({ description: event.target.value });
@@ -80,8 +81,13 @@ class Announcements extends Component {
     try {
       await axios.post(`announcements/`, Announcement);
       this.refreshAnnouncements();
+      alert("Announcement was created successfully.");
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import axios from '../../axiosInstance';
+import React, { Component } from "react";
+import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
-
 
 class Faqs extends Component {
   constructor() {
@@ -20,13 +19,12 @@ class Faqs extends Component {
 
   /////
   getFaqs() {
-    axios.get("http://localhost:5000/api/faqs/")
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-          faqs: res.data.data
-        })
-      })
+    axios.get("http://localhost:5000/api/faqs/").then(res => {
+      console.log(res.data);
+      this.setState({
+        faqs: res.data.data
+      });
+    });
   }
   /////
   handleChangeQ = faqs => {
@@ -36,15 +34,11 @@ class Faqs extends Component {
     this.setState({ answer: faqs.target.value });
   };
 
-
   refreshFaqs() {
-
-    axios.get("http://localhost:5000/api/faqs/")
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-        })
-      });
+    axios.get("http://localhost:5000/api/faqs/").then(res => {
+      console.log(res.data);
+      this.setState({});
+    });
   }
   handleChangeQuestion = faq => {
     this.setState({ question: faq.target.value });
@@ -60,26 +54,33 @@ class Faqs extends Component {
     };
     console.log(updatedFaq);
     try {
-      await axios.put(`faqs/${faq.target.getAttribute("data-index")}`, updatedFaq);
-      this.refreshFaqs();
-    }
-    catch (error) {
-      console.log(error);
+      await axios.put(
+        `faqs/${faq.target.getAttribute("data-index")}`,
+        updatedFaq
+      ).then(res => {
+        this.refreshFaqs();
+        alert(res.data.message);
+      });
+    } catch (error) {
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
   onDelete = e => {
     axios
-      .delete("http://localhost:5000/api/faqs/" +
-        e.target.getAttribute("data-index")
+      .delete(
+        "http://localhost:5000/api/faqs/" + e.target.getAttribute("data-index")
       )
-      .then(
-        res => {
-          console.log();
-          this.refreshFaqs();
-        }
-      )
-      .catch(err => console.log(err))
+      .then(res => {
+        console.log();
+        this.refreshFaqs();
+        alert(res.data.msg);
+      })
+      .catch(err => alert("You are unauthorized"));
   };
 
   handleS = async Faqs => {
@@ -87,14 +88,20 @@ class Faqs extends Component {
 
     const faq = {
       question: this.state.question,
-      answer: this.state.answer,
+      answer: this.state.answer
     };
     console.log(faq);
     try {
-      await axios.post(`FAQs/`, faq);
-      this.refreshFaqs();
+      await axios.post(`FAQs/`, faq).then(res => {
+        this.refreshFaqs();
+        alert(res.data.message);
+      });
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
@@ -113,8 +120,14 @@ class Faqs extends Component {
                   DELETE
                 </button>
                 <form onSubmit={this.handleSubmit} data-index={faq._id}>
-                  Q:<input type="text" name="question" defaultValue={faq.question} />
-                  A:<input type="text" name="answer" defaultValue={faq.answer} />
+                  Q:
+                  <input
+                    type="text"
+                    name="question"
+                    defaultValue={faq.question}
+                  />
+                  A:
+                  <input type="text" name="answer" defaultValue={faq.answer} />
                   <input type="submit" value="Submit" />
                 </form>
               </div>
@@ -126,12 +139,11 @@ class Faqs extends Component {
           <div key={f._id}>
             <li>
               <label> Question: </label>
-              {f.question},
-              <label> Answer: </label>
+              {f.question},<label> Answer: </label>
               {f.answer}
             </li>
-          </div>))}
-
+          </div>
+        ))}
 
         <Collapsible trigger="Create a FAQ">
           <form onSubmit={this.handleS}>
@@ -145,11 +157,7 @@ class Faqs extends Component {
             </label>
             <label>
               Answer:
-              <input
-                type="text"
-                name="Answer"
-                onChange={this.handleChangeA}
-              />
+              <input type="text" name="Answer" onChange={this.handleChangeA} />
             </label>
             <button type="submit">Add</button>
           </form>

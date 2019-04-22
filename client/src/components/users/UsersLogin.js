@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import axios from "../../axiosInstance"
 import Collapsible from "react-collapsible";
 import setAuthToken from '../../helpers/setAuthToken'
+import { ifError } from "assert";
 //import { isNull } from "util";
 
 class UserLogin extends Component {
@@ -38,8 +39,14 @@ class UserLogin extends Component {
             setAuthToken(token)
             // axios.defaults.headers['Authorization'] = response.data.token;
             // this.refreshUsers();
+            alert("You are now logged in");
         } catch (error) {
-            console.log(error);
+            if(error.message === 'Request failed with status code 404')
+                alert("Please enter a valid email")
+            else if(error.message === 'Request failed with status code 400')
+                alert("Password is incorrect")
+            else
+                alert(error.message);
         }
     };
 
