@@ -43,7 +43,6 @@ test("create committees", async done => {
   expect(committee.data.data.team_members).toEqual(comm.team_members);
   expect(getC).toBeDefined();
 
-  await funcs.deleteCommittees(committeeID);
 
   done();
 });

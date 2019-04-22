@@ -32,6 +32,12 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  const clubs = await Club_hub.find()
+  res.json({ data: clubs })
+})
+
+
 // get brief description of the club by its name
 
 router.get("/:id", async (req, res) => {
