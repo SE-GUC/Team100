@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import Header from "./components/layout/Header";
+import React from "react";
 //import Footer from "./components/layout/Footer"
 //import { BrowserRouter as Router, Route } from "react-dom"
 //import Tools from "./components/Tools"
@@ -13,8 +12,6 @@ import Clubs from "./components/clubs/Clubs";
 import UserLogin from "./components/users/UsersLogin";
 import Divider from "@material-ui/core/Divider";
 import "bootstrap/dist/css/bootstrap.min.css";
-import MenuAppBar from "./components/layout/MenuAppBar";
-
 
 const AWGHub = () => {
   return (

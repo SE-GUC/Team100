@@ -3,7 +3,6 @@ import axios from "../../axiosInstance";
 import "./tl.css";
 import { Timeline, TimelineEvent } from "react-event-timeline";
 
-import { Modal, Button } from "react-bootstrap";
 
 class TL extends Component {
   constructor() {

@@ -1,7 +1,5 @@
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import axios from "../../axiosInstance";
 import TextField from "material-ui/TextField";
 import { withStyles } from "@material-ui/core/styles";
@@ -228,22 +226,20 @@ class recruitment extends Component {
           </Button>
         </form>
 
-
         {localStorage.type === "mun_admin" ? (
-          <Collapsible trigger="All Responses" onClick={this.getForms()}  >
+          <Collapsible trigger="All Responses" onClick={this.getForms()}>
             {this.state.forms.map(ach => (
               <div key={ach._id}>
                 <li>
                   {ach.name},{ach.birthdate},{ach.email},{ach.major},
-              {ach.telephone_number},{ach.Year_of_Study},
-              {ach.Means_of_Transportation},{ach.Council_Office1},
-              {ach.Council_Office2},{ach.Previous_Experience}
+                  {ach.telephone_number},{ach.Year_of_Study},
+                  {ach.Means_of_Transportation},{ach.Council_Office1},
+                  {ach.Council_Office2},{ach.Previous_Experience}
                 </li>
               </div>
             ))}
           </Collapsible>
         ) : null}
-
       </div>
     );
   }

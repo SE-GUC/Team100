@@ -15,7 +15,7 @@ const fadeProperties = {
   indicators: true
 };
 
-const fadeImages = [image2, image3, image4,image5];
+const fadeImages = [image2, image3, image4, image5];
 
 class Slideshow extends Component {
   constructor() {

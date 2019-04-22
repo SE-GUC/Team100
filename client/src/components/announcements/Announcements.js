@@ -9,10 +9,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
-import CheckCircle from "@material-ui/icons/CheckCircle";
 import Fab from "@material-ui/core/Fab";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import Button from "@material-ui/core/Button";
 
 const styles = {
@@ -89,12 +87,25 @@ class Announcements extends Component {
   handleChangeCreated = event => {
     this.setState({ created_by: event.target.value });
   };
-  // handleChangeVideo = event => {
-  //   this.setState({ videos: event.target.value });
-  // };
-  // handleChangePhoto = event => {
-  //   this.setState({ photos: event.target.value });
-  // };
+  /*
+  handleSubmit1 = async ann => {
+    ann.preventDefault();
+    const updatedann = {
+      description: ann.target.description.value,
+      title: ann.target.title.value,
+      created_by: ann.target.created_by.value
+
+    };
+    console.log(updatedann);
+    try {
+      await axios.put(`announcements/${ann.target.getAttribute("data-index")}`, updatedann);
+      this.getAchievements();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+  */
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -117,7 +128,6 @@ class Announcements extends Component {
 
   render() {
     const { classes } = this.props;
-    const { spacing } = this.state;
 
     return (
       <div>
@@ -166,6 +176,14 @@ class Announcements extends Component {
                         <DeleteIcon />
                       </Button>
                     </Fab>
+
+                   { /*<form onSubmit={this.handleSubmit1} data-index={ann._id}>
+Description:<input type="text" name="description" defaultValue={ann.description} />
+Title:<input type="text" name="title" defaultValue={ann.title} />
+Created By:<input type="text" name="created_by" defaultValue={ann.created_by} />
+
+<input type="submit" value="Edit" />
+                </form>*/}
                   </CardActions>
                 ) : null}
 

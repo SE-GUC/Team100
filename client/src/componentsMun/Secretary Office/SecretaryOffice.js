@@ -7,7 +7,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Link from "@material-ui/core/Link";
 
-const styles = {
+/*const styles = {
   card: {
     minWidth: 275
   },
@@ -22,7 +22,7 @@ const styles = {
   pos: {
     marginBottom: 12
   }
-};
+};*/
 
 class SecretaryOffice extends Component {
   state = {
@@ -84,7 +84,7 @@ class SecretaryOffice extends Component {
 
   render() {
     const { committee } = this.state;
-    const committeeName = committee.name;
+   // const committeeName = committee.name;
     const committeeDesc = committee.description;
     const committeePage = committee.page;
     const committeeEvents = committee.events;

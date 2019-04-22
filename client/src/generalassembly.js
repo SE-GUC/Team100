@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import GeneralAssembly from "./componentsMun/General Assembly/GeneralAssembly";
 import "./App.css";
 const generalassembly = () => {

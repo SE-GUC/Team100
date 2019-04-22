@@ -68,6 +68,21 @@ router.get("/", async (req, res) => {
   const AP = await Library.find();
   res.json({ data: AP });
 });
+router.get("/sortA", async (req, res) => {
+  var AP = await Library.find();
+  var s = AP.sort((a, b) => parseFloat(a.Year) - parseFloat(b.Year));
+
+  res.json({ data: s });
+}),
+
+
+
+router.get("/sortD", async (req, res) => {
+  var AP = await Library.find();
+  var s = AP.sort((a, b) => parseFloat(b.Year) - parseFloat(a.Year));
+
+  res.json({ data: s });
+}),
 
 //delete a certain academic paper
 router.delete("/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {

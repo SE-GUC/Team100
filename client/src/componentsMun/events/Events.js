@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import "./Events.css";
 import { Timeline, TimelineEvent } from "react-event-timeline";
-import { Typography, Paper, CardContent, CardActions, Button, Card, Fab } from "@material-ui/core";
+import {
+  Typography,
+  Paper,
+  CardContent,
+  CardActions,
+  Button,
+  Card,
+  Fab
+} from "@material-ui/core";
 import Rating from "material-ui-rating";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
@@ -181,9 +189,9 @@ class Events extends Component {
 
   changeValue = async id => {
     this.handleShow();
-    await this.setState({ x: id })
+    await this.setState({ x: id });
     // console.log(this.state.x)
-  }
+  };
 
   render() {
     return (
@@ -200,27 +208,27 @@ class Events extends Component {
             <form onSubmit={this.onCreate}>
               <label>
                 Name:
-            <input type="text" name="name" onChange={this.changeName} />
+                <input type="text" name="name" onChange={this.changeName} />
               </label>
               <label>
                 Club:
-            <input type="text" name="club" onChange={this.changeClub} />
+                <input type="text" name="club" onChange={this.changeClub} />
               </label>
               <label>
                 Year:
-            <input type="text" name="year" onChange={this.changeYear} />
+                <input type="text" name="year" onChange={this.changeYear} />
               </label>
               <label>
                 Month:
-            <input type="text" name="month" onChange={this.changeMonth} />
+                <input type="text" name="month" onChange={this.changeMonth} />
               </label>
               <label>
                 Day:
-            <input type="text" name="day" onChange={this.changeDay} />
+                <input type="text" name="day" onChange={this.changeDay} />
               </label>
               <label>
                 Location:
-            <input
+                <input
                   type="text"
                   name="location"
                   onChange={this.changeLocation}
@@ -228,16 +236,16 @@ class Events extends Component {
               </label>
               <label>
                 Description:
-            <input
+                <input
                   type="text"
                   name="description"
                   onChange={this.changeDescription}
-                // defaultValue="Coming soon"
+                  // defaultValue="Coming soon"
                 />
               </label>
               <label>
                 Committee:
-            <input
+                <input
                   type="text"
                   name="committee"
                   onChange={this.changeCommittee}
@@ -313,7 +321,6 @@ class Events extends Component {
                           <EditIcon />
                         </Fab>
                       ) : null}
-
                     </CardActions>
                   </Card>
                 </Paper>
@@ -437,7 +444,6 @@ class Events extends Component {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-
               </div>
             ))}
           </ul>
@@ -452,8 +458,8 @@ class Events extends Component {
                 <TimelineEvent
                   title={e1.name_event}
                   createdAt={e1.day + "/" + e1.month + "/" + e1.year}
-                //   buttons={"See more details"}
-                //   onIconClick={() => alert(e1.description)}
+                  //   buttons={"See more details"}
+                  //   onIconClick={() => alert(e1.description)}
                 >
                   {"Location: " + e1.location} <br />
                   {"Description: " + e1.description}

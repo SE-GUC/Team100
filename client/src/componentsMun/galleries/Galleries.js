@@ -22,39 +22,39 @@ class Galleries extends Component {
 
   getGalleries() {
     axios.get("/albums").then(res => {
-      this.setState({ albums: res.data.data  });
-     })
-    }
+      this.setState({ albums: res.data.data });
+    });
+  }
 
   refreshAlbums() {
     axios.get("/albums").then(res => {
-      this.setState({ albums: res.data.data  });
-     })
+      this.setState({ albums: res.data.data });
+    });
   }
 
   getMerchandise() {
     axios.get("/albums/type/Merchandise").then(res => {
-        this.setState({ merchandise: res.data.data  });
-       })
+      this.setState({ merchandise: res.data.data });
+    });
   }
 
-refreshMerchandise() {
-        axios.get("/albums/type/Merchandise").then(res => {
-            this.setState({ merchandise: res.data.data  });
-        })
-    }
+  refreshMerchandise() {
+    axios.get("/albums/type/Merchandise").then(res => {
+      this.setState({ merchandise: res.data.data });
+    });
+  }
 
   handleChangeTitle = album => {
-      this.setState({ title: album.target.value})
-  }
+    this.setState({ title: album.target.value });
+  };
 
   handleChangeDesc = album => {
-      this.setState({ description: album.target.value})
-  }
+    this.setState({ description: album.target.value });
+  };
 
   handleChangeType = album => {
-      this.setState({ type: album.target.value})
-  }
+    this.setState({ type: album.target.value });
+  };
 
   handleSubmit = async album => {
     album.preventDefault();
@@ -99,8 +99,8 @@ refreshMerchandise() {
     axios
       .delete(`albums/${album.target.getAttribute("data-index")}`)
       .then(res => {
-          this.refreshAlbums()
-          this.refreshMerchandise()
+        this.refreshAlbums();
+        this.refreshMerchandise();
       });
   };
 
@@ -126,10 +126,11 @@ refreshMerchandise() {
                   <input type="photo" name="photo" defaultValue={each.photo} />
                   Type:
                   <input type="text" name="type" defaultValue={each.type} />
-                  <label>Uploaded at: </label>{each.uploaded_at}
+                  <label>Uploaded at: </label>
+                  {each.uploaded_at}
                   <input type="submit" value="Submit" />
-                  </form>
-                  <button onClick={this.onDelete} data-index={each._id}>
+                </form>
+                <button onClick={this.onDelete} data-index={each._id}>
                   Delete
                 </button>
               </div>
@@ -156,9 +157,10 @@ refreshMerchandise() {
                   <input type="photo" name="photo" defaultValue={each.photo} />
                   Type:
                   <input type="text" name="type" defaultValue={each.type} />
-                  <label>Uploaded at: </label>{each.uploaded_at}
+                  <label>Uploaded at: </label>
+                  {each.uploaded_at}
                   <input type="submit" value="Submit" />
-                  </form>
+                </form>
               </div>
             ))}
           </ul>
@@ -169,7 +171,11 @@ refreshMerchandise() {
           Title:
           <input type="text" name="title" onChange={this.handleChangeTitle} />
           Description:
-          <input type="text" name="description" onChange={this.handleChangeDesc} />
+          <input
+            type="text"
+            name="description"
+            onChange={this.handleChangeDesc}
+          />
           Photo:
           <input type="photo" name="photo" />
           Type:

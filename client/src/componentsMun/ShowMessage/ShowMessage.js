@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import axios from "../../axiosInstance";
-import { ListGroup, Card, Button, Alert } from "react-bootstrap";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { ListGroup, Card, Alert } from "react-bootstrap";
 
-import { IconButton, Typography, Paper, CardContent } from "@material-ui/core";
+import { Typography, Paper, CardContent } from "@material-ui/core";
 class ShowMessage extends Component {
   constructor() {
     super();

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import SecretaryOffice from "./componentsMun/Secretary Office/SecretaryOffice";
 import "./App.css";
 const secretaryoffice = () => {
