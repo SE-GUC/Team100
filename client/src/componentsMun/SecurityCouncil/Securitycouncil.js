@@ -166,46 +166,48 @@ class Securitycouncil extends Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        <form onSubmit={this.handleSubmit(committee._id)}>
-          Name:{" "}
-          <input
-            type="text"
-            name="name"
-            defaultValue={committee.name}
-            onChange={this.handleChangeName}
-          />
-          Description:
-          <input
-            type="text"
-            name="description"
-            defaultValue={committee.description}
-            onChange={this.handleChangedescription}
-          />
-          Page:
-          <input
-            type="text"
-            name="page"
-            defaultValue={committee.page}
-            onChange={this.handleChangePage}
-          />
-          Events:
-          <input
-            type="text"
-            name="events"
-            defaultValue={committee.events}
-            onChange={this.handleChangeEvents}
-          />
-          <br />
-          Team Members:
-          <input
-            type="text"
-            name="team_members"
-            defaultValue={committee.team_members}
-            onChange={this.handleChangeMem}
-          />
-          <br />
-          <input type="submit" value="Update" />
-        </form>
+        {localStorage.type === "mun_admin" ? (
+          <form onSubmit={this.handleSubmit(committee._id)}>
+            Name:{" "}
+            <input
+              type="text"
+              name="name"
+              defaultValue={committee.name}
+              onChange={this.handleChangeName}
+            />
+            Description:
+            <input
+              type="text"
+              name="description"
+              defaultValue={committee.description}
+              onChange={this.handleChangedescription}
+            />
+            Page:
+            <input
+              type="text"
+              name="page"
+              defaultValue={committee.page}
+              onChange={this.handleChangePage}
+            />
+            Events:
+            <input
+              type="text"
+              name="events"
+              defaultValue={committee.events}
+              onChange={this.handleChangeEvents}
+            />
+            <br />
+            Team Members:
+            <input
+              type="text"
+              name="team_members"
+              defaultValue={committee.team_members}
+              onChange={this.handleChangeMem}
+            />
+            <br />
+            <input type="submit" value="Update" />
+          </form>
+        ) : null}
       </div>
     );
   }

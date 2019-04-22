@@ -176,66 +176,23 @@ class Committees extends Component {
                 </CardContent>
 
                 <CardActions>
-                  <Fab
-                    color="primary"
-                    aria-label="Delete"
-                    onClick={this.onDelete}
-                    data-index={c._id}
-                  >
-                    <DeleteIcon />
-                  </Fab>
-
-                  {/* <Button color="primary" onClick={this.handleSubmit} data-index={c.name}  >
-                Update 
-                </Button> */}
-                  <div>
-                    {/* <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-          Updatee
-        </Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          onSubmit={this.handleSubmit}
-          aria-labelledby="form-dialog-title"
-          data-index={c.name}
-        >
-          <DialogTitle id="form-dialog-title">Update Committee</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To update  committee please fill in the required data
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              name="name"
-              label="Committee Name"
-              type="text"
-              onChange={this.handleChangeName}
-              fullWidth
-            />
-             <TextField
-              autoFocus
-              margin="dense"
-              id="description"
-              name="description"
-              label="Committee Description"
-              type="text"
-            onChange={this.handleChangedescription}
-              fullWidth
-            />
-            
-          </DialogContent>
-          <DialogActions>
-            <button onClick={this.handleClose} color="primary">
-              Cancel
-            </button>
-            <button onClick={this.handleSubmit} color="primary" type="submit" data-index={c.name} >
-              update
-            </button>
-          </DialogActions>
-        </Dialog> */}
-                  </div>
+                  {localStorage.type === "mun_admin" ? (
+                    <button
+                      color="primary"
+                      aria-label="Delete"
+                      onClick={this.onDelete}
+                      data-index={c._id}
+                      style={{
+                        backgroundColor: "#003255",
+                        fontWeight: "bolitald",
+                        color: "#ffffff",
+                        size: "small",
+                        blockSize: "small"
+                      }}
+                    >
+                      Delete
+                    </button>
+                  ) : null}
                 </CardActions>
               </Card>
             </Paper>
@@ -288,22 +245,25 @@ class Committees extends Component {
 
         {/* <h1  className="center" >Committees </h1> */}
         <h4 className="center">{committeeList}</h4>
+        {localStorage.type === "mun_admin" ? (
+          <Fab color="primary" aria-label="Add" href="/textfield">
+            <AddIcon />
+          </Fab>
+        ) : null}
 
-        {/* <Fab color="primary" aria-label="Add" href="/textfield">
-          <AddIcon />
-        </Fab> */}
-
-        <Button
-          href="/show"
-          className="float-left"
-          style={{
-            backgroundColor: "#3F51B5",
-            color: "#f4f4f4"
-          }}
-        >
-          {" "}
-          Show Messages{" "}
-        </Button>
+        {localStorage.type === "mun_admin" ? (
+          <Button
+            href="/show"
+            className="float-left"
+            style={{
+              backgroundColor: "#3F51B5",
+              color: "#f4f4f4"
+            }}
+          >
+            {" "}
+            Show Messages{" "}
+          </Button>
+        ) : null}
       </div>
     );
   }
