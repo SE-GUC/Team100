@@ -8,14 +8,24 @@ const functions = {
       console.log(error);
     }
   },
-  updateBriefDescription: async () => {
-    const desc = await axios.put(
-      "http://localhost:6000/api/club_hub/5c9516bd00bed630647f8bfa",
-      {
-        brief_description: "updated description 2"
-      }
-    );
-    return desc;
+
+  getClubHub: async () => {
+    const r = await axios.get("http://localhost:6000/api/club_hub/");
+    return r;
+  },
+
+  createClubHub: async body => {
+    try {
+      const response = await axios.post(
+        "http://localhost:6000/api/club_hub/",
+        body
+      );
+      console.log(JSON.stringify(response, null, 2));
+      return response;
+    } catch (error) {
+      console.log("ERROR");
+      console.log(error);
+    }
   }
 };
 module.exports = functions;
