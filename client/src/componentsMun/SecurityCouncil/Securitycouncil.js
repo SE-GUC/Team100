@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import CardGroup from "react-bootstrap/Card";
 import Card from "react-bootstrap/Card";
-import { Fab } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-
 import {
   Grid,
   Tooltip,
@@ -35,6 +32,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import Collapsible from "react-collapsible";
+import { Popover } from "react-bootstrap";
+import Popper from "popper.js";
 
 const styles = {
   card: {
@@ -53,29 +52,20 @@ const styles = {
   }
 };
 
-//import MunHeader from "./components/layout/MunHeader";
-class EXECUTIVE extends Component {
+class Securitycouncil extends Component {
   state = {
     committee: [],
-    open: false,
-    x: ""
+    open: false
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios.get("/committee/5cbda7931c9d4400008b55be      ").then(res => {
+    axios.get("/committee/5cbda6991c9d44000089a848").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data
       });
     });
   }
-
-  handleChangeName = c => {
-    this.setState({ name: c.target.value });
-  };
-  handleChangedescription = c => {
-    this.setState({ description: c.target.value });
-  };
 
   handleChangeEvents = c => {
     this.setState({ events: c.target.value });
@@ -87,23 +77,19 @@ class EXECUTIVE extends Component {
     this.setState({ team_members: c.target.value });
   };
 
+  handleChangeName = c => {
+    this.setState({ name: c.target.value });
+  };
+  handleChangedescription = c => {
+    this.setState({ description: c.target.value });
+  };
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
   handleClose = () => {
     this.setState({ open: false });
-  };
-
-  // changeValue = async id => {
-  //   await this.setState({
-  //     x: id
-  //   });
-  // };
-
-  handleShow = () => {
-    console.log("showing");
-    this.setState({ open: true });
   };
 
   handleSubmit = id => {
@@ -122,11 +108,6 @@ class EXECUTIVE extends Component {
     } catch (error) {
       console.log(error);
     }
-  };
-  changeValue = async id => {
-    this.handleShow();
-    await this.setState({ x: id });
-    // console.log(this.state.x)
   };
 
   render() {
@@ -147,10 +128,10 @@ class EXECUTIVE extends Component {
             boxShadow: "inset 0 0 9px 5px black"
           }}
         >
-          Executive Office
+          {committeeName}
         </h1>
 
-        <Link component="button" variant="body1">
+        <Link component="button" variant="body1" href="./{committeePage}">
           {committeePage}
         </Link>
 
@@ -184,6 +165,7 @@ class EXECUTIVE extends Component {
             <Typography>{committeeEvents}</Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
+
         {localStorage.type === "mun_admin" ? (
           <form onSubmit={this.handleSubmit(committee._id)}>
             Name:{" "}
@@ -230,4 +212,4 @@ class EXECUTIVE extends Component {
     );
   }
 }
-export default EXECUTIVE;
+export default Securitycouncil;

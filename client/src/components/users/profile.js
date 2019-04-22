@@ -127,7 +127,7 @@ class Profile extends React.Component {
   render() {
     return (
       <>
-        {localStorage.length > 0 ? (
+        {localStorage.length > 1 ? (
           <Button variant="info" size="sm" onClick={this.handleShow}>
             Show my profile
           </Button>

@@ -200,27 +200,27 @@ class Events extends Component {
             <form onSubmit={this.onCreate}>
               <label>
                 Name:
-              <input type="text" name="name" onChange={this.changeName} />
+            <input type="text" name="name" onChange={this.changeName} />
               </label>
               <label>
                 Club:
-              <input type="text" name="club" onChange={this.changeClub} />
+            <input type="text" name="club" onChange={this.changeClub} />
               </label>
               <label>
                 Year:
-              <input type="text" name="year" onChange={this.changeYear} />
+            <input type="text" name="year" onChange={this.changeYear} />
               </label>
               <label>
                 Month:
-              <input type="text" name="month" onChange={this.changeMonth} />
+            <input type="text" name="month" onChange={this.changeMonth} />
               </label>
               <label>
                 Day:
-              <input type="text" name="day" onChange={this.changeDay} />
+            <input type="text" name="day" onChange={this.changeDay} />
               </label>
               <label>
                 Location:
-              <input
+            <input
                   type="text"
                   name="location"
                   onChange={this.changeLocation}
@@ -228,7 +228,7 @@ class Events extends Component {
               </label>
               <label>
                 Description:
-              <input
+            <input
                   type="text"
                   name="description"
                   onChange={this.changeDescription}
@@ -237,7 +237,7 @@ class Events extends Component {
               </label>
               <label>
                 Committee:
-              <input
+            <input
                   type="text"
                   name="committee"
                   onChange={this.changeCommittee}
@@ -293,9 +293,9 @@ class Events extends Component {
                         />
                       </Typography>
                     </CardContent>
-                    {localStorage.type === "mun_admin" ? (
-                      <CardActions>
-                        {" "}
+                    <CardActions>
+                      {" "}
+                      {localStorage.type === "mun_admin" ? (
                         <Fab
                           color="primary"
                           aria-label="Delete"
@@ -303,6 +303,8 @@ class Events extends Component {
                         >
                           <DeleteIcon />
                         </Fab>
+                      ) : null}
+                      {localStorage.type === "mun_admin" ? (
                         <Fab
                           color="secondary"
                           aria-label="Edit"
@@ -310,9 +312,9 @@ class Events extends Component {
                         >
                           <EditIcon />
                         </Fab>
-                      </CardActions>
-                    ) : null}
+                      ) : null}
 
+                    </CardActions>
                   </Card>
                 </Paper>
 
