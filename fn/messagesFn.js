@@ -3,7 +3,7 @@ const functions = {
   deleteCertainMessage: async id => {
     try {
       const msg = await axios.delete(
-        `http://localhost:6000/api/messages/${id}`
+        `http://localhost:6000/api/messages/` + id
       );
       console.log(msg);
       return msg;
@@ -41,7 +41,8 @@ const functions = {
       );
       return response;
     } catch (error) {
-      console.log(error);
+      return error;
+      //console.log(error);
     }
   }
 };

@@ -9,7 +9,7 @@ module.exports = {
       committee: Joi.string().required(),
       text: Joi.string().required(),
       replied: Joi.string().required(),
-      time: Joi.date().required()
+      time: Joi.date()
     };
     return Joi.validate(request, createSchema);
   }

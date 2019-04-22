@@ -1,56 +1,47 @@
 const funcs = require("../fn/messagesFn");
+const Message = require("../models/Message");
 
-//done
-test("get message by committee name", async done => {
-  expect.assertions(1);
-  committee = "security council";
-  const comm = await funcs.getCertainMessage(committee);
-  console.log(comm.data.Message.committee);
-  expect(comm.data.Message.committee).toEqual(committee);
-  done();
-});
+test("get msgs", async done => {
+  const msgBefore = await funcs.getAllMessages();
 
-// done
-test("get all messages", async done => {
-  expect.assertions(1);
-  const response = await funcs.getAllMessages();
-  //const resLength= response.data.data.length;
-  expect(response.data.data.length).toBe(52);
-  done();
-});
-
-//done
-test("create messages", async done => {
-  expect.assertions(4);
-  const testMessage = {
-    sender: "fhfhfhfhhf@gmail.com",
-    text: "lllllllllllll",
-    committee: "PR",
-    replied: "0",
-    time: "2019-02-02T08:11:12.000"
+  const msg = {
+    sender: "Ahmednjadnkajfnkankajnfkajnjansaaknn",
+    committee: "HR",
+    text: "Hiiii",
+    replied: "false"
   };
-  const message = await funcs.createMessage(testMessage);
-  expect(message.data.data.sender).toEqual("fhfhfhfhhf@gmail.com");
-  expect(message.data.data.text).toEqual("lllllllllllll");
-  expect(message.data.data.committee).toEqual("PR");
-  expect(message.data.data.replied).toEqual("0");
+  const newM = await funcs.createMessage(msg);
+  const MsgID = newM.data.data._id;
+  const getM = Message.findOne({ _id: MsgID });
+  const msgAfter = await funcs.getAllMessages();
+  expect(msgAfter.data.data.length).toEqual(msgBefore.data.data.length + 1);
+  expect(getM).toBeDefined();
+
+  // await funcs.deleteCommittees(CommID);
+
   done();
 });
 
-//done
-test("delete a certain message", async done => {
-  id = "5c9de26561e9d2137cac3630";
-  const msg = await funcs.deleteCertainMessage(id);
-  //console.log(msg.data);
-  expect(msg.data.data._id).toEqual(id);
+test("create msg", async done => {
+  expect.assertions(5);
+  const msg = {
+    sender: "Ahmedasdjadkjaskdjaskasaaaaaaaaaaaaaaaaaaaaa",
+    committee: "HR",
+    text: "Hello",
+    replied: "false"
+  };
+  const message = await funcs.createMessage(msg);
+  const msgID = message.data.data._id;
+
+  const getM = Message.findOne({ _id: msgID });
+  expect(message.data.data.sender).toEqual(msg.sender);
+  expect(message.data.data.committee).toEqual(msg.committee);
+  expect(message.data.data.text).toEqual(msg.text);
+  expect(message.data.data.replied).toEqual(msg.replied);
+
+  expect(getM).toBeDefined();
+
+  await funcs.deleteCertainMessage(msgID);
+
   done();
 });
-
-// test (`delete a certain message`, async (done) => {
-//   const r1= await funcs.getCertainMessage();
-//   const res=r1.data.Message.length-1;
-//   const response= await funcs.deleteCertainMessage();
-//   const r2= await funcs.getCertainMessage();
-//   expect(r2.data.data.length).toEqual(res+1);
-//   done();
-// })
