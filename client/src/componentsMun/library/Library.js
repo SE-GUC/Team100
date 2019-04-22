@@ -165,9 +165,9 @@ class Library extends Component {
                           onClick={() => {
                             window.location.href = `//${c.Academic_paper}`;
                           }}
-                        />
+                        >
                         {c.Academic_paper}
-                       
+                       </a>
                         <a
                           style={{ cursor: "pointer" }}
                           onClick={() => {
