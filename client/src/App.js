@@ -12,7 +12,7 @@ import Tiq from "./Tiq";
 import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from "../src/helpers/setAuthToken";
-import Show from "./Show";
+import Show from "./show";
 
 import textfield from "./textfield";
 
