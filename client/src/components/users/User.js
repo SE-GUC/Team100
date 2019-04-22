@@ -58,7 +58,7 @@ class User extends React.Component {
               {this.state.users.map(user =>
                 (<ListGroup.Item>
                   <Image style={{ height: "10rem", width: "10rem" }} src={user.photo} roundedCircle />
-                  <h1>{user.name}</h1> <h3>{user.email}</h3><h5>{user.club}</h5><h4>{user.major}</h4>
+                  <h1>{user.name}</h1> <h3>Email: {user.email}</h3><h3>Club: {user.club}</h3><h3>Major: {user.major}</h3><h3>Telephone: {user.telephone}</h3><h3>User type: {user.user_type}</h3><h3>Committe: {user.committe_type}</h3><h3>Control: {user.control}</h3>
                   {/* <Button variant="danger" onClick={() => this.deleteUser(user._id)}>Delete</Button> */}
                   <Fab
                     color="secondary"
