@@ -55,7 +55,6 @@ class Profile extends React.Component {
       });
       console.log(
         this.state.name,
-        this.state.photo,
         this.state.major,
         this.state.club,
         this.state.email,
@@ -97,8 +96,7 @@ class Profile extends React.Component {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const newPhoto = this.state.photo;
-      this.setState({photo: newPhoto});
+      this.setState({photo: reader.result});
     };
     reader.onerror = error =>{
       console.log("Cant upload photo",error);
