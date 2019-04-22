@@ -36,6 +36,12 @@ router.post("/", async (req, res) => {
     console.log(error);
   }
 });
+
+router.get("/", async (req,res) => {
+  const library= await Library.find();
+  res.json({ data: library });
+});
+
 //done
 router.get("/:year", async (req, res) => {
   const Year = req.params.Year;

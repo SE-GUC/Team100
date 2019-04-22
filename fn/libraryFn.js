@@ -12,6 +12,12 @@ const functions = {
     }
   },
 
+  getallAp: async () => {
+    const response = await axios.get("http://localhost:6000/api/libraries/");
+    return response;
+
+  },
+
   getAP: async body => {
     try {
       const response = await axios.get(
