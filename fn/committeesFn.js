@@ -10,33 +10,33 @@ const functions = {
     //     console.log(error)
     // }
   },
+
+  getcommitteesById: async id => {
+    const comm = await axios.get("http://localhost:6000/api/committee/" + id);
+    return comm;
+  },
   createCommmittee: async body => {
     try {
+      console.log("in create");
       const response = await axios.post(
         "http://localhost:6000/api/committee/",
         body
       );
+      console.log(JSON.stringify(response, null, 2));
       return response;
     } catch (error) {
-      console.log(error);
-    }
-  },
-  updateCommittee: async body => {
-    try {
-      const r = await axios.put("http://localhost:6000/api/committee/HR", body);
-      return r;
-    } catch (error) {
+      console.log("ERROR");
       console.log(error);
     }
   },
 
-  deleteCommittees: async body => {
+  deleteCommittees: async id => {
     try {
-      const resp = await axios.delete(
-        "http://localhost:6000/api/committee/commTest",
-        body
+      const comm = await axios.delete(
+        `http://localhost:6000/api/committee/` + id
       );
-      return resp;
+      console.log(comm);
+      return comm;
     } catch (error) {
       console.log(error);
     }
