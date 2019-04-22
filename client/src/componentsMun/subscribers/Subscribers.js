@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
 import { Typography, Paper, CardContent, Card } from "@material-ui/core";
@@ -61,7 +61,11 @@ class Subscribers extends React.Component {
                     <Paper>
                       <Card>
                         <CardContent>
-                          <Typography variant="h6" component="h2" color="primary">
+                          <Typography
+                            variant="h6"
+                            component="h2"
+                            color="primary"
+                          >
                             {"Subscriber Name: " + subscriber.name} <br />
                             {"Email: " + subscriber.email} <br />
                           </Typography>
@@ -71,9 +75,7 @@ class Subscribers extends React.Component {
                   </div>
                 ))}
               </Collapsible>
-            ) : null
-            }
-
+            ) : null}
           </ul>
         }
         <Modal.Dialog>

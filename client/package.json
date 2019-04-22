@@ -5,6 +5,8 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
+    "@voxeet/react-components": "^0.32.1",
+    "@voxeet/voxeet-web-sdk": "^1.9.3",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "icons": "^1.0.0",
@@ -19,6 +21,7 @@
     "react-bootstrap": "^1.0.0-beta.6",
     "react-collapsible": "^2.6.0",
     "react-dom": "^16.4.1",
+    "react-dropzone": "^10.1.4",
     "react-event-timeline": "^1.6.3",
     "react-instagram-embed": "^1.5.0",
     "react-notifications": "^1.4.3",

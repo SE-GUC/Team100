@@ -2,14 +2,8 @@ import React, { Component } from "react";
 //import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-
+import { Typography, Paper, CardContent, Card, CardActions } from "@material-ui/core";
 const styles = {
   card: {
     minWidth: 275
@@ -33,8 +27,8 @@ class Achievements extends Component {
 
     this.state = {
       achievements: [],
-      description: "",
-      photo: ""
+      description: ""
+      // photo: ""
     };
   }
   componentDidMount() {
@@ -48,12 +42,30 @@ class Achievements extends Component {
         console.log(this.state);
       });
   }
-
+  /*
+  handleChangeDesc = ach => {
+    this.setState({ question: ach.target.value });
+  };
+ 
+  handleSubmit1 = async ach => {
+    ach.preventDefault();
+    const updatedach = {
+      description: ach.target.description.value
+    };
+    console.log(updatedach);
+    try {
+      await axios.put(`achievements/${ach.target.getAttribute("data-index")}`, updatedach);
+      this.getAchievements();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };*/
   onDelete = e => {
     axios
       .delete(
         "http://localhost:5000/api/achievements/" +
-        e.target.getAttribute("data-index")
+          e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
@@ -66,16 +78,16 @@ class Achievements extends Component {
     this.setState({ description: event.target.value });
   };
 
-  handleChangePhoto = event => {
-    this.setState({ photo: event.target.value });
-  };
+  // handleChangePhoto = event => {
+  //   this.setState({ photo: event.target.value });
+  // };
   handleSubmit = async event => {
     event.preventDefault();
 
     const Achievement = {
-      description: this.state.description,
+      description: this.state.description
 
-      photo: this.state.photo
+      // photo: this.state.photo
     };
     console.log(Achievement);
     try {
@@ -92,51 +104,157 @@ class Achievements extends Component {
     }
   };
 
+  /*render() {
+    const { classes } = this.props;
+    const { spacing } = this.state;
+
+    return (
+      <div>
+        <h1>Achievements</h1>
+        <br />
+        <br />
+        <Grid container className={classes.root} spacing={40}>
+          <Grid
+            container
+            className={classes.demo}
+            justify="center"
+            spacing={16}
+          >
+
+            {this.state.achievements.map(ach => (
+              <Card className={Card} display="inline-block">
+                <CardContent>
+                  <div key={ach._id}>
+                    <Typography
+                      variant="body1"
+                      color="textSecondary"
+                      gutterBottom
+                    >
+
+                      Description:
+             {ach.description}
+                      <br />
+                      {/* Photo:
+             {ach.photo} }
+                    </Typography>
+                  </div>
+
+                </CardContent>
+                {localStorage.type === "mun_admin" ? (
+                  <CardActions>
+                    <Fab color="primary" aria-label="Delete" size="sm" >
+
+                      <Button onClick={this.onDelete} data-index={ach._id}>
+                        <DeleteIcon />
+                      </Button>
+                    </Fab>
+                  </CardActions>
+
+                ) : null}
+
+              </Card>
+
+            ))}
+          </Grid>
+        </Grid>
+        <br />
+        <br />
+        <br />
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible trigger="Create new achievement">
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Description:
+         <input
+                  type="text"
+                  name="description"
+                  onChange={this.handleChangeDescription}
+                />
+              </label>
+
+              {/* <label>
+          Photo:
+         <input
+            type="text"
+            name="photo"
+            onChange={this.handleChangePhoto}
+          />
+        </label> }
+              <button type="submit">Add</button>
+            </form>
+          </Collapsible>
+        ) : null}
+
+      </div>
+    );
+  }
+}*/
+
   render() {
     return (
       <div>
         <h1>Achievements</h1>
         {this.state.achievements.map(ach => (
           <div key={ach._id}>
-            <li>
-              <label>Description: </label>
-              {ach.description},<label>Photo: </label>
-              {ach.photo}
-              {
-                <button onClick={this.onDelete} data-index={ach._id}>
-                  Delete
-               </button>
-              }
-            </li>
+            <Paper>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" component="h2" color="primary">
+                    <ul>
+                      <label>Description: </label>
+                      {ach.description},<label>Photo: </label>
+                      {ach.photo}
+                    </ul>
+                  </Typography>
+                  {localStorage.type === "mun_admin" ? (
+                                      <CardActions>
+
+                    <button onClick={this.onDelete} data-index={ach._id}>
+                      Delete
+                    </button>
+{/*
+<form onSubmit={this.handleSubmit1} data-index={ach._id}>
+Description:<input type="text" name="description" defaultValue={ach.description} />
+<input type="submit" value="Edit" />
+</form>*/}
+</CardActions>
+
+                  ) : null}
+                </CardContent>
+              </Card>
+            </Paper>
           </div>
         ))}
-        <Collapsible trigger="Create new achievement">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Description:
-             <input
-                type="text"
-                name="description"
-                onChange={this.handleChangeDescription}
-              />
-            </label>
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible
+            
+            trigger="Create new achievement"
+          >
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Description:
+                <input
+                  type="text"
+                  name="description"
+                  onChange={this.handleChangeDescription}
+                />
+              </label>
 
-            <label>
-              Photo:
-             <input
-                type="text"
-                name="photo"
-                onChange={this.handleChangePhoto}
-              />
-            </label>
-            <button type="submit">Add</button>
-          </form>
-        </Collapsible>
+              <label>
+                Photo:
+                <input
+                  type="text"
+                  name="photo"
+                  onChange={this.handleChangePhoto}
+                />
+              </label>
+              <button type="submit">Add</button>
+            </form>
+          </Collapsible>
+        ) : null}
       </div>
     );
   }
 }
 
 export default withStyles(styles)(Achievements);
-
-

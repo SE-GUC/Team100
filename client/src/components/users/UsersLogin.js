@@ -2,8 +2,17 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
 import setAuthToken from "../../helpers/setAuthToken";
+import User from "./User";
+import Profile from "./profile";
 //import { isNull } from "util";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
+// import TextField from "@material-ui/core/TextField";
+// import MenuItem from '@material-ui/core/MenuItem';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
 class UserLogin extends Component {
   constructor(props, context) {
@@ -115,160 +124,146 @@ class UserLogin extends Component {
         alert("Password is incorrect");
       else alert(error.message);
     }
-  };
-  logout() {
-    localStorage.clear();
-  }
-  // show = event => {
-  //     event.preventDefault();
-  //     axios.get(`users/${localStorage.getItem("id")}`).then(user => {
-  //         this.setState({ user: user.data.User });
-  //         var x = user.data.User;
-  //         console.log(x);
-  //     });
-  // };
+    render() {
+        return (
 
-  // delete = event => {
-  //     event.preventDefault()
-  //     axios.delete(`users/${localStorage.getItem("id")}`).then(user => {
-  //         this.setState({ user: user.data.deletedUser })
-  //     }
-  //     )
-  //     //   console.log(response.data)
-  //     console.log("Deleted successfully")
-  //     localStorage.clear();
-  // }
-  render() {
-    // const { user } = this.state;
-    // let userProfile = '';
-    // if (user) {
-    //     userProfile = <p>
-    //         {user.name}<br />
-    //         {user.email}<br />
-    //         {user.user_type}<br />
-    //     </p>
-    // }
-    return (
-      <div>
-        {localStorage.length === 0 ? (
-          <Collapsible trigger="Login">
-            <form onSubmit={this.handleSubmit}>
-              <label>
-                Email:
-                <input
-                  type="text"
-                  name="email"
-                  onChange={this.handleEnterEmail}
-                />
-              </label>
-              <label>
-                Password:
-                <input
-                  type="password"
-                  name="password"
-                  onChange={this.handleEnterPassword}
-                />
-              </label>
-              <button type="submit">Login</button>
-            </form>
-          </Collapsible>
-        ) : null}
-        {localStorage.length === 0 ? (
-          <Collapsible trigger="Register">
-            <Modal.Dialog>
-              <Modal.Header>
-                <Modal.Title>Sign up!</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <InputGroup size="sm" className="Register">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Email
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    onChange={this.handleChangeEmail}
-                    required={true}
-                    aria-label="Small"
-                    aria-describedby="inputGroup-sizing-sm"
-                  />
-                </InputGroup>
-                <br />
-                <InputGroup size="sm" className="Users">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Password
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    onChange={this.handleChangePassword}
-                    required={true}
-                    type="password"
-                    aria-label="Small"
-                    aria-describedby="inputGroup-sizing-sm"
-                  />
-                </InputGroup>
-                <br />
-                <InputGroup size="sm" className="Users">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Name
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    onChange={this.handleChangeName}
-                    required={true}
-                    aria-label="Small"
-                    aria-describedby="inputGroup-sizing-sm"
-                  />
-                </InputGroup>
-                <br />
-                <InputGroup size="sm" className="Users">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Major
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    onChange={this.handleChangeMajor}
-                    required={true}
-                    aria-label="Small"
-                    aria-describedby="inputGroup-sizing-sm"
-                  />
-                </InputGroup>
-                <br />
-                <InputGroup size="sm" className="Users">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      GUCIAN
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    onChange={this.handleChangeGucian}
-                    required={true}
-                    aria-label="Small"
-                    aria-describedby="inputGroup-sizing-sm"
-                  />
-                </InputGroup>
-                <br />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="warning" onClick={this.register}>
-                  Register
-                </Button>
-              </Modal.Footer>
-            </Modal.Dialog>
-          </Collapsible>
-        ) : null}
+            <div>
+                {localStorage.length === 1 ? (
+                    <Collapsible trigger="Login">
+                        <form onSubmit={this.handleSubmit}>
+                            <label>
+                                Email:
+                        <input
+                                    type="text"
+                                    name="email"
+                                    onChange={this.handleEnterEmail}
+                                />
+                            </label>
+                            <label>
+                                Password:
+                        <input
+                                    type="password"
+                                    name="password"
+                                    onChange={this.handleEnterPassword}
+                                />
+                            </label>
+                            <button type="submit">Login</button>
+                        </form>
+                    </Collapsible>
+                ) : null}
+                {localStorage.length === 1 ? (
+                    <Collapsible trigger="Register">
 
-        {localStorage.length > 0 ? (
-          <form onSubmit={this.logout}>
-            <label>
-              <button type="submit">Logout</button>
-            </label>
-          </form>
-        ) : null}
-        {/* {localStorage.length > 0 ? (
+                        <Modal.Dialog>
+                            <Modal.Header>
+                                <Modal.Title>Sign up!</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <InputGroup size="sm" className="Register">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Email
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeEmail}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Password
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangePassword}
+                                        required={true}
+                                        type="password"
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Name
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeName}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            Major
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeMajor}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup>
+                                <br />
+                                {/* <InputGroup size="sm" className="Users">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroup-sizing-sm">
+                                            GUCIAN
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        onChange={this.handleChangeGucian}
+                                        required={true}
+                                        aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                    />
+                                </InputGroup> */}
+                                <FormLabel component="legend">Gucian</FormLabel>
+                                <RadioGroup
+                                    aria-label="Gucian"
+                                    name="Gucian"
+                                    value={this.state.gucian}
+                                    onChange={this.handleChangeGucian}
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="True" />
+                                    <FormControlLabel value="false" control={<Radio />} label=" False" />
+
+                                </RadioGroup>
+                                <br />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="warning" onClick={this.register}>
+                                    Register
+                                </Button>
+                            </Modal.Footer>
+                        </Modal.Dialog>
+                    </Collapsible>
+                ) : null}
+
+                {localStorage.length > 1 ? (
+                    
+                    <form onSubmit={this.logout}>
+                        <label>
+                        <Profile /> <br />
+      <br />
+      <User />
+                            <button type="submit">Logout</button>
+                        </label>
+                    </form>
+                ) : null
+                }
+                {/* {localStorage.length > 0 ? (
                     <form onSubmit={this.delete}>
                         <label>
                             <button type="submit">Delete your account</button>

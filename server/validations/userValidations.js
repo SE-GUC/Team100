@@ -37,7 +37,7 @@ module.exports = {
             gucian: Joi.boolean(),
             club: Joi.string(),
             committee_type: Joi.string(),
-            //      control: Joi.boolean().required(),
+            control: Joi.boolean(),
             user_type: Joi.string()
         }
 

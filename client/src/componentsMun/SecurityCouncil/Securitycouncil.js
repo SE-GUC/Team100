@@ -8,7 +8,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Link from "@material-ui/core/Link";
 
-const styles = {
+/*const styles = {
   card: {
     minWidth: 275
   },
@@ -24,33 +24,31 @@ const styles = {
     marginBottom: 12
   }
 };
-
-class HR extends Component {
+*/
+class Securitycouncil extends Component {
   state = {
     committee: [],
     open: false
   };
   componentDidMount() {
-    //    this.refreshCommittees();
-    axios
-      .get("http://localhost:5000/api/committee/5cb1e6c2c863c13bd8d08522")
-      .then(res => {
-        console.log(res.data);
-        this.setState({
-          committee: res.data.data
-        });
+    //   this.refreshCommittees();
+    axios.get("/committee/5cbdd0555cc06466f490def7").then(res => {
+      console.log(res.data);
+      this.setState({
+        committee: res.data.data
       });
+    });
   }
-  // refreshCommittees() {
 
-  //     fetch("http://localhost:9000/api/committee/5cb06815b9e4a20a0ca96e83")
-  //       .then(res => {
-  //         return res.json();
-  //       })
-  //       .then(c => {
-  //         this.setState({ c: c.data });
-  //       });
-  //   }
+  handleChangeEvents = c => {
+    this.setState({ events: c.target.value });
+  };
+  handleChangePage = c => {
+    this.setState({ page: c.target.value });
+  };
+  handleChangeMem = c => {
+    this.setState({ team_members: c.target.value });
+  };
 
   handleChangeName = c => {
     this.setState({ name: c.target.value });
@@ -67,20 +65,19 @@ class HR extends Component {
     this.setState({ open: false });
   };
 
-  handleSubmit = async c => {
-    c.preventDefault();
+  handleSubmit = id => {
+    console.log(id);
+    // c.preventDefault();
     const updatedCommittee = {
-      name: c.target.name.value,
-      description: c.target.description.value,
-      team_members: c.target.team_members.value
+      name: this.state.name,
+      description: this.state.description,
+      team_members: this.state.team_members,
+      events: this.state.events,
+      page: this.state.page
     };
     console.log(updatedCommittee);
     try {
-      await axios.put(
-        `committee/${c.target.getAttribute("data-index")}`,
-        updatedCommittee
-      );
-      this.refreshCommittees();
+      axios.put(`committee/${id}`, updatedCommittee);
     } catch (error) {
       console.log(error);
     }
@@ -96,11 +93,18 @@ class HR extends Component {
 
     return (
       <div className="container">
-        <h1 color="#003255" className="center">
-          HR Committee
+        <h1
+          style={{
+            color: "#343a40",
+            className: "center",
+            backgroundColor: "#004085",
+            boxShadow: "inset 0 0 9px 5px black"
+          }}
+        >
+          {committeeName}
         </h1>
 
-        <Link component="button" variant="body1">
+        <Link component="button" variant="body1" href="./{committeePage}">
           {committeePage}
         </Link>
 
@@ -135,30 +139,50 @@ class HR extends Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        <form onSubmit={this.handleSubmit} data-index={committee.id}>
-          Name: <input type="text" name="name" defaultValue={committee.name} />
-          Description:
-          <input
-            type="text"
-            name="description"
-            defaultValue={committee.description}
-          />
-          Page:
-          <input type="text" name="page" defaultValue={committee.page} />
-          Events:
-          <input type="text" name="events" defaultValue={committee.events} />
-          <br />
-          Team Members:
-          <input
-            type="text"
-            name="team_members"
-            defaultValue={committee.team_members}
-          />
-          <br />
-          <input type="submit" value="Update" />
-        </form>
+        {localStorage.type === "mun_admin" ? (
+          <form onSubmit={this.handleSubmit(committee._id)}>
+            Name:{" "}
+            <input
+              type="text"
+              name="name"
+              defaultValue={committee.name}
+              onChange={this.handleChangeName}
+            />
+            Description:
+            <input
+              type="text"
+              name="description"
+              defaultValue={committee.description}
+              onChange={this.handleChangedescription}
+            />
+            Page:
+            <input
+              type="text"
+              name="page"
+              defaultValue={committee.page}
+              onChange={this.handleChangePage}
+            />
+            Events:
+            <input
+              type="text"
+              name="events"
+              defaultValue={committee.events}
+              onChange={this.handleChangeEvents}
+            />
+            <br />
+            Team Members:
+            <input
+              type="text"
+              name="team_members"
+              defaultValue={committee.team_members}
+              onChange={this.handleChangeMem}
+            />
+            <br />
+            <input type="submit" value="Update" />
+          </form>
+        ) : null}
       </div>
     );
   }
 }
-export default HR;
+export default Securitycouncil;

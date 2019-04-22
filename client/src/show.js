@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ShowMessage from "./componentsMun/ShowMessage/ShowMessage";
 import "./App.css";
 const Show = () => {

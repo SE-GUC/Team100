@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import "./Events.css";
 import { Timeline, TimelineEvent } from "react-event-timeline";
-import { Typography, Paper, CardContent, CardActions, Button, Card, Fab } from "@material-ui/core";
+import {
+  Typography,
+  Paper,
+  CardContent,
+  CardActions,
+  Button,
+  Card,
+  Fab
+} from "@material-ui/core";
 import Rating from "material-ui-rating";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
@@ -213,70 +221,72 @@ class Events extends Component {
 
   changeValue = async id => {
     this.handleShow();
-    await this.setState({ x: id })
+    await this.setState({ x: id });
     // console.log(this.state.x)
-  }
+  };
 
   render() {
     return (
       <div>
         <h2>Events</h2>
-        <Collapsible
-          trigger={
-            <Fab color="primary" aria-label="Add">
-              <AddIcon />
-            </Fab>
-          }
-        >
-          <form onSubmit={this.onCreate}>
-            <label>
-              Name:
-              <input type="text" name="name" onChange={this.changeName} />
-            </label>
-            <label>
-              Club:
-              <input type="text" name="club" onChange={this.changeClub} />
-            </label>
-            <label>
-              Year:
-              <input type="text" name="year" onChange={this.changeYear} />
-            </label>
-            <label>
-              Month:
-              <input type="text" name="month" onChange={this.changeMonth} />
-            </label>
-            <label>
-              Day:
-              <input type="text" name="day" onChange={this.changeDay} />
-            </label>
-            <label>
-              Location:
-              <input
-                type="text"
-                name="location"
-                onChange={this.changeLocation}
-              />
-            </label>
-            <label>
-              Description:
-              <input
-                type="text"
-                name="description"
-                onChange={this.changeDescription}
-                // defaultValue="Coming soon"
-              />
-            </label>
-            <label>
-              Committee:
-              <input
-                type="text"
-                name="committee"
-                onChange={this.changeCommittee}
-              />
-            </label>
-            <input type="submit" value="Add" />
-          </form>
-        </Collapsible>
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible
+            trigger={
+              <Fab color="primary" aria-label="Add">
+                <AddIcon />
+              </Fab>
+            }
+          >
+            <form onSubmit={this.onCreate}>
+              <label>
+                Name:
+                <input type="text" name="name" onChange={this.changeName} />
+              </label>
+              <label>
+                Club:
+                <input type="text" name="club" onChange={this.changeClub} />
+              </label>
+              <label>
+                Year:
+                <input type="text" name="year" onChange={this.changeYear} />
+              </label>
+              <label>
+                Month:
+                <input type="text" name="month" onChange={this.changeMonth} />
+              </label>
+              <label>
+                Day:
+                <input type="text" name="day" onChange={this.changeDay} />
+              </label>
+              <label>
+                Location:
+                <input
+                  type="text"
+                  name="location"
+                  onChange={this.changeLocation}
+                />
+              </label>
+              <label>
+                Description:
+                <input
+                  type="text"
+                  name="description"
+                  onChange={this.changeDescription}
+                  // defaultValue="Coming soon"
+                />
+              </label>
+              <label>
+                Committee:
+                <input
+                  type="text"
+                  name="committee"
+                  onChange={this.changeCommittee}
+                />
+              </label>
+              <input type="submit" value="Add" />
+            </form>
+          </Collapsible>
+        ) : null}
         {
           <ul>
             {this.state.events.map(event => (
@@ -325,24 +335,28 @@ class Events extends Component {
                     </CardContent>
                     <CardActions>
                       {" "}
-                      <Fab
-                        color="primary"
-                        aria-label="Delete"
-                        onClick={() => this.onDelete(event._id)}
-                      >
-                        <DeleteIcon />
-                      </Fab>
-                      <Fab
-                        color="secondary"
-                        aria-label="Edit"
-                        onClick={()=> this.changeValue(event._id)}
-                      >
-                        <EditIcon />
-                      </Fab>
+                      {localStorage.type === "mun_admin" ? (
+                        <Fab
+                          color="primary"
+                          aria-label="Delete"
+                          onClick={() => this.onDelete(event._id)}
+                        >
+                          <DeleteIcon />
+                        </Fab>
+                      ) : null}
+                      {localStorage.type === "mun_admin" ? (
+                        <Fab
+                          color="secondary"
+                          aria-label="Edit"
+                          onClick={() => this.changeValue(event._id)}
+                        >
+                          <EditIcon />
+                        </Fab>
+                      ) : null}
                     </CardActions>
                   </Card>
                 </Paper>
-                
+
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
                     Fill in the following boxes
@@ -462,7 +476,6 @@ class Events extends Component {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-                
               </div>
             ))}
           </ul>
