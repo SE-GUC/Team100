@@ -9,12 +9,15 @@ const functions = {
     return FAQ;
   },
   // create a new Faq
-  createFaq: async () => {
-    const FAQ = await axios.post("http://localhost:6000/api/faqs", {
-      question: "who is the speaker today?",
-      answer: "Ahmed desoky"
-    });
-    return FAQ;
+  createFaq: async body => {
+    try {
+      return (response = await axios.post(
+        "http://localhost:6000/api/faqs/",
+        body
+      ));
+    } catch (error) {
+      console.log(error);
+    }
   },
   // update an answer of a faq
   updateAnswerFaqs: async () => {
@@ -37,10 +40,8 @@ const functions = {
     return FAQ;
   },
   // delete a faq
-  deleteFaqs: async () => {
-    const FAQ = await axios.delete(
-      "http://localhost:6000/api/faqs/5c95eb0c70886d18f46efdc3"
-    );
+  deleteFaqs: async id => {
+    const FAQ = await axios.delete("http://localhost:6000/api/faqs/" + id);
     return FAQ;
   },
   // get all faqs

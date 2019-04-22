@@ -1,45 +1,43 @@
 const funcs = require("../fn/faqsFn");
+const Faq = require("../models/Faq");
 
-test(`get a certain faq `, async done => {
-  const response = await funcs.getCertainFaqs();
-  expect(response.data.data.question).toEqual("who is the speaker today?");
-  expect(response.data.data.answer).toEqual("Ahmed desoky");
+test("get faqs", async done => {
+  const faqBefore = await funcs.getFaqs();
+
+  const newComm = {
+    question: "testinggg",
+    answer: "ndnlan"
+  };
+  const newF = await funcs.createFaq(newComm);
+  const faqID = newF.data.Faq._id;
+  const getF = Faq.findOne({ _id: faqID });
+  const faqAfter = await funcs.getFaqs();
+
+  expect(faqAfter.data.data.length).toEqual(faqBefore.data.data.length + 1);
+  expect(getF).toBeDefined();
+
+  // await funcs.deleteCommittees(CommID);
+
   done();
-}),
-  test(`get all Faqs`, async done => {
-    const response = await funcs.getFaqs();
-    const res = response.data.data.length;
-    expect(response.data.data.length).toBe(res);
-    done();
-  }),
-  test(`create a new faq`, async done => {
-    expect.assertions(2);
-    const response = await funcs.createFaq();
-    console.log(response);
-    expect(response.data.Faq.question).toEqual("who is the speaker today?");
-    expect(response.data.Faq.answer).toEqual("Ahmed desoky");
-    done();
-  }),
-  test(`update a question of  Faq`, async done => {
-    expect.assertions(1);
-    const response = await funcs.updateQuestionFaqs();
-    expect(response.data.Faq.question).toEqual(
-      "what are the committees in MUN club?"
-    );
-    done();
-  }),
-  test(`update an answer of  Faq`, async done => {
-    expect.assertions(1);
-    const response = await funcs.updateAnswerFaqs();
-    expect(response.data.Faq.answer).toEqual("design and R&D");
+});
 
-    done();
-  });
-test(`delete a certain faq `, async done => {
-  const r1 = await funcs.getFaqs();
-  const res = r1.data.data.length - 1;
-  const response = await funcs.deleteFaqs();
-  const r2 = await funcs.getFaqs();
-  expect(r2.data.data.length).toEqual(res + 1);
+test("create FAQS", async done => {
+  expect.assertions(3);
+  const comm = {
+    question: "when is ur next event?",
+    answer: "next week"
+  };
+  const faq = await funcs.createFaq(comm);
+  console.log(Error);
+  const faqID = faq.data.Faq._id;
+  console.log(faq.data.Faq);
+
+  const getF = Faq.findOne({ _id: faqID });
+  expect(faq.data.Faq.question).toEqual(comm.question);
+  expect(faq.data.Faq.answer).toEqual(comm.answer);
+  expect(getF).toBeDefined();
+
+  await funcs.deleteFaqs(faqID);
+
   done();
 });
