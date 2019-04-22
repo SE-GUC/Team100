@@ -5,7 +5,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { Fab } from "@material-ui/core";
 import Collapsible from "react-collapsible";
 import TextField from "@material-ui/core/TextField";
-import Icon from "@material-ui/core/Icon";
+//import Icon from "@material-ui/core/Icon";
 import editicon from "../../images/editicon.png";
 import Dropzone from "react-dropzone";
 

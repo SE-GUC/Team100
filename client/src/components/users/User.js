@@ -4,10 +4,10 @@ import axios from "../../axiosInstance";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Collapsible from "react-collapsible";
 import TextField from "@material-ui/core/TextField";
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 // import UserAdd from "./UserAdd"
@@ -25,7 +25,7 @@ class User extends React.Component {
 
     this.state = {
       show: false,
-      users: []
+      users: [],
     };
   }
 
@@ -88,7 +88,8 @@ class User extends React.Component {
       club: this.state.club,
       committee_type: this.state.committee_type,
       control: this.state.control,
-      gucian: this.state.gucian
+      gucian: this.state.gucian,
+      control: this.state.control,
     };
     console.log(User);
     try {
@@ -166,7 +167,6 @@ class User extends React.Component {
                   variant="outlined"
                 />
 
-
                 <FormLabel component="legend">Gucian</FormLabel>
                 <RadioGroup
                   aria-label="Gucian"
@@ -186,8 +186,8 @@ class User extends React.Component {
                   onChange={this.handleChangeUserType}
                 >
                   <FormControlLabel value="user" control={<Radio />} label="User" />
-                  <FormControlLabel value="mun_admin" control={<Radio />} label="MUN member" />
-                  <FormControlLabel value="mun_member" control={<Radio />} label="MUN admin" />
+                  <FormControlLabel value="mun_member" control={<Radio />} label="MUN member" />
+                  <FormControlLabel value="mun_admin" control={<Radio />} label="MUN admin" />
 
                 </RadioGroup>
                 <FormLabel component="legend">Control</FormLabel>
@@ -202,8 +202,6 @@ class User extends React.Component {
 
                 </RadioGroup>
 
-
-
                 <Button
                   variant="dark"
                   onClick={() => this.handleSubmit()}
@@ -213,15 +211,23 @@ class User extends React.Component {
               </form>
             </Collapsible>
 
-            {/* <UserAdd> </UserAdd> */}
           </Modal.Header>
           <Modal.Body>
             <ListGroup>
               {this.state.users.map(user =>
                 (<ListGroup.Item>
                   <Image style={{ height: "10rem", width: "10rem" }} src={user.photo} roundedCircle />
-                  <h1>{user.name}</h1> <h3>Email: {user.email}</h3><h3>Club: {user.club}</h3><h3>Major: {user.major}</h3><h3>Telephone: {user.telephone}</h3><h3>User type: {user.user_type}</h3><h3>Committe: {user.committe_type}</h3><h3>Control: {user.control}</h3>
-                  {/* <Button variant="danger" onClick={() => this.deleteUser(user._id)}>Delete</Button> */}
+                  <h1>{user.name}</h1>
+                  <h3> {user.email}</h3>
+                  <h3>{user.club}</h3>
+                  <h3>{user.major}</h3>
+                  <h3>{user.telephone}</h3>
+                  <h3>{user.user_type}</h3>
+                  <h3>{user.committe_type}</h3>
+                  {user.user_type === "mun_member" ? (
+                    <h3>Control: {this.state.control}</h3>
+                  ) : null}
+
                   <Fab
                     color="secondary"
                     aria-label="Delete"
@@ -231,7 +237,7 @@ class User extends React.Component {
                     <DeleteIcon />
                   </Fab>
                   {user.user_type === "mun_member" ? (
-                    <Button variant="success" onClick={() => this.updateUser(user._id)}>Authorize  as an admin</Button>
+                    <Button variant="success" onClick={() => this.updateUser(user._id)}>Authorize as an admin</Button>
                   ) : null}
                   {user.user_type === "mun_member" ? (
                     <Button variant="dark" onClick={() => this.updateUser1(user._id)}>Unauthorize </Button>
@@ -246,9 +252,6 @@ class User extends React.Component {
             <Button variant="secondary" onClick={this.handleClose}>
               Close
             </Button>
-            {/* <Button variant="primary" onClick={this.handleClose}>
-              Save Changes
-            </Button> */}
           </Modal.Footer>
         </Modal>
       </>
@@ -263,12 +266,18 @@ class User extends React.Component {
   updateUser(id) {
     axios.put(`/users/update/${id}`, { control: "true" }).then(res => {
       console.log(res.data);
+      this.setState({
+        control: "true"
+      })
       this.refreshUsers();
     });
   }
   updateUser1(id) {
     axios.put(`/users/update/${id}`, { control: "false" }).then(res => {
       console.log(res.data);
+      this.setState({
+        control: "false"
+      })
       this.refreshUsers();
     });
   }
