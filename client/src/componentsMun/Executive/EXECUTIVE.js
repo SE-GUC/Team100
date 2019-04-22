@@ -62,7 +62,7 @@ class EXECUTIVE extends Component {
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios.get("/committee/5cbda7931c9d4400008b55be      ").then(res => {
+    axios.get("/committee/5cbdd0555cc06466f490def6").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data

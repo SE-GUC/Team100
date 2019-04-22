@@ -4,6 +4,13 @@ import Collapsible from "react-collapsible";
 import setAuthToken from "../../helpers/setAuthToken";
 //import { isNull } from "util";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
+// import TextField from "@material-ui/core/TextField";
+// import MenuItem from '@material-ui/core/MenuItem';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
 class UserLogin extends Component {
     constructor(props, context) {
@@ -201,7 +208,7 @@ class UserLogin extends Component {
                                     />
                                 </InputGroup>
                                 <br />
-                                <InputGroup size="sm" className="Users">
+                                {/* <InputGroup size="sm" className="Users">
                                     <InputGroup.Prepend>
                                         <InputGroup.Text id="inputGroup-sizing-sm">
                                             GUCIAN
@@ -213,7 +220,18 @@ class UserLogin extends Component {
                                         aria-label="Small"
                                         aria-describedby="inputGroup-sizing-sm"
                                     />
-                                </InputGroup>
+                                </InputGroup> */}
+                                <FormLabel component="legend">Gucian</FormLabel>
+                                <RadioGroup
+                                    aria-label="Gucian"
+                                    name="Gucian"
+                                    value={this.state.gucian}
+                                    onChange={this.handleChangeGucian}
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="True" />
+                                    <FormControlLabel value="false" control={<Radio />} label=" False" />
+
+                                </RadioGroup>
                                 <br />
                             </Modal.Body>
                             <Modal.Footer>
