@@ -17,8 +17,10 @@ import MV from './componentsMun/aboutus/MV';
 import livestream from './componentsMun/livestream/livestream';
 import Livefeed from './componentsMun/livefeed/Livefeed';
 import aboutus from './componentsMun/aboutus/aboutus';
+import show from "./show";
+
 if (localStorage.token) {
-  setAuthToken(localStorage.token)
+  setAuthToken(localStorage.token);
 }
 
 class App extends Component {
@@ -29,13 +31,12 @@ class App extends Component {
         {/* <Header/>  */}
         <MenuAppBar />
         <div className="nav ">
-          { /* <NavLink exact to="/" activeClassName="active">
+          {/* <NavLink exact to="/" activeClassName="active">
             AWG Hub
           </NavLink>
           <NavLink to="/componentsMun" activeClassName="active">
             Mun Club
     </NavLink>*/}
-
         </div>
         <Route
           render={({ location }) => (
