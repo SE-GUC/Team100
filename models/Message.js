@@ -21,7 +21,7 @@ const messagesSchema = new Schema({
   },
   time: {
     type: Date,
-    required: true
+    required: false
   }
 });
 
