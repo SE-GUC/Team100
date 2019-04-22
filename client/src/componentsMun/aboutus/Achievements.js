@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
 import { withStyles } from "@material-ui/core/styles";
-import { Typography, Paper, CardContent, Card } from "@material-ui/core";
+import { Typography, Paper, CardContent, Card, CardActions } from "@material-ui/core";
 const styles = {
   card: {
     minWidth: 275
@@ -42,7 +42,25 @@ class Achievements extends Component {
         console.log(this.state);
       });
   }
-
+  /*
+  handleChangeDesc = ach => {
+    this.setState({ question: ach.target.value });
+  };
+ 
+  handleSubmit1 = async ach => {
+    ach.preventDefault();
+    const updatedach = {
+      description: ach.target.description.value
+    };
+    console.log(updatedach);
+    try {
+      await axios.put(`achievements/${ach.target.getAttribute("data-index")}`, updatedach);
+      this.getAchievements();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };*/
   onDelete = e => {
     axios
       .delete(
@@ -182,9 +200,18 @@ class Achievements extends Component {
                     </ul>
                   </Typography>
                   {localStorage.type === "mun_admin" ? (
+                                      <CardActions>
+
                     <button onClick={this.onDelete} data-index={ach._id}>
                       Delete
                     </button>
+{/*
+<form onSubmit={this.handleSubmit1} data-index={ach._id}>
+Description:<input type="text" name="description" defaultValue={ach.description} />
+<input type="submit" value="Edit" />
+</form>*/}
+</CardActions>
+
                   ) : null}
                 </CardContent>
               </Card>

@@ -237,6 +237,8 @@ class Committees extends Component {
               backgroundColor: "#3F51B5",
               color: "#f4f4f4"
             }}
+            onClick={() => history.push("/show")}
+
           >
             {" "}
             Show Messages{" "}
