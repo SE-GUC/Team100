@@ -13,7 +13,12 @@ import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from "../src/helpers/setAuthToken";
 import show from "./show";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import securitycouncil from "./securitycouncil";
+import generalassembly from "./generalassembly";
+import secretaryoffice from "./secretaryoffice";
+import executive from "./executive";
 import textfield from "./textfield";
 
 if (localStorage.token) {
@@ -23,6 +28,8 @@ if (localStorage.token) {
 class App extends Component {
   render() {
     return (
+      <MuiThemeProvider>
+
       <div className="App">
         {/* <Header/>  */}
         <MenuAppBar />
@@ -41,7 +48,10 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={components} />
                   <Route path="/componentsMun" component={componentsMun} />
-                  <Route path="/show" component={show} />
+                  <Route path="/secretaryoffice" component={secretaryoffice} />
+                  <Route path="/securitycouncil" component={securitycouncil} />
+                  <Route path="/generalassembly" component={generalassembly} />
+                  <Route path="/executive" component={executive} />
 
                   <Route path="/textfield" component={textfield} />
                 </Switch>
@@ -50,6 +60,8 @@ class App extends Component {
           )}
         />
       </div>
+      </MuiThemeProvider>
+
     );
   }
 }
