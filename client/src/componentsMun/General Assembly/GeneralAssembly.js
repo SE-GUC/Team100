@@ -57,14 +57,12 @@ class GeneralAssembly extends Component {
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios
-      .get("http://localhost:5000/api/committee/5cbcccc91c9d4400003a39ad")
-      .then(res => {
-        console.log(res.data);
-        this.setState({
-          committee: res.data.data
-        });
+    axios.get("/committee/5cbcccc91c9d4400003a39ad").then(res => {
+      console.log(res.data);
+      this.setState({
+        committee: res.data.data
       });
+    });
   }
 
   handleChangeName = c => {

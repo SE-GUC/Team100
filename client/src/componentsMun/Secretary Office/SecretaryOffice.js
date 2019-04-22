@@ -31,14 +31,12 @@ class SecretaryOffice extends Component {
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios
-      .get("http://localhost:5000/api/committee/5cbccbb41c9d4400003a39ab")
-      .then(res => {
-        console.log(res.data);
-        this.setState({
-          committee: res.data.data
-        });
+    axios.get("/committee/5cbccbb41c9d4400003a39ab").then(res => {
+      console.log(res.data);
+      this.setState({
+        committee: res.data.data
       });
+    });
   }
 
   handleChangeName = c => {

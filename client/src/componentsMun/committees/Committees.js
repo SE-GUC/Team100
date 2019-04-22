@@ -67,7 +67,7 @@ class Committees extends Component {
     open: false
   };
   componentDidMount() {
-    axios.get("http://localhost:5000/api/committee").then(res => {
+    axios.get("/committee").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data
@@ -127,7 +127,7 @@ class Committees extends Component {
 
   onDelete = e => {
     axios
-      .delete("/api/committee/" + e.target.getAttribute("data-index"))
+      .delete("/committee/" + e.target.getAttribute("data-index"))
       .then(res => {
         console.log();
       })
