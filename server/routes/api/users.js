@@ -80,7 +80,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/add', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    if (req.user.user_type === "mun_admin") {
+    if (req.user.user_type === "mun_admin" || req.user.user_type === "hub_admin") {
         try {
             const isValidated = validator.registerValidation(req.body);
             if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message });

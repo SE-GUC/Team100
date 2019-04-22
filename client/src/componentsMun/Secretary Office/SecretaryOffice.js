@@ -31,7 +31,7 @@ class SecretaryOffice extends Component {
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios.get("/committee/5cbda7d61c9d4400008b55bf").then(res => {
+    axios.get("/committee/5cbdd1eece6d31574d6b0c27").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import axios from "../../axiosInstance"
 //import { isNull } from "util";
-import {  Form , Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 class SearchTool extends Component {
   state = {
@@ -100,10 +100,10 @@ class SearchTool extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-        <input type="text" name="name" onChange={this.handleChange} />
-      <Button type="submit" variant="outline-success">Search</Button>
-    </Form>
-       
+          <input type="text" name="name" onChange={this.handleChange} />
+          <Button type="submit" variant="outline-success">Search</Button>
+        </Form>
+
         <div>
           <h1> </h1>
           {this.state.x}

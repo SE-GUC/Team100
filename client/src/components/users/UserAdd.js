@@ -1,245 +1,219 @@
 // import React, { Component } from "react";
+// import { Modal, Button, ListGroup, Image } from "react-bootstrap";
 // import axios from "../../axiosInstance";
+// import DeleteIcon from "@material-ui/icons/Delete";
+// import { Fab } from "@material-ui/core";
 // import Collapsible from "react-collapsible";
-// import DropdownButton from 'react-bootstrap/DropdownButton'
-// //import { isNull } from "util";
-// import { Modal, Button, InputGroup, FormControl, Dropdown, DropdownItem } from "react-bootstrap";
-// import DropdownMenu from "react-bootstrap/DropdownMenu";
-// import ToggleButton from 'react-bootstrap/ToggleButton'
-// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-// class UserAdd extends Component {
+// import TextField from "@material-ui/core/TextField";
+// import MenuItem from '@material-ui/core/MenuItem';
+// import Radio from '@material-ui/core/Radio';
+// import RadioGroup from '@material-ui/core/RadioGroup';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormLabel from '@material-ui/core/FormLabel';
+
+// class UserAdd extends React.Component {
 //     constructor(props, context) {
 //         super(props, context);
 
 //         this.state = {
-//             user: {},
-//             id: "",
+//             show: false,
 //             name: "",
-//             user_type: "",
+//             email: "",
+//             club: "mun",
 //             major: "",
 //             committee_type: "",
-//             gucian: "",
-//             control: "",
-//             password: "",
-//             club: "",
-//             email: "",
-//             Comm: []
+//             user_type: "",
+//             control: false,
+//             gucian: ""
 //         };
 //     }
-//     getComm() {
-//         axios
-//             .get("/committee")
-//             .then(res => this.setState({ Comm: res.data.data }))
-//             .catch(err => console.log(err));
+//     refreshUser() {
+//         axios.get(`users/${localStorage.getItem("id")}`).then(res => {
+//             this.setState({
+//                 photo: res.data.User.photo,
+//                 name: res.data.User.name,
+//                 email: res.data.User.email,
+//                 telephone: res.data.User.telephone,
+//                 club: res.data.User.club,
+//                 committee_type: res.data.User.committee_type,
+//                 major: res.data.User.major,
+//                 birthdate: res.data.User.birthdate,
+//                 user_type: res.data.User.user_type,
+//                 control: res.data.User.control,
+//                 gucian: res.data.User.gucian
+//             });
+//             console.log(
+//                 this.state.name,
+//                 this.state.photo,
+//                 this.state.major,
+//                 this.state.club,
+//                 this.state.email,
+//                 this.state.telephone,
+//                 this.state.committee_type,
+//                 this.state.user_type,
+//                 this.state.birthdate,
+//                 this.state.control,
+//                 this.state.gucian
+//             );
+//         });
 //     }
-//     componentDidMount() {
-//         this.getComm();
-//     }
-//     changeName = event => {
+
+//     handleChangeName = event => {
 //         this.setState({ name: event.target.value });
 //     };
-//     changeEmail = event => {
+//     handleChangeEmail = event => {
 //         this.setState({ email: event.target.value });
 //     };
-//     changePassword = event => {
+//     handleChangePassword = event => {
 //         this.setState({ password: event.target.value });
 //     };
-//     changeMajor = event => {
+//     handleChangeTelephone = event => {
+//         this.setState({ telephone: event.target.value });
+//     };
+//     handleChangeClub = event => {
+//         this.setState({ club: event.target.value });
+//     };
+//     handleChangeCommitte = event => {
+//         this.setState({ committee_type: event.target.value });
+//     };
+//     handleChangeMajor = event => {
 //         this.setState({ major: event.target.value });
 //     };
-//     changeGucian = event => {
-//         this.setState({ gucian: event });
+//     handleChangeGucian = event => {
+//         this.setState({ gucian: event.target.value });
 //     };
-//     // changeClub = event => {
-//     //     this.setState({ gucian: event });
-//     // };
-//     changeUsertype = event => {
-//         if (event === "Mun admin")
-//             this.setState({ user_type: "mun_admin" });
-//         if (event === "Mun member")
-//             this.setState({ user_type: "mun_member" });
+//     handleChangeControl = event => {
+//         this.setState({ control: event.target.value });
 //     };
-//     // changeCommittee = event => {
-//     //     this.setState({ committee_type: event.target.value });
-//     // };
-//     changeControl = event => {
-//         this.setState({ control: event });
-//     };
-//     handleChangeComm = value => {
-//         this.setState({ committee: value });
+//     handleChangeUserType = event => {
+//         this.setState({ user_type: event.target.value });
 //     };
 
-//     add = async event => {
-//         event.preventDefault()
-//         const user = {
-//             password: this.state.password,
-//             email: this.state.email,
+//     handleSubmit = async event => {
+//         const User = {
 //             name: this.state.name,
-//             //club: this.state.club,
+//             email: this.state.email,
 //             major: this.state.major,
-//             gucian: this.state.gucian,
-//             user_type: this.state.type,
+//             user_type: this.state.user_type,
+//             password: this.state.password,
+//             club: this.state.club,
+//             committee_type: this.state.committee_type,
 //             control: this.state.control,
-//             committee: this.state.committee
-//         }
+//             gucian: this.state.gucian
+//         };
+//         console.log(User);
 //         try {
-//             console.log(process.env.REACT_APP_BASE_URL);
-//             await axios.post(`/users/add`, user);
-//             console.log("Successfully added")
+//             await axios.post(`users/add`, User).then(res => {
+//                 this.refreshUser();
+//                 console.log("Added successfully")
+//             });
 //         } catch (error) {
 //             console.log(error);
 //         }
-//     }
+//     };
 
 //     render() {
 //         return (
-//             <div>
-//                 {localStorage.type === "mun_admin" ? (
-//                     <Collapsible trigger="Add user">
-//                         <Modal.Dialog>
-//                             <Modal.Header>
-//                                 <Modal.Title>Add a user</Modal.Title>
-//                             </Modal.Header>
-//                             <Modal.Body>
-//                                 <InputGroup size="sm" className="user">
-//                                     <InputGroup.Prepend>
-//                                         <InputGroup.Text id="inputGroup-sizing-sm">
-//                                             Email
-//                                 </InputGroup.Text>
-//                                     </InputGroup.Prepend>
-//                                     <FormControl
-//                                         onChange={this.changeEmail}
-//                                         required={true}
-//                                         aria-label="Small"
-//                                         aria-describedby="inputGroup-sizing-sm"
-//                                     />
-//                                 </InputGroup>
-//                                 <br />
-//                                 <InputGroup size="sm" className="Users">
-//                                     <InputGroup.Prepend>
-//                                         <InputGroup.Text id="inputGroup-sizing-sm">
-//                                             Password
-//                                 </InputGroup.Text>
-//                                     </InputGroup.Prepend>
-//                                     <FormControl
-//                                         onChange={this.changePassword}
-//                                         required={true}
-//                                         type="password"
-//                                         aria-label="Small"
-//                                         aria-describedby="inputGroup-sizing-sm"
-//                                     />
-//                                 </InputGroup>
-//                                 <br />
-//                                 <InputGroup size="sm" className="Users">
-//                                     <InputGroup.Prepend>
-//                                         <InputGroup.Text id="inputGroup-sizing-sm">
-//                                             Name
-//                                 </InputGroup.Text>
-//                                     </InputGroup.Prepend>
-//                                     <FormControl
-//                                         onChange={this.changeName}
-//                                         required={true}
-//                                         aria-label="Small"
-//                                         aria-describedby="inputGroup-sizing-sm"
-//                                     />
-//                                 </InputGroup>
-//                                 <br />
-//                                 <InputGroup size="sm" className="Users">
-//                                     <InputGroup.Prepend>
-//                                         <InputGroup.Text id="inputGroup-sizing-sm">
-//                                             Major
-//                                 </InputGroup.Text>
-//                                     </InputGroup.Prepend>
-//                                     <FormControl
-//                                         onChange={this.changeMajor}
-//                                         aria-label="Small"
-//                                         aria-describedby="inputGroup-sizing-sm"
-//                                     />
-//                                 </InputGroup>
-//                                 <br />
-//                                 <Dropdown>
-//                                     <Dropdown.Toggle variant="dark" id="dropdown-basic" size="sm" >
-//                                         Choose The Type Of User
-//                                      </Dropdown.Toggle>
-//                                     <Dropdown.Menu>
-//                                         <Dropdown.Item onSelect={this.changeUsertype}>Mun admin</Dropdown.Item>
-//                                         <Dropdown.Item onSelect={this.changeUsertype}>Mun member</Dropdown.Item>
-//                                     </Dropdown.Menu>
-//                                 </Dropdown>
-//                                 <br />
-//                                 {/* <InputGroup size="sm" className="Users">
-//                                     <InputGroup.Prepend>
-//                                         <InputGroup.Text id="inputGroup-sizing-sm">
-//                                             GUCIAN
-//                                 </InputGroup.Text>
-//                                     </InputGroup.Prepend>
-//                                     <FormControl
-//                                         onChange={this.changeGucian}
-//                                         required={true}
-//                                         type="boolean"
-//                                         aria-label="Small"
-//                                         aria-describedby="inputGroup-sizing-sm"
-//                                     />
-//                                 </InputGroup> */}
+//             <Collapsible trigger="Click here to add new user">
+//                 <form>
+//                     <TextField
+//                         id="outlined-name"
+//                         label="Name"
+//                         defaultValue={this.state.name}
+//                         onChange={this.handleChangeName}
+//                         margin="normal"
+//                         variant="outlined"
+//                     />
+//                     <TextField
+//                         id="outlined-name"
+//                         label="Email"
+//                         defaultValue={this.state.email}
+//                         onChange={this.handleChangeEmail}
+//                         margin="normal"
+//                         variant="outlined"
+//                     />
+//                     <TextField
+//                         id="outlined-name"
+//                         label="Password"
+//                         defaultValue={this.state.password}
+//                         onChange={this.handleChangePassword}
+//                         margin="normal"
+//                         variant="outlined"
+//                         type="password"
+//                     />
+//                     <TextField
+//                         id="outlined-name"
+//                         label="Major"
+//                         defaultValue={this.state.major}
+//                         onChange={this.handleChangeMajor}
+//                         margin="normal"
+//                         variant="outlined"
+//                     />
 
-//                                 <Dropdown>
-//                                     <Dropdown.Toggle variant="dark" id="dropdown-basic" size="sm" >
-//                                         GUCIAN
-//                                      </Dropdown.Toggle>
-//                                     <Dropdown.Menu>
-//                                         <Dropdown.Item onSelect={this.changeGucian}>true</Dropdown.Item>
-//                                         <Dropdown.Item onSelect={this.changeGucian}>false</Dropdown.Item>
-//                                     </Dropdown.Menu>
-//                                 </Dropdown>
-//                                 <br />
-//                                 <Dropdown>
-//                                     <Dropdown.Toggle variant="dark" id="dropdown-basic" size="sm" >
-//                                         Control
-//                                      </Dropdown.Toggle>
-//                                     <Dropdown.Menu>
-//                                         <Dropdown.Item onSelect={this.changeControl}>true</Dropdown.Item>
-//                                         <Dropdown.Item onSelect={this.changeControl}>false</Dropdown.Item>
-//                                     </Dropdown.Menu>
-//                                 </Dropdown>
-//                                 <br />
-//                                 <Dropdown onSelect={this.handleChangeComm}>
-//                                     <Dropdown.Toggle variant="dark" id="dropdown-basic">
-//                                         {this.state.committee ? this.state.committee : "Committees"}
-//                                     </Dropdown.Toggle>
-//                                     <Dropdown.Menu>
-//                                         {this.state.Comm.map(e1 => (
-//                                             <div key={e1._id}>
-//                                                 <li>
-//                                                     <DropdownItem eventKey={e1.name}>{e1.name}</DropdownItem>
-//                                                 </li>
-//                                             </div>
-//                                         ))}
-//                                     </Dropdown.Menu>
-//                                 </Dropdown>
-//                                 <br />
-//                                 {/* <Dropdown>
-//                                     <Dropdown.Toggle variant="dark" id="dropdown-basic" size="sm" >
-//                                         Choose the user's type
-//                                      </Dropdown.Toggle>
-//                                     <Dropdown.Menu>
-//                                         <Dropdown.Item onSelect={this.changeUsertype}>User</Dropdown.Item>
-//                                         <Dropdown.Item onSelect={this.changeUsertype}>Mun admin</Dropdown.Item>
-//                                         <Dropdown.Item onSelect={this.changeUsertype}>Mun member</Dropdown.Item>
-//                                     </Dropdown.Menu>
-//                                 </Dropdown>
-//                                 <br /> */}
-//                             </Modal.Body>
-//                             <Modal.Footer>
-//                                 <Button variant="warning" onClick={this.add}>
-//                                     Add user
-//                             </Button>
-//                             </Modal.Footer>
-//                         </Modal.Dialog>
-//                     </Collapsible>
-//                 ) : null
-//                 }
-//             </div>
+//                     <TextField
+//                         id="outlined-name"
+//                         label="Club"
+//                         defaultValue={this.state.club}
+//                         onChange={this.handleChangeClub}
+//                         margin="normal"
+//                         variant="outlined"
+//                     />
+//                     <TextField
+//                         id="outlined-name"
+//                         label="Committee"
+//                         defaultValue={this.state.committee_type}
+//                         onChange={this.handleChangeCommitte}
+//                         margin="normal"
+//                         variant="outlined"
+//                     />
 
+
+//                     <FormLabel component="legend">Gucian</FormLabel>
+//                     <RadioGroup
+//                         aria-label="Gucian"
+//                         name="Gucian"
+//                         value={this.state.gucian}
+//                         onChange={this.handleChangeGucian}
+//                     >
+//                         <FormControlLabel value="true" control={<Radio />} label="True" />
+//                         <FormControlLabel value="false" control={<Radio />} label=" False" />
+
+//                     </RadioGroup>
+//                     <FormLabel component="legend">User Type</FormLabel>
+//                     <RadioGroup
+//                         aria-label="User Type"
+//                         name="User Type"
+//                         value={this.state.user_type}
+//                         onChange={this.handleChangeUserType}
+//                     >
+//                         <FormControlLabel value="user" control={<Radio />} label="User" />
+//                         <FormControlLabel value="mun_admin" control={<Radio />} label="MUN member" />
+//                         <FormControlLabel value="mun_member" control={<Radio />} label="MUN admin" />
+
+//                     </RadioGroup>
+//                     <FormLabel component="legend">Control</FormLabel>
+//                     <RadioGroup
+//                         aria-label="Control"
+//                         name="Control"
+//                         value={this.state.control}
+//                         onChange={this.handleChangeControl}
+//                     >
+//                         <FormControlLabel value="true" control={<Radio />} label="True" />
+//                         <FormControlLabel value="false" control={<Radio />} label=" False" />
+
+//                     </RadioGroup>
+
+
+
+//                     <Button
+//                         variant="dark"
+//                         onClick={() => this.handleSubmit()}
+//                     >
+//                         Add user
+//                     </Button>
+//                 </form>
+//             </Collapsible>
 //         )
 //     }
 
