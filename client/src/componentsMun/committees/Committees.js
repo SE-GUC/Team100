@@ -137,7 +137,7 @@ class Committees extends Component {
     axios
       .delete(
         "http://localhost:5000/api/committee/" +
-          e.target.getAttribute("data-index")
+        e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
@@ -254,8 +254,8 @@ class Committees extends Component {
         );
       })
     ) : (
-      <div className="center"> No committees yet </div>
-    );
+        <div className="center"> No committees yet </div>
+      );
 
     return (
       <div className="container">
@@ -286,22 +286,26 @@ class Committees extends Component {
         )}
         {/* <h1  className="center" >Committees </h1> */}
         <h4 className="center">{committeeList}</h4>
+        {localStorage.type === "mun_admin" ? (
+          <Fab color="primary" aria-label="Add" href="/textfield">
+            <AddIcon />
+          </Fab>
+        ) : null}
 
-        <Fab color="primary" aria-label="Add" href="/textfield">
-          <AddIcon />
-        </Fab>
+        {localStorage.type === "mun_admin" ? (
+          <Button
+            href="/show"
+            className="float-left"
+            style={{
+              backgroundColor: "#3F51B5",
+              color: "#f4f4f4"
+            }}
+          >
+            {" "}
+            Show Messages{" "}
+          </Button>
+        ) : null}
 
-        <Button
-          href="/show"
-          className="float-left"
-          style={{
-            backgroundColor: "#3F51B5",
-            color: "#f4f4f4"
-          }}
-        >
-          {" "}
-          Show Messages{" "}
-        </Button>
       </div>
     );
   }
