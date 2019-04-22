@@ -67,7 +67,7 @@ class Committees extends Component {
     open: false
   };
   componentDidMount() {
-    axios.get("http://localhost:5000/api/committee").then(res => {
+    axios.get("/committee").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data
@@ -99,14 +99,6 @@ class Committees extends Component {
     this.setState({ team_members: c.target.value });
   };
 
-  // refreshCommittees() {
-
-  //   fetch("http://localhost:5000/api/committee")
-  //     .then(res => res.json())
-  //     .then(c => {
-  //       this.setState({ c: c.data });
-  //     });
-  // }
   handleChangeName = c => {
     this.setState({ name: c.target.value });
   };
@@ -135,10 +127,7 @@ class Committees extends Component {
 
   onDelete = e => {
     axios
-      .delete(
-        "http://localhost:5000/api/committee/" +
-        e.target.getAttribute("data-index")
-      )
+      .delete("/committee/" + e.target.getAttribute("data-index"))
       .then(res => {
         console.log();
       })
@@ -187,66 +176,23 @@ class Committees extends Component {
                 </CardContent>
 
                 <CardActions>
-                  <Fab
-                    color="primary"
-                    aria-label="Delete"
-                    onClick={this.onDelete}
-                    data-index={c._id}
-                  >
-                    <DeleteIcon />
-                  </Fab>
-
-                  {/* <Button color="primary" onClick={this.handleSubmit} data-index={c.name}  >
-                Update 
-                </Button> */}
-                  <div>
-                    {/* <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-          Updatee
-        </Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          onSubmit={this.handleSubmit}
-          aria-labelledby="form-dialog-title"
-          data-index={c.name}
-        >
-          <DialogTitle id="form-dialog-title">Update Committee</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To update  committee please fill in the required data
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              name="name"
-              label="Committee Name"
-              type="text"
-              onChange={this.handleChangeName}
-              fullWidth
-            />
-             <TextField
-              autoFocus
-              margin="dense"
-              id="description"
-              name="description"
-              label="Committee Description"
-              type="text"
-            onChange={this.handleChangedescription}
-              fullWidth
-            />
-            
-          </DialogContent>
-          <DialogActions>
-            <button onClick={this.handleClose} color="primary">
-              Cancel
-            </button>
-            <button onClick={this.handleSubmit} color="primary" type="submit" data-index={c.name} >
-              update
-            </button>
-          </DialogActions>
-        </Dialog> */}
-                  </div>
+                  {localStorage.type === "mun_admin" ? (
+                    <button
+                      color="primary"
+                      aria-label="Delete"
+                      onClick={this.onDelete}
+                      data-index={c._id}
+                      style={{
+                        backgroundColor: "#003255",
+                        fontWeight: "bolitald",
+                        color: "#ffffff",
+                        size: "small",
+                        blockSize: "small"
+                      }}
+                    >
+                      Delete
+                    </button>
+                  ) : null}
                 </CardActions>
               </Card>
             </Paper>
@@ -254,36 +200,49 @@ class Committees extends Component {
         );
       })
     ) : (
-        <div className="center"> No committees yet </div>
-      );
+      <div className="center"> No committees yet </div>
+    );
 
     return (
       <div className="container">
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="HR" />
-            <Tab label="PR" />
             <Tab label="Executive Office" />
+            <Tab label="Security Council" />
+            <Tab label="General Assembly" />
+            <Tab label="Secretary Office" />
           </Tabs>
         </AppBar>
+
         {value === 0 && (
           <TabContainer>
-            {" "}
-            <HR />
+            <NavLink exact to="./executive" activeClassName="active">
+              See more
+            </NavLink>
           </TabContainer>
         )}
         {value === 1 && (
           <TabContainer>
-            {" "}
-            <PR />
+            <NavLink exact to="./securitycouncil" activeClassName="active">
+              See more
+            </NavLink>
           </TabContainer>
         )}
         {value === 2 && (
           <TabContainer>
-            {" "}
-            <EXECUTIVE />{" "}
+            <NavLink exact to="./generalassembly" activeClassName="active">
+              See more
+            </NavLink>
           </TabContainer>
         )}
+        {value === 3 && (
+          <TabContainer>
+            <NavLink exact to="./secretaryoffice" activeClassName="active">
+              See more
+            </NavLink>
+          </TabContainer>
+        )}
+
         {/* <h1  className="center" >Committees </h1> */}
         <h4 className="center">{committeeList}</h4>
         {localStorage.type === "mun_admin" ? (
@@ -305,7 +264,6 @@ class Committees extends Component {
             Show Messages{" "}
           </Button>
         ) : null}
-
       </div>
     );
   }
