@@ -57,7 +57,7 @@ class GeneralAssembly extends Component {
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios.get("/committee/5cbcccc91c9d4400003a39ad").then(res => {
+    axios.get("/committee/5cbda8561c9d4400008b55c0").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data
