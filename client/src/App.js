@@ -13,6 +13,7 @@ import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from "../src/helpers/setAuthToken";
 import show from "./show";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import textfield from "./textfield";
 
@@ -23,6 +24,8 @@ if (localStorage.token) {
 class App extends Component {
   render() {
     return (
+      <MuiThemeProvider>
+
       <div className="App">
         {/* <Header/>  */}
         <MenuAppBar />
@@ -50,6 +53,8 @@ class App extends Component {
           )}
         />
       </div>
+      </MuiThemeProvider>
+
     );
   }
 }

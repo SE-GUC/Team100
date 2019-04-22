@@ -22,7 +22,7 @@ import TL from "../../components/timeline/tl";
 import Descriptions from "../descriptions/Descriptions";
 import ContactUs from "../contactus/ContactUs";
 import Library from "../library/Library";
-
+import Recruitment from '../forms/recruitment'
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -92,7 +92,7 @@ class SimpleTabs extends React.Component {
 
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/></TabContainer>}
+        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/><Recruitment/></TabContainer>}
         {value === 1 && <TabContainer><Galleries /></TabContainer>}
         {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
         {value === 3 && <TabContainer><ContactUs/></TabContainer>}

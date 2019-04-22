@@ -1,6 +1,37 @@
 import React, { Component } from 'react';
 import axios from '../../axiosInstance';
 import Collapsible from "react-collapsible";
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import CheckCircle from '@material-ui/icons/CheckCircle';
+import Fab from '@material-ui/core/Fab';
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import Button from "@material-ui/core/Button";
+
+
+const styles = {
+  card: {
+    display:'inline-block',
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 25,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+};
 
 
 class Faqs extends Component {
@@ -46,12 +77,7 @@ class Faqs extends Component {
         })
       });
   }
-  handleChangeQuestion = faq => {
-    this.setState({ question: faq.target.value });
-  };
-  handleChangeAnswer = faq => {
-    this.setState({ question: faq.target.value });
-  };
+  
   handleSubmit = async faq => {
     faq.preventDefault();
     const updatedFaq = {
@@ -99,41 +125,50 @@ class Faqs extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+    const { spacing } = this.state;
+
     return (
-      <div>
-        <h2>FAQS</h2>
-        {
-          <ul>
-            {this.state.faqs.map(faq => (
+<div>
+        <h1>FAQS</h1>
+        <br/>
+        <br/>
+
+        <Grid container className={classes.root} spacing={40}>
+        <Grid container className={classes.demo} justify="center" spacing={16}>
+        {this.state.faqs.map(faq => (
+          <Card className={Card} display='inline-block'>
+          <CardContent>
               <div key={faq._id}>
-                <li>
-                  {faq.question} {faq.answer}
-                </li>
-                <button onClick={this.onDelete} data-index={faq._id}>
-                  DELETE
-                </button>
-                <form onSubmit={this.handleSubmit} data-index={faq._id}>
+              <Typography variant="body1" color="textSecondary" gutterBottom>
+              {faq.question}
+              </Typography>
+              <Typography component="p">
+              {faq.answer}
+         </Typography>
+         </div>
+         </CardContent>
+         <CardActions>
+         <Fab color="primary" aria-label="Delete">
+                <Button onClick={this.onDelete} data-index={faq._id}>
+                <DeleteIcon/>
+                  </Button>
+                  </Fab>
+                  <form onSubmit={this.handleSubmit} data-index={faq._id}>
                   Q:<input type="text" name="question" defaultValue={faq.question} />
                   A:<input type="text" name="answer" defaultValue={faq.answer} />
-                  <input type="submit" value="Submit" />
+                  <input type="submit" value="Edit"/>
                 </form>
-              </div>
-            ))}
-          </ul>
-        }
+                </CardActions>
+                </Card>
 
-        {this.state.faqs.map(f => (
-          <div key={f._id}>
-            <li>
-              <label> Question: </label>
-              {f.question},
-              <label> Answer: </label>
-              {f.answer}
-            </li>
-          </div>))}
+))}
+</Grid>
 
-
-        <Collapsible trigger="Create a FAQ">
+</Grid>
+<br/>
+<br/>
+<Collapsible trigger="Create a FAQ">
           <form onSubmit={this.handleS}>
             <label>
               Question:
@@ -151,12 +186,22 @@ class Faqs extends Component {
                 onChange={this.handleChangeA}
               />
             </label>
-            <button type="submit">Add</button>
+            <Button type="submit">
+            <CheckCircle/>
+            </Button>
           </form>
         </Collapsible>
-      </div>
-    );
-  }
-}
+ </div>
 
-export default Faqs;
+
+
+    )
+      
+        
+}
+}
+Faqs.propTypes = {
+  classes: PropTypes.object.isRequired,
+};    
+
+export default withStyles(styles)(Faqs);

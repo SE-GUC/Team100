@@ -9,6 +9,9 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Fab from "@material-ui/core/Fab";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { Grid } from "@material-ui/core";
 
 const styles = {
   card: {
@@ -86,23 +89,58 @@ class Achievements extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+    const { spacing } = this.state;
+ 
     return (
       <div>
         <h1>Achievements</h1>
+        <br />
+       <br />
+       <Grid container className={classes.root} spacing={40}>
+         <Grid
+           container
+           className={classes.demo}
+           justify="center"
+           spacing={16}
+         >
+
         {this.state.achievements.map(ach => (
+            <Card className={Card} display="inline-block">
+            <CardContent>
           <div key={ach._id}>
-            <li>
-              <label>Description: </label>
-              {ach.description},<label>Photo: </label>
-              {ach.photo}
-              {
-                <button onClick={this.onDelete} data-index={ach._id}>
-                  Delete
-               </button>
-              }
-            </li>
-          </div>
+          <Typography
+                     variant="body1"
+                     color="textSecondary"
+                     gutterBottom
+                   >
+
+             Description:
+             {ach.description},
+             <br/>
+            Photo:
+             {ach.photo}
+             </Typography>
+             </div>
+
+             </CardContent>
+             <CardActions>
+                 <Fab color="primary" aria-label="Delete">
+             
+                <Button onClick={this.onDelete} data-index={ach._id}>
+                <DeleteIcon />
+               </Button>
+               </Fab>
+                 </CardActions>
+
+             </Card>
+
         ))}
+        </Grid>
+</Grid>
+<br/>
+<br/>
+<br/>
         <Collapsible trigger="Create new achievement">
           <form onSubmit={this.handleSubmit}>
             <label>
@@ -129,7 +167,10 @@ class Achievements extends Component {
     );
   }
 }
-
+Achievements.propTypes = {
+  classes: PropTypes.object.isRequired
+ };
+ 
 export default withStyles(styles)(Achievements);
 
 
