@@ -1,40 +1,11 @@
 import React, { Component } from "react";
-import CardGroup from "react-bootstrap/Card";
-import Card from "react-bootstrap/Card";
-import { Fab } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-
-import {
-  Grid,
-  Tooltip,
-  IconButton,
-  Typography,
-  Paper,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  CardContent,
-  CardActions,
-  Button,
-  AppBar,
-  Tabs,
-  Tab,
-  TabContainer
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import axios from "../../axiosInstance";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Link from "@material-ui/core/Link";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
-import Collapsible from "react-collapsible";
 
 const styles = {
   card: {
@@ -53,16 +24,14 @@ const styles = {
   }
 };
 
-//import MunHeader from "./components/layout/MunHeader";
-class EXECUTIVE extends Component {
+class SecretaryOffice extends Component {
   state = {
     committee: [],
-    open: false,
-    x: ""
+    open: false
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios.get("/committee/5cbda7931c9d4400008b55be      ").then(res => {
+    axios.get("/committee/5cbda7d61c9d4400008b55bf").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data
@@ -95,17 +64,6 @@ class EXECUTIVE extends Component {
     this.setState({ open: false });
   };
 
-  // changeValue = async id => {
-  //   await this.setState({
-  //     x: id
-  //   });
-  // };
-
-  handleShow = () => {
-    console.log("showing");
-    this.setState({ open: true });
-  };
-
   handleSubmit = id => {
     console.log(id);
     // c.preventDefault();
@@ -122,11 +80,6 @@ class EXECUTIVE extends Component {
     } catch (error) {
       console.log(error);
     }
-  };
-  changeValue = async id => {
-    this.handleShow();
-    await this.setState({ x: id });
-    // console.log(this.state.x)
   };
 
   render() {
@@ -147,10 +100,10 @@ class EXECUTIVE extends Component {
             boxShadow: "inset 0 0 9px 5px black"
           }}
         >
-          Executive Office
+          Secretary Office
         </h1>
 
-        <Link component="button" variant="body1">
+        <Link component="button" variant="body1" href="./{committeePage}">
           {committeePage}
         </Link>
 
@@ -230,4 +183,4 @@ class EXECUTIVE extends Component {
     );
   }
 }
-export default EXECUTIVE;
+export default SecretaryOffice;

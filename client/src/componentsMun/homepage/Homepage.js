@@ -23,6 +23,7 @@ import Descriptions from "../descriptions/Descriptions";
 import ContactUs from "../contactus/ContactUs";
 import Library from "../library/Library";
 import Recruitment from '../forms/recruitment'
+import LiveStream from '../livestream/livestream';
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -83,7 +84,7 @@ class SimpleTabs extends React.Component {
             <Tab label="Home" />
             <Tab label="Gallery" />
             <Tab label="Livefeed" />
-            <Tab label="Contact us" />
+            <Tab label="LiveStream" />
             <Tab label="About us" />
             <Tab label="Events" />
             <Tab label="Committes" />
@@ -92,10 +93,10 @@ class SimpleTabs extends React.Component {
 
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/><Recruitment/></TabContainer>}
+        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/><Recruitment/><ContactUs/></TabContainer>}
         {value === 1 && <TabContainer><Galleries /></TabContainer>}
         {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
-        {value === 3 && <TabContainer><ContactUs/></TabContainer>}
+        {value === 3 && <TabContainer><LiveStream/></TabContainer>}
         {value === 4 && <TabContainer>
           <MV/>
           <Hierarchy/>
