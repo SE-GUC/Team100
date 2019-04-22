@@ -43,8 +43,8 @@ class Announcements extends Component {
       date: new Date(),
       title: "",
       created_by: "",
-      videos: "",
-      photos: ""
+      // videos: "",
+      // photos: ""
     };
   }
   componentDidMount() {
@@ -72,7 +72,7 @@ class Announcements extends Component {
     axios
       .delete(
         "http://localhost:5000/api/announcements/" +
-          e.target.getAttribute("data-index")
+        e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
@@ -89,12 +89,12 @@ class Announcements extends Component {
   handleChangeCreated = event => {
     this.setState({ created_by: event.target.value });
   };
-  handleChangeVideo = event => {
-    this.setState({ videos: event.target.value });
-  };
-  handleChangePhoto = event => {
-    this.setState({ photos: event.target.value });
-  };
+  // handleChangeVideo = event => {
+  //   this.setState({ videos: event.target.value });
+  // };
+  // handleChangePhoto = event => {
+  //   this.setState({ photos: event.target.value });
+  // };
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -103,8 +103,8 @@ class Announcements extends Component {
       date: this.state.date,
       title: this.state.title,
       created_by: this.state.created_by,
-      videos: this.state.videos,
-      photos: this.state.photos
+      // videos: this.state.videos,
+      // photos: this.state.photos
     };
     console.log(Announcement);
     try {
@@ -151,21 +151,24 @@ class Announcements extends Component {
                       <br />
                       Created by:
                       {ann.created_by} <br />
-                      Photos:
+                      {/* Photos:
                       {ann.photos}
                       <br />
                       Videos:
-                      {ann.videos}
+                      {ann.videos} */}
                     </Typography>
                   </div>
                 </CardContent>
-                <CardActions>
-                  <Fab color="primary" aria-label="Delete">
-                    <Button onClick={this.onDelete} data-index={ann._id}>
-                      <DeleteIcon />
-                    </Button>
-                  </Fab>
-                </CardActions>
+                {localStorage.type === "hub_admin" ? (
+                  <CardActions>
+                    <Fab color="primary" aria-label="Delete">
+                      <Button onClick={this.onDelete} data-index={ann._id}>
+                        <DeleteIcon />
+                      </Button>
+                    </Fab>
+                  </CardActions>
+                ) : null}
+
               </Card>
             ))}
           </Grid>
@@ -173,34 +176,34 @@ class Announcements extends Component {
         <br />
         <br />
         <br />
-
-        <Collapsible trigger="Create new announcement">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Title:
+        {localStorage.type === "hub_admin" ? (
+          <Collapsible trigger="Create new announcement">
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Title:
               <input
-                type="text"
-                name="title"
-                onChange={this.handleChangeTitle}
-              />
-            </label>
-            <label>
-              Description:
+                  type="text"
+                  name="title"
+                  onChange={this.handleChangeTitle}
+                />
+              </label>
+              <label>
+                Description:
               <input
-                type="text"
-                name="description"
-                onChange={this.handleChangeDescription}
-              />
-            </label>
-            <label>
-              Club:
+                  type="text"
+                  name="description"
+                  onChange={this.handleChangeDescription}
+                />
+              </label>
+              <label>
+                Club:
               <input
-                type="text"
-                name="created_by"
-                onChange={this.handleChangeCreated}
-              />
-            </label>
-            <label>
+                  type="text"
+                  name="created_by"
+                  onChange={this.handleChangeCreated}
+                />
+              </label>
+              {/* <label>
               Video:
               <input
                 type="text"
@@ -215,10 +218,12 @@ class Announcements extends Component {
                 name="photos"
                 onChange={this.handleChangePhoto}
               />
-            </label>
-            <button type="submit">Add</button>
-          </form>
-        </Collapsible>
+            </label> */}
+              <button type="submit">Add</button>
+            </form>
+          </Collapsible>
+        ) : null}
+
       </div>
     );
   }

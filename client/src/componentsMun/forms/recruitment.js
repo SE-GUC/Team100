@@ -138,10 +138,10 @@ class recruitment extends Component {
     const { classes } = this.props;
     return (
       <div>
-                <h2>Recruitment Form</h2>
+        <h2>Recruitment Form</h2>
 
         <form className={classes.container}>
-        <br/>
+          <br />
           <TextField
             name="name"
             hintText="Name"
@@ -228,20 +228,22 @@ class recruitment extends Component {
           </Button>
         </form>
 
-       
 
-        <Collapsible trigger="All Responses" onClick={this.getForms()}  >
-        {this.state.forms.map(ach => (
-          <div key={ach._id}>
-            <li>
-              {ach.name},{ach.birthdate},{ach.email},{ach.major},
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible trigger="All Responses" onClick={this.getForms()}  >
+            {this.state.forms.map(ach => (
+              <div key={ach._id}>
+                <li>
+                  {ach.name},{ach.birthdate},{ach.email},{ach.major},
               {ach.telephone_number},{ach.Year_of_Study},
               {ach.Means_of_Transportation},{ach.Council_Office1},
               {ach.Council_Office2},{ach.Previous_Experience}
-            </li>
-          </div>
-        ))}
-        </Collapsible>
+                </li>
+              </div>
+            ))}
+          </Collapsible>
+        ) : null}
+
       </div>
     );
   }

@@ -37,7 +37,7 @@ class Achievements extends Component {
     this.state = {
       achievements: [],
       description: "",
-      photo: ""
+      // photo: ""
     };
   }
   componentDidMount() {
@@ -68,16 +68,16 @@ class Achievements extends Component {
     this.setState({ description: event.target.value });
   };
 
-  handleChangePhoto = event => {
-    this.setState({ photo: event.target.value });
-  };
+  // handleChangePhoto = event => {
+  //   this.setState({ photo: event.target.value });
+  // };
   handleSubmit = async event => {
     event.preventDefault();
 
     const Achievement = {
       description: this.state.description,
 
-      photo: this.state.photo
+      // photo: this.state.photo
     };
     console.log(Achievement);
     try {
@@ -91,86 +91,92 @@ class Achievements extends Component {
   render() {
     const { classes } = this.props;
     const { spacing } = this.state;
- 
+
     return (
       <div>
         <h1>Achievements</h1>
         <br />
-       <br />
-       <Grid container className={classes.root} spacing={40}>
-         <Grid
-           container
-           className={classes.demo}
-           justify="center"
-           spacing={16}
-         >
+        <br />
+        <Grid container className={classes.root} spacing={40}>
+          <Grid
+            container
+            className={classes.demo}
+            justify="center"
+            spacing={16}
+          >
 
-        {this.state.achievements.map(ach => (
-            <Card className={Card} display="inline-block">
-            <CardContent>
-          <div key={ach._id}>
-          <Typography
-                     variant="body1"
-                     color="textSecondary"
-                     gutterBottom
-                   >
+            {this.state.achievements.map(ach => (
+              <Card className={Card} display="inline-block">
+                <CardContent>
+                  <div key={ach._id}>
+                    <Typography
+                      variant="body1"
+                      color="textSecondary"
+                      gutterBottom
+                    >
 
-             Description:
-             {ach.description},
-             <br/>
-            Photo:
-             {ach.photo}
-             </Typography>
-             </div>
+                      Description:
+             {ach.description}
+                      <br />
+                      {/* Photo:
+             {ach.photo} */}
+                    </Typography>
+                  </div>
 
-             </CardContent>
-             <CardActions>
-                 <Fab color="primary" aria-label="Delete">
-             
-                <Button onClick={this.onDelete} data-index={ach._id}>
-                <DeleteIcon />
-               </Button>
-               </Fab>
-                 </CardActions>
+                </CardContent>
+                {localStorage.type === "mun_admin" ? (
+                  <CardActions>
+                    <Fab color="primary" aria-label="Delete" size="sm" >
 
-             </Card>
+                      <Button onClick={this.onDelete} data-index={ach._id}>
+                        <DeleteIcon />
+                      </Button>
+                    </Fab>
+                  </CardActions>
 
-        ))}
+                ) : null}
+
+              </Card>
+
+            ))}
+          </Grid>
         </Grid>
-</Grid>
-<br/>
-<br/>
-<br/>
-        <Collapsible trigger="Create new achievement">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Description:
-             <input
-                type="text"
-                name="description"
-                onChange={this.handleChangeDescription}
-              />
-            </label>
+        <br />
+        <br />
+        <br />
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible trigger="Create new achievement">
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Description:
+         <input
+                  type="text"
+                  name="description"
+                  onChange={this.handleChangeDescription}
+                />
+              </label>
 
-            <label>
-              Photo:
-             <input
-                type="text"
-                name="photo"
-                onChange={this.handleChangePhoto}
-              />
-            </label>
-            <button type="submit">Add</button>
-          </form>
-        </Collapsible>
+              {/* <label>
+          Photo:
+         <input
+            type="text"
+            name="photo"
+            onChange={this.handleChangePhoto}
+          />
+        </label> */}
+              <button type="submit">Add</button>
+            </form>
+          </Collapsible>
+        ) : null}
+
       </div>
     );
   }
 }
 Achievements.propTypes = {
   classes: PropTypes.object.isRequired
- };
- 
+};
+
 export default withStyles(styles)(Achievements);
 
 
