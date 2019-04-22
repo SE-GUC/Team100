@@ -20,9 +20,6 @@ const AWGHub = () => {
   return (
     <div className="AWG Hub">
       <UserLogin />
-      <Profile /> <br />
-      <br />
-      <User />
       {/* <UserAdd /> */}
       <Divider variant="middle" />
       <Clubs />
