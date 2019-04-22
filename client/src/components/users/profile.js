@@ -7,6 +7,7 @@ import Collapsible from "react-collapsible";
 import TextField from "@material-ui/core/TextField";
 import Icon from "@material-ui/core/Icon";
 import editicon from "../../images/editicon.png";
+import Dropzone from "react-dropzone";
 
 class Profile extends React.Component {
   constructor(props, context) {
@@ -92,12 +93,25 @@ class Profile extends React.Component {
   handleChangeMajor = event => {
     this.setState({ major: event.target.value });
   };
+  handleChangePhoto = file => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const newPhoto = this.state.photo;
+      this.setState({photo: newPhoto});
+    };
+    reader.onerror = error =>{
+      console.log("Cant upload photo",error);
+    };
+   
+  };
   handleSubmit = async event => {
     const User = {
       name: this.state.name,
       email: this.state.email,
       major: this.state.major,
-      telephone: this.state.telephone
+      telephone: this.state.telephone,
+      photo: this.state.photo
     };
     console.log(User);
     try {
@@ -155,6 +169,20 @@ class Profile extends React.Component {
                     />
                   }
                 >
+                  <Dropzone
+                    onDrop={acceptedFiles => acceptedFiles.forEach(a=> this.handleChangePhoto(a))}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <section>
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          <p>
+                          Add photo
+                          </p>
+                        </div>
+                      </section>
+                    )}
+                  </Dropzone>
                   <form>
                     <TextField
                       id="outlined-name"
