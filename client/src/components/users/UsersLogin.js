@@ -141,7 +141,7 @@ class UserLogin extends Component {
         return (
 
             <div>
-                {localStorage.length === 0 ? (
+                {localStorage.length === 1 ? (
                     <Collapsible trigger="Login">
                         <form onSubmit={this.handleSubmit}>
                             <label>
@@ -164,7 +164,7 @@ class UserLogin extends Component {
                         </form>
                     </Collapsible>
                 ) : null}
-                {localStorage.length === 0 ? (
+                {localStorage.length === 1 ? (
                     <Collapsible trigger="Register">
 
                         <Modal.Dialog>
@@ -253,7 +253,7 @@ class UserLogin extends Component {
                     </Collapsible>
                 ) : null}
 
-                {localStorage.length > 0 ? (
+                {localStorage.length > 1 ? (
                     <form onSubmit={this.logout}>
                         <label>
                             <button type="submit">Logout</button>
