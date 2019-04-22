@@ -86,17 +86,19 @@ class SimpleTabs extends React.Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Home" />
-            <Tab label="About us" />
-            <Tab label="Committes" />
-            <Tab label="Library" />
-            <Tab label="Events" />
-            <Tab label="Gallery" />
-            <Tab label="Livefeed" />
-            <Tab label="livestream" />
+            <Tab label="About us" onClick={ () => history.push('/componentsMun/AboutUs') }/>
+            <Tab label="Committes"  onClick={ () => history.push('/componentsMun/Committees') } />
+            <Tab label="Library" onClick={ () => history.push('/componentsMun/library') }/>
+            <Tab label="Events" onClick={ () => history.push('/componentsMun/Events') }/>
+            <Tab label="Gallery" onClick={ () => history.push('/componentsMun/Galleries') }/>
+            <Tab label="Livefeed" onClick={ () => history.push('/componentsMun/livefeed') }/>
+            <Tab label="livestream" onClick={ () => history.push('/componentsMun/livestream') }/>
 
 
           </Tabs>
         </AppBar>
+
+
         {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/> <ContactUs/>
          { /*<Nav.Link href='../forms/recruitment' >
             Recruitment Form
