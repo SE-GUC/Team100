@@ -51,7 +51,7 @@ router.post(
        // console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -80,7 +80,7 @@ router.put(
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -98,7 +98,7 @@ router.delete(
         //console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );

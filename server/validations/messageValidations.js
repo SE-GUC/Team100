@@ -16,7 +16,9 @@ module.exports = {
 
   updateValidation: request => {
     const createSchema = {
-      replied: Joi.boolean().required()
+      replied: Joi.boolean()
+        .required()
+        .default(false)
     };
     return Joi.validate(request, createSchema);
   }

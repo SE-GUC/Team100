@@ -24,7 +24,7 @@ router.post(
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -61,7 +61,7 @@ router.put(
           });
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -74,8 +74,7 @@ router.get("/:id", async (req, res) => {
     if (!wantedEvent) {
       return res.status(404).send({ error: "Event does not exist" });
     }
-    res.json({data: wantedEvent.name_event, data1: wantedEvent.description
-    });
+    res.json({ data: wantedEvent.name_event, data1: wantedEvent.description });
   } catch (error) {
     console.log(error);
   }
@@ -102,23 +101,22 @@ router.delete(
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
 
 //get all mun events
 router.get("/", async (req, res) => {
-  try{
-  const events = await Event.find({
-    club: "MUN" || "mun"
-  });
-  res.json({ data: events });
-}catch(error){
-  console.log(error)
-}
+  try {
+    const events = await Event.find({
+      club: "MUN" || "mun"
+    });
+    res.json({ data: events });
+  } catch (error) {
+    console.log(error)
+  }
 });
-
 
 //get by id
 router.get("/eventbyid/:id", async (req, res) => {
@@ -139,8 +137,9 @@ router.get("/timeline/current", async (req, res) => {
   var currentTime = new Date().getMonth() + 1;
   var currentYear = new Date().getFullYear();
 
-  console.log(currentYear);
+  // console.log(currentTime);
   const exists = await Event.find({
+    club: "MUN" || "mun",
     $and: [{ month: currentTime }, { year: currentYear }]
   });
 
@@ -150,12 +149,10 @@ router.get("/timeline/current", async (req, res) => {
 });
 //module.exports = router
 
-
 router.get("/timeline/f_soon", async (req, res) => {
   var currentMonth = new Date().getMonth();
   var currentYear = new Date().getFullYear() - 1;
 
-  console.log(currentYear);
   const exists = await Event.find({
     $and: [{ year: { $gt: currentYear } }, { description: "coming soon" }]
   });
@@ -229,32 +226,44 @@ router.put(
         const updatedRating = oldRating + userRate;
         const updatedRate = updatedRating / updatedRatingcount;
         const isValidated = validator.updateValidation(req.body);
-        if (isValidated.error)
+        if (!eve) {
+          return res.status(404).send({ error: "Event does not exist" });
+        }
+        if (isValidated.error) {
           return res
             .status(400)
             .send({ error: isValidated.error.details[0].message });
-        Event.findByIdAndUpdate(
-          id,
-          {
-            $set: {
-              rate: updatedRate,
-              rating: updatedRating,
-              ratingcount: updatedRatingcount
+        } else {
+          Event.update(
+            { _id: id },
+            {
+              $set: {
+                rate: updatedRate,
+                rating: updatedRating,
+                ratingcount: updatedRatingcount
+              }
             }
-          },
-          { upsert: true }
-        );
-        res.json({
-          msg: "Event was rated successfully",
-          Rate: updatedRate,
-          Rating: updatedRating,
-          Ratingcount: updatedRatingcount
-        });
+          )
+            .exec()
+            .then(() => {
+              res.status(200).json({
+                message: "Event is rated successfully",
+                Rate: updatedRate,
+                Rating: updatedRating,
+                Ratingcount: updatedRatingcount
+              });
+            })
+            .catch(err => {
+              res.status(500).json({
+                message: "Error"
+              });
+            });
+        }
       } catch (error) {
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "You have to sign in" });
+      return res.status(401).send({ error: "You have to sign in" });
     }
   }
 );

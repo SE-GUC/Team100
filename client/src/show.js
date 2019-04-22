@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import ShowMessages from "./componentsMun/ShowMessages";
+import ShowMessage from "./componentsMun/ShowMessage/ShowMessage";
 import "./App.css";
 const Show = () => {
   return (
-    <div className="ShowMessages">
-      <ShowMessages />
+    <div className="ShowMessage">
+      <ShowMessage />
     </div>
   );
 };
-export default ShowMessages;
+export default Show;

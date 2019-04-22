@@ -1,29 +1,44 @@
-import React, { Component } from 'react';
-import axios from '../../axiosInstance';
-import { Grid, Tooltip, IconButton, Typography, Paper, FormLabel, RadioGroup, FormControlLabel, Radio, CardContent, CardActions, Button, AppBar, Tabs, Tab } from '@material-ui/core';
-import Card from 'react-bootstrap/Card';
-import Fab from '@material-ui/core/Fab';
-import Icon from '@material-ui/core/Icon';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-import { Link } from 'react-dom';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { Component } from "react";
+import axios from "../../axiosInstance";
+import {
+  Grid,
+  Tooltip,
+  IconButton,
+  Typography,
+  Paper,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  CardContent,
+  CardActions,
+  Button,
+  AppBar,
+  Tabs,
+  Tab
+} from "@material-ui/core";
+import Card from "react-bootstrap/Card";
+import Fab from "@material-ui/core/Fab";
+import Icon from "@material-ui/core/Icon";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
+import { Link } from "react-dom";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Collapsible from "react-collapsible";
 
 import { NavLink, Switch, Route } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import PropTypes from 'prop-types';
-import HR from "../Hr/HR"
-import EXECUTIVE from "../Executive/EXECUTIVE"
-import PR from "../Pr/PR"
+import PropTypes from "prop-types";
+import HR from "../Hr/HR";
+import EXECUTIVE from "../Executive/EXECUTIVE";
+import PR from "../Pr/PR";
 
-import Input from '@material-ui/core/Input';
-
+import Input from "@material-ui/core/Input";
 
 function TabContainer(props) {
   return (
@@ -34,17 +49,15 @@ function TabContainer(props) {
 }
 
 TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
+    backgroundColor: theme.palette.background.paper
+  }
 });
-
-
 
 class Committees extends Component {
   state = {
@@ -52,18 +65,14 @@ class Committees extends Component {
     events: [],
     team_members: [],
     open: false
-  }
+  };
   componentDidMount() {
-
-    axios.get("http://localhost:5000/api/committee")
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-          committee: res.data.data
-        })
-      })
-
-
+    axios.get("http://localhost:5000/api/committee").then(res => {
+      console.log(res.data);
+      this.setState({
+        committee: res.data.data
+      });
+    });
   }
 
   handleClickOpen = () => {
@@ -90,8 +99,6 @@ class Committees extends Component {
     this.setState({ team_members: c.target.value });
   };
 
-
-
   // refreshCommittees() {
 
   //   fetch("http://localhost:5000/api/committee")
@@ -113,13 +120,15 @@ class Committees extends Component {
       description: c.target.description.value,
       page: c.target.page.value,
       team_members: c.target.team_members.value,
-      events: c.target.events.value,
+      events: c.target.events.value
     };
     console.log(updatedCommittee);
     try {
-      await axios.put(`committee/${c.target.getAttribute("data-index")}`, updatedCommittee);
-    }
-    catch (error) {
+      await axios.put(
+        `committee/${c.target.getAttribute("data-index")}`,
+        updatedCommittee
+      );
+    } catch (error) {
       console.log(error);
     }
   };
@@ -128,16 +137,13 @@ class Committees extends Component {
     axios
       .delete(
         "http://localhost:5000/api/committee/" +
-        e.target.getAttribute("data-index")
+          e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
-       
       })
       .catch(err => console.log(err));
   };
-
-
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -151,7 +157,7 @@ class Committees extends Component {
       page: this.state.page,
       description: this.state.description,
       events: this.state.events,
-      team_members: this.state.team_members,
+      team_members: this.state.team_members
     };
     console.log(com);
     try {
@@ -162,7 +168,6 @@ class Committees extends Component {
     }
   };
 
-
   render() {
     const { classes } = this.props;
     const { value } = this.state;
@@ -171,27 +176,25 @@ class Committees extends Component {
       committee.map(c => {
         return (
           <div className="center" key={c._id}>
-
-            <Paper >
+            <Paper>
               <Card>
-                <CardContent >
-                  <Typography variant="h5" component="h2" color="primary" >
+                <CardContent>
+                  <Typography variant="h5" component="h2" color="primary">
                     {c.name} Committee
-              </Typography>
-                  <Typography color="textSecondary">
-                    {c.page}
                   </Typography>
-                  <Typography component="p">
-                    {c.description}
-                  </Typography>
+                  <Typography color="textSecondary">{c.page}</Typography>
+                  <Typography component="p">{c.description}</Typography>
                 </CardContent>
 
                 <CardActions>
-
-                  <Fab color="primary" aria-label="Delete" onClick={this.onDelete} data-index={c._id}>
+                  <Fab
+                    color="primary"
+                    aria-label="Delete"
+                    onClick={this.onDelete}
+                    data-index={c._id}
+                  >
                     <DeleteIcon />
                   </Fab>
-
 
                   {/* <Button color="primary" onClick={this.handleSubmit} data-index={c.name}  >
                 Update 
@@ -244,57 +247,64 @@ class Committees extends Component {
           </DialogActions>
         </Dialog> */}
                   </div>
-
                 </CardActions>
               </Card>
-
             </Paper>
-
           </div>
-
-
-        )
+        );
       })
     ) : (
-        <div className="center"> No committees yet </div>
-      )
-
+      <div className="center"> No committees yet </div>
+    );
 
     return (
-
-      <div className="container" >
+      <div className="container">
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-
             <Tab label="HR" />
             <Tab label="PR" />
             <Tab label="Executive Office" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer> <HR />
-        </TabContainer>}
-        {value === 1 && <TabContainer> <PR /></TabContainer>}
-        {value === 2 && <TabContainer> <EXECUTIVE /> </TabContainer>}
+        {value === 0 && (
+          <TabContainer>
+            {" "}
+            <HR />
+          </TabContainer>
+        )}
+        {value === 1 && (
+          <TabContainer>
+            {" "}
+            <PR />
+          </TabContainer>
+        )}
+        {value === 2 && (
+          <TabContainer>
+            {" "}
+            <EXECUTIVE />{" "}
+          </TabContainer>
+        )}
         {/* <h1  className="center" >Committees </h1> */}
         <h4 className="center">{committeeList}</h4>
-
-
 
         <Fab color="primary" aria-label="Add" href="/textfield">
           <AddIcon />
         </Fab>
 
-        <Button   href="/show"> Show Messages </Button>
-
-
-      </ div >
-    )
+        <Button
+          href="/show"
+          className="float-left"
+          style={{
+            backgroundColor: "#3F51B5",
+            color: "#f4f4f4"
+          }}
+        >
+          {" "}
+          Show Messages{" "}
+        </Button>
+      </div>
+    );
   }
-
-
-
 }
 
-
-
-export default Committees
+export default Committees;

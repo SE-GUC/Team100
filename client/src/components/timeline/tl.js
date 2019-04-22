@@ -34,11 +34,12 @@ class TL extends Component {
   // }
 
   componentDidMount() {
-    fetch("api/events/timeline/current")
-      .then(res => res.json())
-      .then(e => {
-        this.setState({ e: e.data });
+    axios.get("events/timeline/current").then(res => {
+      console.log(res.data);
+      this.setState({
+        e: res.data.data
       });
+    });
   }
 
   render() {

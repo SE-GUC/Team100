@@ -12,6 +12,7 @@ import Tiq from "./Tiq";
 import lib from "./lib";
 import MenuAppBar from "./components/layout/MenuAppBar";
 import setAuthToken from "../src/helpers/setAuthToken";
+import show from "./show";
 import textfield from "./textfield";
 
 if (localStorage.token) {
@@ -39,9 +40,9 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={components} />
                   <Route path="/componentsMun" component={componentsMun} />
+                  <Route path="/show" component={show} />
 
                   <Route path="/textfield" component={textfield} />
-                  <Route path="/lib" component={lib} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../axiosInstance";
+import { ServerResponse } from "http";
 
 class Galleries extends Component {
   constructor() {

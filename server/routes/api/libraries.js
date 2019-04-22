@@ -30,7 +30,7 @@ router.post("/AcademicPaper", passport.authenticate('jwt', { session: false }), 
   }
   else {
     return res
-      .status(404)
+      .status(401)
       .send({ error: "Unauthorized" });
   }
 
@@ -53,7 +53,7 @@ router.post("/Resolution", passport.authenticate('jwt', { session: false }), asy
   }
   else {
     return res
-      .status(404)
+      .status(401)
       .send({ error: "Unauthorized" });
   }
 });
@@ -86,7 +86,7 @@ router.delete("/:id", passport.authenticate('jwt', { session: false }), async (r
   }
   else {
     return res
-      .status(404)
+      .status(401)
       .send({ error: "Unauthorized" });
   }
 });
