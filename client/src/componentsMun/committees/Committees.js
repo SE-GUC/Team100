@@ -99,14 +99,6 @@ class Committees extends Component {
     this.setState({ team_members: c.target.value });
   };
 
-  // refreshCommittees() {
-
-  //   fetch("http://localhost:5000/api/committee")
-  //     .then(res => res.json())
-  //     .then(c => {
-  //       this.setState({ c: c.data });
-  //     });
-  // }
   handleChangeName = c => {
     this.setState({ name: c.target.value });
   };
@@ -135,10 +127,7 @@ class Committees extends Component {
 
   onDelete = e => {
     axios
-      .delete(
-        "http://localhost:5000/api/committee/" +
-          e.target.getAttribute("data-index")
-      )
+      .delete("/api/committee/" + e.target.getAttribute("data-index"))
       .then(res => {
         console.log();
       })
@@ -261,35 +250,48 @@ class Committees extends Component {
       <div className="container">
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="HR" />
-            <Tab label="PR" />
             <Tab label="Executive Office" />
+            <Tab label="Security Council" />
+            <Tab label="General Assembly" />
+            <Tab label="Secretary Office" />
           </Tabs>
         </AppBar>
+
         {value === 0 && (
           <TabContainer>
-            {" "}
-            <HR />
+            <NavLink exact to="./executive" activeClassName="active">
+              See more
+            </NavLink>
           </TabContainer>
         )}
         {value === 1 && (
           <TabContainer>
-            {" "}
-            <PR />
+            <NavLink exact to="./securitycouncil" activeClassName="active">
+              See more
+            </NavLink>
           </TabContainer>
         )}
         {value === 2 && (
           <TabContainer>
-            {" "}
-            <EXECUTIVE />{" "}
+            <NavLink exact to="./generalassembly" activeClassName="active">
+              See more
+            </NavLink>
           </TabContainer>
         )}
+        {value === 3 && (
+          <TabContainer>
+            <NavLink exact to="./secretaryoffice" activeClassName="active">
+              See more
+            </NavLink>
+          </TabContainer>
+        )}
+
         {/* <h1  className="center" >Committees </h1> */}
         <h4 className="center">{committeeList}</h4>
 
-        <Fab color="primary" aria-label="Add" href="/textfield">
+        {/* <Fab color="primary" aria-label="Add" href="/textfield">
           <AddIcon />
-        </Fab>
+        </Fab> */}
 
         <Button
           href="/show"

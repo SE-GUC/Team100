@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import CardGroup from "react-bootstrap/Card";
 import Card from "react-bootstrap/Card";
-import { Fab } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-
 import {
   Grid,
   Tooltip,
@@ -53,17 +50,15 @@ const styles = {
   }
 };
 
-//import MunHeader from "./components/layout/MunHeader";
-class EXECUTIVE extends Component {
+class GeneralAssembly extends Component {
   state = {
     committee: [],
-    open: false,
-    x: ""
+    open: false
   };
   componentDidMount() {
     //   this.refreshCommittees();
     axios
-      .get("http://localhost:5000/api/committee/5cbccc511c9d4400003a39ac      ")
+      .get("http://localhost:5000/api/committee/5cbcccc91c9d4400003a39ad")
       .then(res => {
         console.log(res.data);
         this.setState({
@@ -78,7 +73,6 @@ class EXECUTIVE extends Component {
   handleChangedescription = c => {
     this.setState({ description: c.target.value });
   };
-
   handleChangeEvents = c => {
     this.setState({ events: c.target.value });
   };
@@ -97,17 +91,6 @@ class EXECUTIVE extends Component {
     this.setState({ open: false });
   };
 
-  // changeValue = async id => {
-  //   await this.setState({
-  //     x: id
-  //   });
-  // };
-
-  handleShow = () => {
-    console.log("showing");
-    this.setState({ open: true });
-  };
-
   handleSubmit = id => {
     console.log(id);
     // c.preventDefault();
@@ -124,11 +107,6 @@ class EXECUTIVE extends Component {
     } catch (error) {
       console.log(error);
     }
-  };
-  changeValue = async id => {
-    this.handleShow();
-    await this.setState({ x: id });
-    // console.log(this.state.x)
   };
 
   render() {
@@ -149,10 +127,10 @@ class EXECUTIVE extends Component {
             boxShadow: "inset 0 0 9px 5px black"
           }}
         >
-          Executive Office
+          {committeeName}
         </h1>
 
-        <Link component="button" variant="body1">
+        <Link component="button" variant="body1" href="./{committeePage}">
           {committeePage}
         </Link>
 
@@ -186,7 +164,6 @@ class EXECUTIVE extends Component {
             <Typography>{committeeEvents}</Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-
         <form onSubmit={this.handleSubmit(committee._id)}>
           Name:{" "}
           <input
@@ -231,4 +208,4 @@ class EXECUTIVE extends Component {
     );
   }
 }
-export default EXECUTIVE;
+export default GeneralAssembly;

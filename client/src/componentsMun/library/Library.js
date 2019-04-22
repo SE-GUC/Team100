@@ -110,47 +110,54 @@ class Library extends Component {
     return (
       <div>
         <h2>MUN's Academic Library</h2> <br />
-        {localStorage.type==="mun_admin"?(
-        <Collapsible
-          trigger={
-            <Fab color="primary" aria-label="Add">
-              <AddIcon />
-            </Fab>
-          }
-        >
-          <form onSubmit={this.onCreateA}>
-            <label>
-              AcademicPaper:
-              <input
-                type="text"
-                name="Academic Paper"
-                onChange={this.handleChangeAcademicPaper}
-              />
-            </label>
-            <label>
-              Year:
-              <input type="text" name="year" onChange={this.handleChangeYear} />
-            </label>
-            <input type="submit" value="Add" />
-          </form>
-          <form onSubmit={this.onCreateR}>
-            <label>
-              Resolution:
-              <input
-                type="text"
-                name="Resolution"
-                onChange={this.handleChangeResolution}
-              />
-            </label>
-            <label>
-              Year:
-              <input type="text" name="year" onChange={this.handleChangeYear} />
-            </label>
-            <input type="submit" value="Add" />
-          </form>
-        </Collapsible>
-        ):null
-        }
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible
+            trigger={
+              <Fab color="primary" aria-label="Add">
+                <AddIcon />
+              </Fab>
+            }
+          >
+            <form onSubmit={this.onCreateA}>
+              <label>
+                AcademicPaper:
+                <input
+                  type="text"
+                  name="Academic Paper"
+                  onChange={this.handleChangeAcademicPaper}
+                />
+              </label>
+              <label>
+                Year:
+                <input
+                  type="text"
+                  name="year"
+                  onChange={this.handleChangeYear}
+                />
+              </label>
+              <input type="submit" value="Add" />
+            </form>
+            <form onSubmit={this.onCreateR}>
+              <label>
+                Resolution:
+                <input
+                  type="text"
+                  name="Resolution"
+                  onChange={this.handleChangeResolution}
+                />
+              </label>
+              <label>
+                Year:
+                <input
+                  type="text"
+                  name="year"
+                  onChange={this.handleChangeYear}
+                />
+              </label>
+              <input type="submit" value="Add" />
+            </form>
+          </Collapsible>
+        ) : null}
         {
           <ul>
             {this.state.libraries.map(c => (
@@ -159,15 +166,15 @@ class Library extends Component {
                   <Card>
                     <CardContent>
                       <Typography variant="h6" component="h2" color="primary">
-                        Press link to read  :
+                        Press link to read :
                         <a
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             window.location.href = `//${c.Academic_paper}`;
                           }}
-                        />
-                        {c.Academic_paper}
-                       
+                        >
+                          {c.Academic_paper}
+                        </a>
                         <a
                           style={{ cursor: "pointer" }}
                           onClick={() => {
@@ -177,15 +184,13 @@ class Library extends Component {
                           {c.Resolution}
                         </a>{" "}
                         <br />
-
-                       year :  {c.Year} <br />
+                        year : {c.Year} <br />
                       </Typography>
-                      {localStorage.type==="mun_admin"?(
-
-                      <button onClick={this.onDelete} data-index={c._id}>
-                        Delete
-                      </button>
-                      ):null}
+                      {localStorage.type === "mun_admin" ? (
+                        <button onClick={this.onDelete} data-index={c._id}>
+                          Delete
+                        </button>
+                      ) : null}
                     </CardContent>
                   </Card>
                 </Paper>
