@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
 import setAuthToken from "../../helpers/setAuthToken";
+import User from "./User";
+import Profile from "./profile";
 //import { isNull } from "util";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 
@@ -226,8 +228,12 @@ class UserLogin extends Component {
                 ) : null}
 
                 {localStorage.length > 1 ? (
+                    
                     <form onSubmit={this.logout}>
                         <label>
+                        <Profile /> <br />
+      <br />
+      <User />
                             <button type="submit">Logout</button>
                         </label>
                     </form>

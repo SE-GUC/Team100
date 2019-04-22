@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField";
 //import Icon from "@material-ui/core/Icon";
 import editicon from "../../images/editicon.png";
 import Dropzone from "react-dropzone";
+import UserLogin from "./UsersLogin";
 
 class Profile extends React.Component {
   constructor(props, context) {
