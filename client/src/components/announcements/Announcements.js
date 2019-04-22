@@ -9,10 +9,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
-import CheckCircle from "@material-ui/icons/CheckCircle";
 import Fab from "@material-ui/core/Fab";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import Button from "@material-ui/core/Button";
 
 const styles = {
@@ -117,7 +115,6 @@ class Announcements extends Component {
 
   render() {
     const { classes } = this.props;
-    const { spacing } = this.state;
 
     return (
       <div>

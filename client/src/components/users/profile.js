@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Modal, Button, ListGroup, Image } from "react-bootstrap";
 import axios from "../../axiosInstance";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Fab } from "@material-ui/core";
 import Collapsible from "react-collapsible";
 import TextField from "@material-ui/core/TextField";
-import Icon from "@material-ui/core/Icon";
 import editicon from "../../images/editicon.png";
 
 class Profile extends React.Component {

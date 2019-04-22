@@ -1,15 +1,8 @@
 import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import {
-  Grid,
-  Tooltip,
-  IconButton,
   Typography,
   Paper,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   CardContent,
   CardActions,
   Button,
@@ -19,26 +12,10 @@ import {
 } from "@material-ui/core";
 import Card from "react-bootstrap/Card";
 import Fab from "@material-ui/core/Fab";
-import Icon from "@material-ui/core/Icon";
-import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
-import { Link } from "react-dom";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Collapsible from "react-collapsible";
 
-import { NavLink, Switch, Route } from "react-router-dom";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import HR from "../Hr/HR";
-import EXECUTIVE from "../Executive/EXECUTIVE";
-import PR from "../Pr/PR";
-
-import Input from "@material-ui/core/Input";
 
 function TabContainer(props) {
   return (
@@ -52,12 +29,12 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-const styles = theme => ({
+/*const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper
   }
-});
+});*/
 
 class Committees extends Component {
   state = {
@@ -158,7 +135,7 @@ class Committees extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+   // const { classes } = this.props;
     const { value } = this.state;
     const { committee } = this.state;
     const committeeList = committee.length ? (

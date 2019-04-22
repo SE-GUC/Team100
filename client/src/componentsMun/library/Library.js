@@ -1,31 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Collapsible from "react-collapsible";
-import { NavLink, Switch, Route } from "react-router-dom";
-
-import {
-  Grid,
-  Tooltip,
-  IconButton,
-  Typography,
-  Paper,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  CardContent,
-  CardActions,
-  Button,
-  AppBar,
-  Tabs,
-  Tab,
-  Card,
-  Fab
-} from "@material-ui/core";
-import Icon from "@material-ui/core/Icon";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { Typography, Paper, CardContent, Card, Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import EditIcon from "@material-ui/icons/Edit";
 
 const mainBg = {
   backgroundImage: 'url("./images/1.jpg")',
@@ -48,12 +25,45 @@ class Library extends Component {
     document.body.style = { mainBg };
   }
 
+  sortCaseNum = async e => {
+    var temp;
+    var formTemp = this.state.libraries;
+    for (var i = 1; i < formTemp.length; i++) {
+      for (var j = i; j > 0; j--) {
+        if (formTemp[j].caseNumber < formTemp[j - 1].caseNumber) {
+          temp = formTemp[j];
+          formTemp[j] = formTemp[j - 1];
+          formTemp[j - 1] = temp;
+        }
+      }
+    }
+    this.setState({
+      libraries: formTemp
+    });
+  };
+
   refreshLibraries() {
     axios("/api/libraries")
       .then(res => {
         console.log(res.data.data);
         this.setState({ libraries: res.data.data });
         console.log(this.state);
+      })
+      .catch(err => console.log(err));
+  }
+
+  sortAscending() {
+    axios("/api/libraries/sortA")
+      .then(res => {
+        this.setState({ libraries: res.data.data });
+      })
+      .catch(err => console.log(err));
+  }
+
+  sortDescending() {
+    axios("/api/libraries/sortD")
+      .then(res => {
+        this.setState({ libraries: res.data.data });
       })
       .catch(err => console.log(err));
   }
@@ -184,7 +194,7 @@ class Library extends Component {
                           {c.Resolution}
                         </a>{" "}
                         <br />
-                        year : {c.Year} <br />
+                        Year : {c.Year} <br />
                       </Typography>
                       {localStorage.type === "mun_admin" ? (
                         <button onClick={this.onDelete} data-index={c._id}>

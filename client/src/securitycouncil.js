@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import SecurityCouncil from "./componentsMun/SecurityCouncil/Securitycouncil";
 import "./App.css";
 const securitycouncil = () => {

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import EXECUTIVE from "./componentsMun/Executive/EXECUTIVE";
 import "./App.css";
 const executive = () => {

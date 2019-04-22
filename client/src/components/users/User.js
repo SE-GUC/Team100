@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Modal, Button, ListGroup, Image } from "react-bootstrap";
 import axios from "../../axiosInstance";
 import DeleteIcon from "@material-ui/icons/Delete";

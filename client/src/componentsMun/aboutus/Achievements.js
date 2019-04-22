@@ -2,17 +2,8 @@ import React, { Component } from "react";
 //import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Fab from "@material-ui/core/Fab";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { Grid } from "@material-ui/core";
-
+import { Typography, Paper, CardContent, Card } from "@material-ui/core";
 const styles = {
   card: {
     minWidth: 275
@@ -36,7 +27,7 @@ class Achievements extends Component {
 
     this.state = {
       achievements: [],
-      description: "",
+      description: ""
       // photo: ""
     };
   }
@@ -56,7 +47,7 @@ class Achievements extends Component {
     axios
       .delete(
         "http://localhost:5000/api/achievements/" +
-        e.target.getAttribute("data-index")
+          e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
@@ -75,7 +66,7 @@ class Achievements extends Component {
     event.preventDefault();
 
     const Achievement = {
-      description: this.state.description,
+      description: this.state.description
 
       // photo: this.state.photo
     };
@@ -88,7 +79,7 @@ class Achievements extends Component {
     }
   };
 
-  render() {
+  /*render() {
     const { classes } = this.props;
     const { spacing } = this.state;
 
@@ -119,7 +110,7 @@ class Achievements extends Component {
              {ach.description}
                       <br />
                       {/* Photo:
-             {ach.photo} */}
+             {ach.photo} }
                     </Typography>
                   </div>
 
@@ -163,7 +154,7 @@ class Achievements extends Component {
             name="photo"
             onChange={this.handleChangePhoto}
           />
-        </label> */}
+        </label> }
               <button type="submit">Add</button>
             </form>
           </Collapsible>
@@ -172,11 +163,64 @@ class Achievements extends Component {
       </div>
     );
   }
+}*/
+
+  render() {
+    return (
+      <div>
+        <h1>Achievements</h1>
+        {this.state.achievements.map(ach => (
+          <div key={ach._id}>
+            <Paper>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" component="h2" color="primary">
+                    <ul>
+                      <label>Description: </label>
+                      {ach.description},<label>Photo: </label>
+                      {ach.photo}
+                    </ul>
+                  </Typography>
+                  {localStorage.type === "mun_admin" ? (
+                    <button onClick={this.onDelete} data-index={ach._id}>
+                      Delete
+                    </button>
+                  ) : null}
+                </CardContent>
+              </Card>
+            </Paper>
+          </div>
+        ))}
+        {localStorage.type === "mun_admin" ? (
+          <Collapsible
+            
+            trigger="Create new achievement"
+          >
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Description:
+                <input
+                  type="text"
+                  name="description"
+                  onChange={this.handleChangeDescription}
+                />
+              </label>
+
+              <label>
+                Photo:
+                <input
+                  type="text"
+                  name="photo"
+                  onChange={this.handleChangePhoto}
+                />
+              </label>
+              <button type="submit">Add</button>
+            </form>
+          </Collapsible>
+        ) : null}
+      </div>
+    );
+  }
 }
-Achievements.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(Achievements);
-
-

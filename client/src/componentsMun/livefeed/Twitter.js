@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-var twitterAPI = require("node-twitter-api");
+//var twitterAPI = require("node-twitter-api");
 
 class Twitter extends Component {
   componentDidMount() {
