@@ -247,7 +247,6 @@ class Events extends Component {
             </form>
           </Collapsible>
         ) : null}
-
         {
           <ul>
             {this.state.events.map(event => (

@@ -59,7 +59,7 @@ class Securitycouncil extends Component {
   };
   componentDidMount() {
     //   this.refreshCommittees();
-    axios.get("/committee/5cbda6991c9d44000089a848").then(res => {
+    axios.get("/committee/5cbdd0555cc06466f490def7").then(res => {
       console.log(res.data);
       this.setState({
         committee: res.data.data

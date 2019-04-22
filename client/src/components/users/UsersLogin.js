@@ -2,8 +2,17 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
 import setAuthToken from "../../helpers/setAuthToken";
+import User from "./User";
+import Profile from "./profile";
 //import { isNull } from "util";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
+// import TextField from "@material-ui/core/TextField";
+// import MenuItem from '@material-ui/core/MenuItem';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
 class UserLogin extends Component {
     constructor(props, context) {
@@ -109,35 +118,7 @@ class UserLogin extends Component {
     logout() {
         localStorage.clear();
     }
-    // show = event => {
-    //     event.preventDefault();
-    //     axios.get(`users/${localStorage.getItem("id")}`).then(user => {
-    //         this.setState({ user: user.data.User });
-    //         var x = user.data.User;
-    //         console.log(x);
-    //     });
-    // };
-
-    // delete = event => {
-    //     event.preventDefault()
-    //     axios.delete(`users/${localStorage.getItem("id")}`).then(user => {
-    //         this.setState({ user: user.data.deletedUser })
-    //     }
-    //     )
-    //     //   console.log(response.data)
-    //     console.log("Deleted successfully")
-    //     localStorage.clear();
-    // }
     render() {
-        // const { user } = this.state;
-        // let userProfile = '';
-        // if (user) {
-        //     userProfile = <p>
-        //         {user.name}<br />
-        //         {user.email}<br />
-        //         {user.user_type}<br />
-        //     </p>
-        // }
         return (
 
             <div>
@@ -229,7 +210,7 @@ class UserLogin extends Component {
                                     />
                                 </InputGroup>
                                 <br />
-                                <InputGroup size="sm" className="Users">
+                                {/* <InputGroup size="sm" className="Users">
                                     <InputGroup.Prepend>
                                         <InputGroup.Text id="inputGroup-sizing-sm">
                                             GUCIAN
@@ -241,7 +222,18 @@ class UserLogin extends Component {
                                         aria-label="Small"
                                         aria-describedby="inputGroup-sizing-sm"
                                     />
-                                </InputGroup>
+                                </InputGroup> */}
+                                <FormLabel component="legend">Gucian</FormLabel>
+                                <RadioGroup
+                                    aria-label="Gucian"
+                                    name="Gucian"
+                                    value={this.state.gucian}
+                                    onChange={this.handleChangeGucian}
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="True" />
+                                    <FormControlLabel value="false" control={<Radio />} label=" False" />
+
+                                </RadioGroup>
                                 <br />
                             </Modal.Body>
                             <Modal.Footer>
@@ -254,8 +246,12 @@ class UserLogin extends Component {
                 ) : null}
 
                 {localStorage.length > 1 ? (
+                    
                     <form onSubmit={this.logout}>
                         <label>
+                        <Profile /> <br />
+      <br />
+      <User />
                             <button type="submit">Logout</button>
                         </label>
                     </form>

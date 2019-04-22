@@ -114,7 +114,7 @@ router.get("/", async (req, res) => {
     });
     res.json({ data: events });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 });
 
@@ -208,63 +208,63 @@ router.get("/rate/:id", async (req, res) => {
 //rate an event
 router.put(
   "/rate/:id",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    if (
-      req.user.user_type === "user" ||
-      "mun_admin" ||
-      "hub_admin" ||
-      "team_members"
-    ) {
-      try {
-        const id = req.params.id;
-        const userRate = req.body.rate;
-        const eve = await Event.findById(id);
-        const oldRating = eve.rating;
-        const oldRatingcount = eve.ratingcount;
-        const updatedRatingcount = oldRatingcount + 1;
-        const updatedRating = oldRating + userRate;
-        const updatedRate = updatedRating / updatedRatingcount;
-        const isValidated = validator.updateValidation(req.body);
-        if (!eve) {
-          return res.status(404).send({ error: "Event does not exist" });
-        }
-        if (isValidated.error) {
-          return res
-            .status(400)
-            .send({ error: isValidated.error.details[0].message });
-        } else {
-          Event.update(
-            { _id: id },
-            {
-              $set: {
-                rate: updatedRate,
-                rating: updatedRating,
-                ratingcount: updatedRatingcount
-              }
-            }
-          )
-            .exec()
-            .then(() => {
-              res.status(200).json({
-                message: "Event is rated successfully",
-                Rate: updatedRate,
-                Rating: updatedRating,
-                Ratingcount: updatedRatingcount
-              });
-            })
-            .catch(err => {
-              res.status(500).json({
-                message: "Error"
-              });
-            });
-        }
-      } catch (error) {
-        console.log(error);
+    // if (
+    //   req.user.user_type === "user" ||
+    //   "mun_admin" ||
+    //   "hub_admin" ||
+    //   "team_members"
+    // ) {
+    try {
+      const id = req.params.id;
+      const userRate = req.body.rate;
+      const eve = await Event.findById(id);
+      const oldRating = eve.rating;
+      const oldRatingcount = eve.ratingcount;
+      const updatedRatingcount = oldRatingcount + 1;
+      const updatedRating = oldRating + userRate;
+      const updatedRate = updatedRating / updatedRatingcount;
+      const isValidated = validator.updateValidation(req.body);
+      if (!eve) {
+        return res.status(404).send({ error: "Event does not exist" });
       }
-    } else {
-      return res.status(404).send({ error: "You have to sign in" });
+      if (isValidated.error) {
+        return res
+          .status(400)
+          .send({ error: isValidated.error.details[0].message });
+      } else {
+        Event.update(
+          { _id: id },
+          {
+            $set: {
+              rate: updatedRate,
+              rating: updatedRating,
+              ratingcount: updatedRatingcount
+            }
+          }
+        )
+          .exec()
+          .then(() => {
+            res.status(200).json({
+              message: "Event is rated successfully",
+              Rate: updatedRate,
+              Rating: updatedRating,
+              Ratingcount: updatedRatingcount
+            });
+          })
+          .catch(err => {
+            res.status(500).json({
+              message: "Error"
+            });
+          });
+      }
+    } catch (error) {
+      console.log(error);
     }
+    // } else {
+    //   return res.status(404).send({ error: "You have to sign in" });
+    // }
   }
 );
 
