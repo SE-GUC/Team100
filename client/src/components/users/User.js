@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal, Button, ListGroup, Image } from "react-bootstrap";
 import axios from "../../axiosInstance";
 import DeleteIcon from "@material-ui/icons/Delete";
+import UserAdd from "./UserAdd"
 
 import {
   Fab
@@ -50,6 +51,7 @@ class User extends React.Component {
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Users</Modal.Title>
+            <UserAdd> </UserAdd>
           </Modal.Header>
           <Modal.Body>
             <ListGroup>
