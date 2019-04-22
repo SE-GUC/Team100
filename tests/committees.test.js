@@ -1,48 +1,49 @@
 const funcs = require("../fn/committeesFn");
+const Committee = require("../models/Committee");
 
 test("Number of committees should be 4", async done => {
-  expect.assertions(1);
-  const response = await funcs.getcommittees();
-  expect(response.data.data.length).toBe(24);
+  const commBefore = await funcs.getcommittees();
+
+  const newComm = {
+    name: "PR",
+    description: "ndnlan",
+    page: "adjklans",
+    events: ["openning"],
+    team_members: ["AYA"]
+  };
+  const newC = await funcs.createCommmittee(newComm);
+  const CommID = newC.data.data._id;
+  const getC = Committee.findOne({ _id: CommID });
+
+  const commAfter = await funcs.getcommittees();
+
+  expect(commAfter.data.data.length).toEqual(commBefore.data.data.length + 1);
+  expect(getC).toBeDefined();
+
   done();
 });
 
 test("create committees", async done => {
-  expect.assertions(5);
+  expect.assertions(6);
   const comm = {
-    name: "NEWHR",
+    name: "newcommittee ",
     description: "ndnlan",
     page: "adjklans",
     events: ["openning"],
     team_members: ["AYA"]
   };
   const committee = await funcs.createCommmittee(comm);
-  console.log(committee.data.data.name);
-  expect(committee.data.data.name).toEqual("NEWHR");
-  expect(committee.data.data.description).toEqual("ndnlan");
-  expect(committee.data.data.page).toEqual("adjklans");
-  expect(committee.data.data.events).toEqual(["openning"]);
-  expect(committee.data.data.team_members).toEqual(["AYA"]);
-  done();
-});
+  const committeeID = committee.data.data._id;
 
-test("delete committee", async done => {
-  expect.assertions(1);
-  const c = {
-    name: "commTest"
-  };
-  const com = await funcs.deleteCommittees(c);
-  expect(com.data.data.name).toEqual("commTest");
-  done();
-});
+  const getC = Committee.findOne({ _id: committeeID });
+  expect(committee.data.data.name).toEqual(comm.name);
+  expect(committee.data.data.description).toEqual(comm.description);
+  expect(committee.data.data.page).toEqual(comm.page);
+  expect(committee.data.data.events).toEqual(comm.events);
+  expect(committee.data.data.team_members).toEqual(comm.team_members);
+  expect(getC).toBeDefined();
 
-test("update committee", async done => {
-  expect.assertions(1);
-  const t = {
-    name: "updateee"
-  };
-  const up = await funcs.updateCommittee(t);
-  //console.log(up.data.Committee.name)
-  expect(up.data.Committee.name).toEqual("updateee");
+  await funcs.deleteCommittees(committeeID);
+
   done();
 });
