@@ -9,8 +9,8 @@ const RecSchema = new Schema({
     required: true
   },
   birthdate: {
-    type: Date,
-    required: true
+    type: String,
+    required: false
   },
   email: {
     type: String,
@@ -25,7 +25,7 @@ const RecSchema = new Schema({
     required: true
   },
   Year_of_Study: {
-    type: Date,
+    type: Number,
     required: true
   },
   Means_of_Transportation: {
@@ -44,4 +44,7 @@ const RecSchema = new Schema({
   }
 });
 
-module.exports = RecruitmentForm = mongoose.model("recruitmentforms", RecSchema);
+module.exports = RecruitmentForm = mongoose.model(
+  "recruitmentforms",
+  RecSchema
+);

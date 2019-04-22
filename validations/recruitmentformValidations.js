@@ -4,7 +4,7 @@ module.exports = {
   createValidation: request => {
     const createSchema = {
       name: Joi.string().required(),
-      birthdate: Joi.date().required(),
+      birthdate: Joi.string(),
       email: Joi.string()
         .email()
         .required(),
@@ -20,4 +20,3 @@ module.exports = {
     return Joi.validate(request, createSchema);
   }
 };
-
