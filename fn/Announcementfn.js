@@ -20,7 +20,7 @@ const functions = {
   deleteAnnouncement: async id => {
     try {
       const response = await axios.delete(
-        `http://localhost:6000/api/announcements/${id}`
+        `http://localhost:6000/api/announcements/` + id
       );
       return response;
     } catch (error) {
