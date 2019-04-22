@@ -60,7 +60,7 @@ class Achievements extends Component {
         this.getAchievements();
         alert(res.data.message);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert("Unauthorized"));
   };
   handleChangeDescription = event => {
     this.setState({ description: event.target.value });

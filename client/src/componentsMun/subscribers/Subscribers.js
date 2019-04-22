@@ -38,9 +38,14 @@ class Subscribers extends React.Component {
     };
     console.log(Subscriber);
     try {
-      await axios.post(`/subscribers/`, Subscriber);
+      await axios.post(`/subscribers/`, Subscriber)
+        alert("You are subscribed")
     } catch (error) {
-      this.setState({ error });
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
   render() {

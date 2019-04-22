@@ -64,10 +64,17 @@ class Messages extends Component {
     };
     console.log(message);
     try {
-      await axios.post(`/messages/`, { ...message });
-      this.refreshMessages();
+      await axios.post(`/messages/`, { ...message }).then( res => {
+        this.refreshMessages();
+        alert(res.data.msg)
+      })
+      
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 

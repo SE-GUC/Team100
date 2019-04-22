@@ -127,9 +127,15 @@ class Committees extends Component {
       await axios.put(
         `committee/${c.target.getAttribute("data-index")}`,
         updatedCommittee
-      );
+      ).then( res => {
+        alert(res.data.msg)
+      })
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
@@ -140,9 +146,9 @@ class Committees extends Component {
         e.target.getAttribute("data-index")
       )
       .then(res => {
-        console.log();
+        alert(res.data.msg)
       })
-      .catch(err => console.log(err));
+      .catch(err => "Unauthorized");
   };
 
   handleChange = (event, value) => {
@@ -161,10 +167,16 @@ class Committees extends Component {
     };
     console.log(com);
     try {
-      await axios.post(`committee/`, com);
+      await axios.post(`committee/`, com).then(res => {
+        alert(res.data.msg);
+      })
       // this.refreshCommittees();
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
