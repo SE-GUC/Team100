@@ -13,7 +13,7 @@ import {
 import Card from "react-bootstrap/Card";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-
+import { withRouter } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -135,7 +135,7 @@ class Committees extends Component {
   };
 
   render() {
-   // const { classes } = this.props;
+    const { classes, history } = this.props;
     const { value } = this.state;
     const { committee } = this.state;
     const committeeList = committee.length ? (
@@ -184,10 +184,11 @@ class Committees extends Component {
       <div className="container">
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Executive Office" />
-            <Tab label="Security Council" />
-            <Tab label="General Assembly" />
-            <Tab label="Secretary Office" />
+            <Tab label="Executive Office"      onClick={() => history.push("/executive")}
+ />
+            <Tab label="Security Council"  onClick={() => history.push("/securitycouncil")}/>
+            <Tab label="General Assembly"  onClick={() => history.push("/generalassembly")}/>
+            <Tab label="Secretary Office" onClick={() => history.push("/secretaryoffice")}/>
           </Tabs>
         </AppBar>
 
