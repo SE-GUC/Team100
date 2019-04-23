@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-//import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
+import React from "react";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
-
+import { Typography, Paper, CardContent, Card } from "@material-ui/core";
+import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 class Subscribers extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -12,7 +12,17 @@ class Subscribers extends React.Component {
       email: ""
     };
   }
-
+  componentDidMount() {
+    this.refreshSubscribers();
+  }
+  refreshSubscribers() {
+    axios.get("http://localhost:5000/api/subscribers").then(res => {
+      console.log(res.data);
+      this.setState({
+        subscribers: res.data.data
+      });
+    });
+  }
   handleChangeName = event => {
     this.setState({ name: event.target.value });
   };
@@ -28,54 +38,87 @@ class Subscribers extends React.Component {
     };
     console.log(Subscriber);
     try {
-      await axios.post(`/subscribers/`, Subscriber);
+      await axios.post(`/subscribers/`, Subscriber)
+        alert("You are subscribed")
     } catch (error) {
-      this.setState({ error });
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
-
   render() {
-    if (this.state.error) {
-      return (
-        <label>
-          Sorry, you have already Subscribed with this email before.{" "}
-        </label>
-      );
-    }
     return (
       <div>
         <h1>Subscribers</h1>
-        <Collapsible trigger="Click here to Register to mailing service">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="Name"
+        {
+          <ul>
+            {localStorage.type === "mun_admin" ? (
+              <Collapsible trigger="Click here to view subscribers list">
+                {this.state.subscribers.map(subscriber => (
+                  <div className="center" key={subscriber._id}>
+                    <Paper>
+                      <Card>
+                        <CardContent>
+                          <Typography
+                            variant="h6"
+                            component="h2"
+                            color="primary"
+                          >
+                            {"Subscriber Name: " + subscriber.name} <br />
+                            {"Email: " + subscriber.email} <br />
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Paper>
+                  </div>
+                ))}
+              </Collapsible>
+            ) : null}
+          </ul>
+        }
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>Subscribe To Our Mailing Services!</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <InputGroup size="sm" className="Subscribers">
+              <InputGroup.Prepend>
+                <InputGroup.Text id="inputGroup-sizing-sm">
+                  Name
+                </InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl
                 onChange={this.handleChangeName}
                 required={true}
+                aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm"
               />
-            </label>
-            <label>
-              Email:
-              <input
-                type="text"
-                name="email"
+            </InputGroup>
+            <br />
+            <InputGroup size="sm" className="Subscribers">
+              <InputGroup.Prepend>
+                <InputGroup.Text id="inputGroup-sizing-sm">
+                  Email
+                </InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl
                 onChange={this.handleChangeEmail}
                 required={true}
+                aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm"
               />
-            </label>
-            <button
-              onClick={() => {
-                alert(
-                  "Your have successfully subscribed to our mailing services!"
-                );
-              }}
-            >
+            </InputGroup>
+            <br />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="warning" onClick={this.handleSubmit}>
               Subscribe
-            </button>
-          </form>
-        </Collapsible>
+            </Button>
+          </Modal.Footer>
+        </Modal.Dialog>
       </div>
     );
   }

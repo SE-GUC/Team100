@@ -1,7 +1,36 @@
-import React, { Component } from 'react';
-import axios from '../../axiosInstance';
+import React, { Component } from "react";
+import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import CheckCircle from '@material-ui/icons/CheckCircle';
+import Fab from '@material-ui/core/Fab';
+import DeleteIcon from "@material-ui/icons/Delete";
+import Button from "@material-ui/core/Button";
 
+
+const styles = {
+  card: {
+    display: 'inline-block',
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 25,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+};
 
 class Faqs extends Component {
   constructor() {
@@ -20,13 +49,12 @@ class Faqs extends Component {
 
   /////
   getFaqs() {
-    axios.get("http://localhost:5000/api/faqs/")
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-          faqs: res.data.data
-        })
-      })
+    axios.get("http://localhost:5000/api/faqs/").then(res => {
+      console.log(res.data);
+      this.setState({
+        faqs: res.data.data
+      });
+    });
   }
   /////
   handleChangeQ = faqs => {
@@ -36,22 +64,13 @@ class Faqs extends Component {
     this.setState({ answer: faqs.target.value });
   };
 
-
   refreshFaqs() {
-
-    axios.get("http://localhost:5000/api/faqs/")
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-        })
-      });
+    axios.get("http://localhost:5000/api/faqs/").then(res => {
+      console.log(res.data);
+      this.setState({});
+    });
   }
-  handleChangeQuestion = faq => {
-    this.setState({ question: faq.target.value });
-  };
-  handleChangeAnswer = faq => {
-    this.setState({ question: faq.target.value });
-  };
+
   handleSubmit = async faq => {
     faq.preventDefault();
     const updatedFaq = {
@@ -60,26 +79,33 @@ class Faqs extends Component {
     };
     console.log(updatedFaq);
     try {
-      await axios.put(`faqs/${faq.target.getAttribute("data-index")}`, updatedFaq);
-      this.refreshFaqs();
-    }
-    catch (error) {
-      console.log(error);
+      await axios.put(
+        `faqs/${faq.target.getAttribute("data-index")}`,
+        updatedFaq
+      ).then(res => {
+        this.refreshFaqs();
+        alert(res.data.message);
+      });
+    } catch (error) {
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
   onDelete = e => {
     axios
-      .delete("http://localhost:5000/api/faqs/" +
-        e.target.getAttribute("data-index")
+      .delete(
+        "http://localhost:5000/api/faqs/" + e.target.getAttribute("data-index")
       )
-      .then(
-        res => {
-          console.log();
-          this.refreshFaqs();
-        }
-      )
-      .catch(err => console.log(err))
+      .then(res => {
+        console.log();
+        this.refreshFaqs();
+        alert(res.data.msg);
+      })
+      .catch(err => alert("You are unauthorized"));
   };
 
   handleS = async Faqs => {
@@ -87,76 +113,101 @@ class Faqs extends Component {
 
     const faq = {
       question: this.state.question,
-      answer: this.state.answer,
+      answer: this.state.answer
     };
     console.log(faq);
     try {
-      await axios.post(`FAQs/`, faq);
-      this.refreshFaqs();
+      await axios.post(`FAQs/`, faq).then(res => {
+        this.refreshFaqs();
+        alert(res.data.message);
+      });
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
-        <h2>FAQS</h2>
-        {
-          <ul>
+        <h1>FAQS</h1>
+        <br />
+        <br />
+
+        <Grid container className={classes.root} spacing={40}>
+          <Grid container className={classes.demo} justify="center" spacing={16}>
             {this.state.faqs.map(faq => (
-              <div key={faq._id}>
-                <li>
-                  {faq.question} {faq.answer}
-                </li>
-                <button onClick={this.onDelete} data-index={faq._id}>
-                  DELETE
-                </button>
-                <form onSubmit={this.handleSubmit} data-index={faq._id}>
-                  Q:<input type="text" name="question" defaultValue={faq.question} />
-                  A:<input type="text" name="answer" defaultValue={faq.answer} />
-                  <input type="submit" value="Submit" />
-                </form>
-              </div>
+              <Card className={Card} display='inline-block'>
+                <CardContent>
+                  <div key={faq._id}>
+                    <Typography variant="body1" color="textSecondary" gutterBottom>
+                      {faq.question}
+                    </Typography>
+                    <Typography component="p">
+                      {faq.answer}
+                    </Typography>
+                  </div>
+                </CardContent>
+                {localStorage.type === "hub_admin" ? (
+                  <CardActions>
+                    <Fab color="primary" aria-label="Delete">
+                      <Button onClick={this.onDelete} data-index={faq._id}>
+                        <DeleteIcon />
+                      </Button>
+                    </Fab>
+                    <form onSubmit={this.handleSubmit} data-index={faq._id}>
+                      Q:<input type="text" name="question" defaultValue={faq.question} />
+                      A:<input type="text" name="answer" defaultValue={faq.answer} />
+                      <input type="submit" value="Edit" />
+                    </form>
+                  </CardActions>
+                ) : null}
+
+              </Card>
+
             ))}
-          </ul>
-        }
+          </Grid>
 
-        {this.state.faqs.map(f => (
-          <div key={f._id}>
-            <li>
-              <label> Question: </label>
-              {f.question},
-              <label> Answer: </label>
-              {f.answer}
-            </li>
-          </div>))}
+        </Grid>
+        <br />
+        <br />
+        {localStorage.type === "hub_admin" ? (
+          <Collapsible trigger="Create a FAQ">
+            <form onSubmit={this.handleS}>
+              <label>
+                Question:
+     <input
+                  type="text"
+                  name="Question"
+                  onChange={this.handleChangeQ}
+                />
+              </label>
+              <label>
+                Answer:
+     <input
+                  type="text"
+                  name="Answer"
+                  onChange={this.handleChangeA}
+                />
+              </label>
+              <Button type="submit">
+                <CheckCircle />
+              </Button>
+            </form>
+          </Collapsible>
+        ) : null}
 
-
-        <Collapsible trigger="Create a FAQ">
-          <form onSubmit={this.handleS}>
-            <label>
-              Question:
-              <input
-                type="text"
-                name="Question"
-                onChange={this.handleChangeQ}
-              />
-            </label>
-            <label>
-              Answer:
-              <input
-                type="text"
-                name="Answer"
-                onChange={this.handleChangeA}
-              />
-            </label>
-            <button type="submit">Add</button>
-          </form>
-        </Collapsible>
       </div>
-    );
+    )
   }
 }
+Faqs.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default Faqs;
+export default withStyles(styles)(Faqs);

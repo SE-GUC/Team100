@@ -1,9 +1,9 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Form , FormControl,Button} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Form } from 'react-bootstrap';
 import SearchTool from '../search/SearchTool';
 
 
-const styles = {
+/*const styles = {
   root: {
     flexGrow: 1,
   },
@@ -12,7 +12,7 @@ const styles = {
     marginRight: 10,
   },
 };
-
+*/
 class Tabs extends React.Component {
   render() {
     return (

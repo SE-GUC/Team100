@@ -1,26 +1,20 @@
-import React, { Component } from "react"
+import React from "react";
 import axios from "../../axiosInstance";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
 // import Livefeed from ".componentsMun/livefeed/Livefeed";
 import "./Homepage.css";
-import { Timeline, TimelineEvent } from "react-event-timeline";
-import LiveFeed from "../livefeed/Livefeed";
-import Subscribers from "../subscribers/Subscribers"
-import Slideshow from "../slideshow/Slideshow"
-import Galleries from "../galleries/Galleries"
-import Hierarchy from "../aboutus/Hierarchy";
-import Achievements from "../aboutus/Achievements";
-import MV from "../aboutus/MV";
-import Committees from "../committees/Committees"
-import Events from "../events/Events";
+import Subscribers from "../subscribers/Subscribers";
+import Slideshow from "../slideshow/Slideshow";
 import TL from "../../components/timeline/tl";
 import Descriptions from "../descriptions/Descriptions";
 import ContactUs from "../contactus/ContactUs";
+import { Button } from "@material-ui/core";
 
 function TabContainer(props) {
   return (
@@ -31,14 +25,14 @@ function TabContainer(props) {
 }
 
 TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
+    backgroundColor: theme.palette.background.paper
+  }
 });
 
 class SimpleTabs extends React.Component {
@@ -72,7 +66,7 @@ class SimpleTabs extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { value } = this.state;
 
     return (
@@ -80,27 +74,49 @@ class SimpleTabs extends React.Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Home" />
-            <Tab label="Gallery" />
-            <Tab label="Livefeed" />
-            <Tab label="Contact us" />
-            <Tab label="About us" />
-            <Tab label="Events" />
-            <Tab label="Committes" />
-
+            <Tab
+              label="Gallery"
+              onClick={() => history.push("/componentsMun/gallery")}
+            />
+            <Tab
+              label="Livefeed"
+              onClick={() => history.push("/componentsMun/livefeed")}
+            />
+            <Tab
+              label="LiveStream"
+              onClick={() => history.push("/componentsMun/livestream")}
+            />
+            <Tab
+              label="About us"
+              onClick={() => history.push("/componentsMun/aboutus")}
+            />
+            <Tab
+              label="Events"
+              onClick={() => history.push("/componentsMun/events")}
+            />
+            <Tab
+              label="Committes"
+              onClick={() => history.push("/componentsMun/committees")}
+            />
+            <Tab
+              label="Library"
+              onClick={() => history.push("/componentsMun/library")}
+            />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><Descriptions/><Slideshow /><Subscribers /><TL/></TabContainer>}
-        {value === 1 && <TabContainer><Galleries /></TabContainer>}
-        {value === 2 && <TabContainer><LiveFeed /></TabContainer>}
-        {value === 3 && <TabContainer><ContactUs/></TabContainer>}
-        {value === 4 && <TabContainer>
-          <MV/>
-          <Hierarchy/>
-          <Achievements/>
-        </TabContainer>}
-        {value === 5 && <TabContainer><Events/></TabContainer>}
-        {value === 6 && <TabContainer><Committees /></TabContainer>}
+        {value === 0 && (
+          <TabContainer>
+            <Descriptions />
+            <Slideshow />
+            <Subscribers />
+            <TL />
+            <ContactUs />
+          </TabContainer>
+        )}
 
+        <Button onClick={() => history.push("/componentsMun/Forms")}>
+          Recruitment Form
+        </Button>
 
         {/* <h3>Events within the month</h3>
         <Timeline>
@@ -126,11 +142,11 @@ class SimpleTabs extends React.Component {
         </Timeline> */}
       </div>
     );
-  }        
+  }
 }
 
 SimpleTabs.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleTabs);
+export default withRouter(withStyles(styles)(SimpleTabs));

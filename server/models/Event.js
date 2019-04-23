@@ -49,8 +49,7 @@ const EventSchema = new Schema({
     default: 0
   },
   feedback: {
-    type: [String],
-    default: "No feedbacks yet"
+    type: [String]
   }
 })
 
