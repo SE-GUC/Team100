@@ -113,6 +113,33 @@ class Announcements extends Component {
     }
   };
 
+  handleChangeDescription = event => {
+    this.setState({ description: event.target.value });
+  };
+  handleChangeTitle = event => {
+    this.setState({ title: event.target.value });
+  };
+  handleChangeCreated = event => {
+    this.setState({ created_by: event.target.value });
+  };
+  handleSubmit1 = async ann => {
+    ann.preventDefault();
+    const updatedann = {
+      description: ann.target.description.value,
+      title: ann.target.title.value,
+      created_by: ann.target.created_by.value
+
+    };
+    console.log(updatedann);
+    try {
+      await axios.put(`announcements/${ann.target.getAttribute("data-index")}`, updatedann);
+      this.getAchievements();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -163,6 +190,13 @@ class Announcements extends Component {
                         <DeleteIcon />
                       </Button>
                     </Fab>
+                    <form onSubmit={this.handleSubmit1} data-index={ann._id}>
+                      Description:<input type="text" name="description" defaultValue={ann.description} />
+                      Title:<input type="text" name="title" defaultValue={ann.title} />
+                      Created By:<input type="text" name="created_by" defaultValue={ann.created_by} />
+
+                      <input type="submit" value="Edit" />
+                    </form>
                   </CardActions>
                 ) : null}
 

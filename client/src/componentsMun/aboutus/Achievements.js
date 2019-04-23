@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axios from "../../axiosInstance";
 import Collapsible from "react-collapsible";
 import { withStyles } from "@material-ui/core/styles";
-import { Typography, Paper, CardContent, Card } from "@material-ui/core";
+import { Typography, Paper, CardContent, Card, CardActions } from "@material-ui/core";
 const styles = {
   card: {
     minWidth: 275
@@ -47,7 +47,7 @@ class Achievements extends Component {
     axios
       .delete(
         "http://localhost:5000/api/achievements/" +
-          e.target.getAttribute("data-index")
+        e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
@@ -75,6 +75,24 @@ class Achievements extends Component {
       await axios.post(`achievements/`, Achievement);
       this.getAchievements();
     } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleChangeDescription = event => {
+    this.setState({ description: event.target.value });
+  };
+  handleSubmit1 = async ach => {
+    ach.preventDefault();
+    const updatedach = {
+      description: ach.target.description.value
+    };
+    console.log(updatedach);
+    try {
+      await axios.put(`achievements/${ach.target.getAttribute("data-index")}`, updatedach);
+      this.getAchievements();
+    }
+    catch (error) {
       console.log(error);
     }
   };
@@ -182,9 +200,15 @@ class Achievements extends Component {
                     </ul>
                   </Typography>
                   {localStorage.type === "mun_admin" ? (
-                    <button onClick={this.onDelete} data-index={ach._id}>
-                      Delete
+                    <CardActions>
+                      <button onClick={this.onDelete} data-index={ach._id}>
+                        Delete
                     </button>
+                      <form onSubmit={this.handleSubmit1} data-index={ach._id}>
+                        Description:<input type="text" name="description" defaultValue={ach.description} />
+                        <input type="submit" value="Edit" />
+                      </form>
+                    </CardActions>
                   ) : null}
                 </CardContent>
               </Card>
@@ -193,7 +217,7 @@ class Achievements extends Component {
         ))}
         {localStorage.type === "mun_admin" ? (
           <Collapsible
-            
+
             trigger="Create new achievement"
           >
             <form onSubmit={this.handleSubmit}>
