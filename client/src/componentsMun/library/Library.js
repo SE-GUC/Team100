@@ -4,12 +4,6 @@ import Collapsible from "react-collapsible";
 import { Typography, Paper, CardContent, Card, Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
-const mainBg = {
-  backgroundImage: 'url("./images/1.jpg")',
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  backgroundPosition: "right"
-};
 class Library extends Component {
   constructor() {
     super();
@@ -22,28 +16,10 @@ class Library extends Component {
   }
   componentDidMount() {
     this.refreshLibraries();
-    document.body.style = { mainBg };
   }
 
-  sortCaseNum = async e => {
-    var temp;
-    var formTemp = this.state.libraries;
-    for (var i = 1; i < formTemp.length; i++) {
-      for (var j = i; j > 0; j--) {
-        if (formTemp[j].caseNumber < formTemp[j - 1].caseNumber) {
-          temp = formTemp[j];
-          formTemp[j] = formTemp[j - 1];
-          formTemp[j - 1] = temp;
-        }
-      }
-    }
-    this.setState({
-      libraries: formTemp
-    });
-  };
-
   refreshLibraries() {
-    axios("/api/libraries")
+    axios("http://localhost:5000/api/libraries")
       .then(res => {
         console.log(res.data.data);
         this.setState({ libraries: res.data.data });
@@ -52,31 +28,78 @@ class Library extends Component {
       .catch(err => console.log(err));
   }
 
-  sortAscending() {
-    axios("/api/libraries/sortA")
-      .then(res => {
-        this.setState({ libraries: res.data.data });
-      })
-      .catch(err => console.log(err));
-  }
-
-  sortDescending() {
-    axios("/api/libraries/sortD")
-      .then(res => {
-        this.setState({ libraries: res.data.data });
-      })
-      .catch(err => console.log(err));
-  }
   onDelete = e => {
     axios
-      .delete("api/libraries/" + e.target.getAttribute("data-index"))
+      .delete(
+        "http://localhost:5000/api/libraries/" +
+          e.target.getAttribute("data-index")
+      )
       .then(res => {
         console.log();
         this.refreshLibraries();
-        alert(res.data.msg);
       })
-      .catch(err => alert("Unauthorized"));
+      .catch(err => console.log(err));
   };
+
+  // sortCaseNum = async e => {
+
+  //   var temp;
+
+  //   var formTemp = this.state.libraries;
+
+  //   for (var i = 1; i < formTemp.length; i++) {
+
+  //     for (var j = i; j > 0; j--) {
+
+  //       if (formTemp[j].caseNumber < formTemp[j - 1].caseNumber) {
+
+  //         temp = formTemp[j];
+
+  //         formTemp[j] = formTemp[j - 1];
+
+  //         formTemp[j - 1] = temp;
+
+  //       }
+
+  //     }
+
+  //   }
+
+  //   this.setState({
+
+  //     libraries: formTemp
+
+  //   });
+
+  // };
+  // sortAscending() {
+
+  //   axios("/api/libraries/sortA")
+
+  //     .then(res => {
+
+  //       this.setState({ libraries: res.data.data });
+
+  //     })
+
+  //     .catch(err => console.log(err));
+
+  // }
+
+  // sortDescending() {
+
+  //   axios("/api/libraries/sortD")
+
+  //     .then(res => {
+
+  //       this.setState({ libraries: res.data.data });
+
+  //     })
+
+  //     .catch(err => console.log(err));
+
+  // }
+
   handleChangeAcademicPaper = x => {
     this.setState({ Academic_paper: x.target.value });
   };
@@ -95,17 +118,10 @@ class Library extends Component {
     };
     console.log(x);
     try {
-      await axios.post("api/libraries/AcademicPaper", x).then( res => {
-        this.refreshLibraries();
-        alert(res.data.msg);
-      })
-      
+      await axios.post("http://localhost:5000/api/libraries/AcademicPaper", x);
+      this.refreshLibraries();
     } catch (error) {
-      if (error.message === "Request failed with status code 404")
-        alert("Please enter valid inputs");
-      else if (error.message === "Request failed with status code 401")
-        alert("You are unauthorized");
-      else alert(error.message);
+      console.log(error);
     }
   };
   onCreateR = async Resolution => {
@@ -117,17 +133,10 @@ class Library extends Component {
     };
     console.log(x);
     try {
-      await axios.post("api/libraries/Resolution", x).then(res => {
-        this.refreshLibraries();
-        alert(res.data.msg);
-      })
-      
+      await axios.post("http://localhost:5000/api/libraries/Resolution", x);
+      this.refreshLibraries();
     } catch (error) {
-      if (error.message === "Request failed with status code 404")
-        alert("Please enter valid inputs");
-      else if (error.message === "Request failed with status code 401")
-        alert("You are unauthorized");
-      else alert(error.message);
+      console.log(error);
     }
   };
 
