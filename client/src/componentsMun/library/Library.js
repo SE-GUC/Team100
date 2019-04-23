@@ -73,8 +73,9 @@ class Library extends Component {
       .then(res => {
         console.log();
         this.refreshLibraries();
+        alert(res.data.msg);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert("Unauthorized"));
   };
   handleChangeAcademicPaper = x => {
     this.setState({ Academic_paper: x.target.value });
@@ -94,10 +95,17 @@ class Library extends Component {
     };
     console.log(x);
     try {
-      await axios.post("api/libraries/AcademicPaper", x);
-      this.refreshLibraries();
+      await axios.post("api/libraries/AcademicPaper", x).then( res => {
+        this.refreshLibraries();
+        alert(res.data.msg);
+      })
+      
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
   onCreateR = async Resolution => {
@@ -109,10 +117,17 @@ class Library extends Component {
     };
     console.log(x);
     try {
-      await axios.post("api/libraries/Resolution", x);
-      this.refreshLibraries();
+      await axios.post("api/libraries/Resolution", x).then(res => {
+        this.refreshLibraries();
+        alert(res.data.msg);
+      })
+      
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 

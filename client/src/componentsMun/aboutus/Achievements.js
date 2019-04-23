@@ -42,7 +42,25 @@ class Achievements extends Component {
         console.log(this.state);
       });
   }
-
+  /*
+  handleChangeDesc = ach => {
+    this.setState({ question: ach.target.value });
+  };
+ 
+  handleSubmit1 = async ach => {
+    ach.preventDefault();
+    const updatedach = {
+      description: ach.target.description.value
+    };
+    console.log(updatedach);
+    try {
+      await axios.put(`achievements/${ach.target.getAttribute("data-index")}`, updatedach);
+      this.getAchievements();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };*/
   onDelete = e => {
     axios
       .delete(
@@ -52,8 +70,9 @@ class Achievements extends Component {
       .then(res => {
         console.log();
         this.getAchievements();
+        alert(res.data.message);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert("Unauthorized"));
   };
   handleChangeDescription = event => {
     this.setState({ description: event.target.value });
@@ -72,10 +91,16 @@ class Achievements extends Component {
     };
     console.log(Achievement);
     try {
-      await axios.post(`achievements/`, Achievement);
+      await axios.post(`achievements/`, Achievement).then(res => {
       this.getAchievements();
+      alert(res.data.message);
+      })
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 

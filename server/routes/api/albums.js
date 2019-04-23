@@ -16,7 +16,7 @@ router.get("/:id", async (req, res) => {
     if (!album) return res.status(404).send({ error: "Album does not exist" });
     res.json({ data: album });
   } catch (error) {
-    console.log(error);
+     // res.json({ error: error })
   }
 });
 
@@ -48,10 +48,10 @@ router.post(
         const newAlbum = await Album.create(req.body);
         res.json({ msg: "Album was created successfully", data: newAlbum });
       } catch (error) {
-        console.log(error);
+       // console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -80,7 +80,7 @@ router.put(
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -95,10 +95,10 @@ router.delete(
         const deletedAlbum = await Album.findByIdAndRemove(id);
         res.json({ msg: "Album was deleted successfully", data: deletedAlbum });
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );

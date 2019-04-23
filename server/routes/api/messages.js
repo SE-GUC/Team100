@@ -32,7 +32,7 @@ router.post(
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "You have to sign in" });
+      return res.status(401).send({ error: "You have to sign in" });
     }
   }
 );
@@ -59,7 +59,7 @@ router.delete(
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -73,7 +73,7 @@ router.get(
       const message = await Message.find();
       res.json({ data: message });
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );
@@ -104,7 +104,7 @@ router.put(
         console.log(error);
       }
     } else {
-      return res.status(404).send({ error: "Unauthorized" });
+      return res.status(401).send({ error: "Unauthorized" });
     }
   }
 );

@@ -1,26 +1,27 @@
-import React, { Component } from "react";
-import "./App.css";
-import { Switch, Route } from "react-router-dom";
-import "./App.css";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import components from "./components";
-import componentsMun from "./componentsMun";
-import MenuAppBar from "./components/layout/MenuAppBar";
-import setAuthToken from "../src/helpers/setAuthToken";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import setAuthToken from "../src/helpers/setAuthToken";
+import "./App.css";
+import components from "./components";
+import MenuAppBar from "./components/layout/MenuAppBar";
+import componentsMun from "./componentsMun";
 import aboutus from "./componentsMun/aboutus/aboutus";
-import securitycouncil from "./securitycouncil";
-import generalassembly from "./generalassembly";
-import secretaryoffice from "./secretaryoffice";
-import executive from "./executive";
-import textfield from "./textfield";
-import recruitment from "./componentsMun/forms/recruitment";
-import Events from "./componentsMun/events/Events";
-import Galleries from "./componentsMun/galleries/Galleries";
 import Committees from "./componentsMun/committees/Committees";
+import Events from "./componentsMun/events/Events";
+import recruitment from "./componentsMun/forms/recruitment";
+import Galleries from "./componentsMun/galleries/Galleries";
+import Library from "./componentsMun/library/Library";
 import Livefeed from "./componentsMun/livefeed/Livefeed";
 import livestream from "./componentsMun/livestream/livestream";
-import Library from "./componentsMun/library/Library";
+import executive from "./executive";
+import generalassembly from "./generalassembly";
+import secretaryoffice from "./secretaryoffice";
+import securitycouncil from "./securitycouncil";
+import ShowMessage from './componentsMun/ShowMessage/ShowMessage'
+import textfield from "./textfield";
+
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -94,6 +95,8 @@ class App extends Component {
                     <Route path="/executive" component={executive} />
 
                     <Route path="/textfield" component={textfield} />
+                    <Route path="/show" component={ShowMessage} />
+
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>

@@ -70,13 +70,14 @@ class Announcements extends Component {
     axios
       .delete(
         "http://localhost:5000/api/announcements/" +
-        e.target.getAttribute("data-index")
+          e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
         this.refreshAnnouncements();
+        alert(res.data.msg);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert("Unauthorized"));
   };
   handleChangeDescription = event => {
     this.setState({ description: event.target.value });
@@ -87,12 +88,25 @@ class Announcements extends Component {
   handleChangeCreated = event => {
     this.setState({ created_by: event.target.value });
   };
-  // handleChangeVideo = event => {
-  //   this.setState({ videos: event.target.value });
-  // };
-  // handleChangePhoto = event => {
-  //   this.setState({ photos: event.target.value });
-  // };
+  /*
+  handleSubmit1 = async ann => {
+    ann.preventDefault();
+    const updatedann = {
+      description: ann.target.description.value,
+      title: ann.target.title.value,
+      created_by: ann.target.created_by.value
+
+    };
+    console.log(updatedann);
+    try {
+      await axios.put(`announcements/${ann.target.getAttribute("data-index")}`, updatedann);
+      this.getAchievements();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+  */
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -108,8 +122,13 @@ class Announcements extends Component {
     try {
       await axios.post(`announcements/`, Announcement);
       this.refreshAnnouncements();
+      alert("Announcement was created successfully.");
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 

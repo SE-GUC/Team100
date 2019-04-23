@@ -107,10 +107,15 @@ class Events extends Component {
     try {
       await axios.put(`events/rate/${eventId}`, Rate).then(res => {
         console.log(res.data);
+        alert(res.data.message);
       });
       this.refreshEvents();
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
@@ -129,10 +134,16 @@ class Events extends Component {
     };
     console.log(event);
     try {
-      await axios.post(`events/`, event);
+      await axios.post(`events/`, event).then(res => {
       this.refreshEvents();
+      alert(res.data.msg)
+    })
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
@@ -143,10 +154,14 @@ class Events extends Component {
         .then(res => {
           console.log();
           this.refreshEvents();
+          alert(res.data.msg)
         })
-        .catch(err => console.log(err));
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
@@ -164,9 +179,19 @@ class Events extends Component {
       description: this.state.description,
       committee: this.state.committee
     };
-
-    await axios.put(`events/${id}`, updatedEvent);
-    this.refreshEvents();
+    try{
+      await axios.put(`events/${id}`, updatedEvent).then( res => {
+      this.refreshEvents();
+      alert(res.data.message);
+      })
+    }
+    catch(error){
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
+    }
   };
 
   onCreateFeed = async event => {
@@ -180,10 +205,17 @@ class Events extends Component {
       await axios.put(
         "events/feedback/" + event.target.getAttribute("data-index"),
         feed
-      );
-      this.refreshEvents();
+      ).then(res => {
+        this.refreshEvents();
+        alert(res.data.message);
+      })
+      
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 

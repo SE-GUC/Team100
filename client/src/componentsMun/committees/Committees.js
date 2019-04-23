@@ -13,7 +13,7 @@ import {
 import Card from "react-bootstrap/Card";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-
+import { withRouter } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -96,9 +96,15 @@ class Committees extends Component {
       await axios.put(
         `committee/${c.target.getAttribute("data-index")}`,
         updatedCommittee
-      );
+      ).then( res => {
+        alert(res.data.msg)
+      })
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
@@ -106,9 +112,9 @@ class Committees extends Component {
     axios
       .delete("/committee/" + e.target.getAttribute("data-index"))
       .then(res => {
-        console.log();
+        alert(res.data.msg)
       })
-      .catch(err => console.log(err));
+      .catch(err => "Unauthorized");
   };
 
   handleChange = (event, value) => {
@@ -127,15 +133,21 @@ class Committees extends Component {
     };
     console.log(com);
     try {
-      await axios.post(`committee/`, com);
+      await axios.post(`committee/`, com).then(res => {
+        alert(res.data.msg);
+      })
       // this.refreshCommittees();
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
   render() {
-   // const { classes } = this.props;
+    const { classes, history } = this.props;
     const { value } = this.state;
     const { committee } = this.state;
     const committeeList = committee.length ? (
@@ -184,10 +196,11 @@ class Committees extends Component {
       <div className="container">
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Executive Office" />
-            <Tab label="Security Council" />
-            <Tab label="General Assembly" />
-            <Tab label="Secretary Office" />
+            <Tab label="Executive Office"      onClick={() => history.push("/executive")}
+ />
+            <Tab label="Security Council"  onClick={() => history.push("/securitycouncil")}/>
+            <Tab label="General Assembly"  onClick={() => history.push("/generalassembly")}/>
+            <Tab label="Secretary Office" onClick={() => history.push("/secretaryoffice")}/>
           </Tabs>
         </AppBar>
 
@@ -236,6 +249,8 @@ class Committees extends Component {
               backgroundColor: "#3F51B5",
               color: "#f4f4f4"
             }}
+            onClick={() => history.push("/show")}
+
           >
             {" "}
             Show Messages{" "}
