@@ -70,8 +70,9 @@ class Achievements extends Component {
       .then(res => {
         console.log();
         this.getAchievements();
+        alert(res.data.message);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert("Unauthorized"));
   };
   handleChangeDescription = event => {
     this.setState({ description: event.target.value });
@@ -90,10 +91,16 @@ class Achievements extends Component {
     };
     console.log(Achievement);
     try {
-      await axios.post(`achievements/`, Achievement);
+      await axios.post(`achievements/`, Achievement).then(res => {
       this.getAchievements();
+      alert(res.data.message);
+      })
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 

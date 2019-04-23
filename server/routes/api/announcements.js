@@ -57,7 +57,7 @@ router.post("/", passport.authenticate('jwt', { session: false }), async (req, r
   }
   else {
     return res
-      .status(404)
+      .status(401)
       .send({ error: "Unauthorized" });
   }
 });
@@ -90,7 +90,7 @@ router.put("/:id", passport.authenticate('jwt', { session: false }), async (req,
   }
   else {
     return res
-      .status(404)
+      .status(401)
       .send({ error: "Unauthorized" });
   }
 });
@@ -117,7 +117,7 @@ router.delete("/:id", passport.authenticate('jwt', { session: false }), async (r
   }
   else {
     return res
-      .status(404)
+      .status(401)
       .send({ error: "Unauthorized" });
   }
 });

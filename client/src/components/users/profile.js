@@ -70,7 +70,7 @@ class Profile extends React.Component {
       this.setState({ user: user.data.deletedUser });
     });
     //   console.log(response.data)
-    console.log("Deleted successfully");
+    alert("Deleted successfully");
     this.handleClose();
     localStorage.clear();
   }
@@ -116,9 +116,14 @@ class Profile extends React.Component {
       await axios.put(`users/${localStorage.getItem("id")}`, User).then(res => {
         this.handleClose();
         this.refreshUser();
+        alert(res.data.msg);
       });
     } catch (error) {
-      console.log(error);
+      if (error.message === "Request failed with status code 404")
+        alert("Please enter valid inputs");
+      else if (error.message === "Request failed with status code 401")
+        alert("You are unauthorized");
+      else alert(error.message);
     }
   };
 
