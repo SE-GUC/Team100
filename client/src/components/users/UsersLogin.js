@@ -125,6 +125,9 @@ class UserLogin extends Component {
       else alert(error.message);
     }
   }
+  logout() {
+    localStorage.clear();
+}
   render() {
     return (
 
