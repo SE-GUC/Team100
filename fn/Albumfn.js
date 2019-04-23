@@ -17,11 +17,11 @@ const functions = {
     });
     return album;
   },
-  postAlbum: async body => {
+  createAlbum: async body => {
     try {
       const album = await axios.post(`http://localhost:6000/api/albums/`, {
-        title: "Event 12",
-        description: "fcghbj",
+        title: "photoshootTesting",
+        description: "ndnlan",
         photo: ["5c96009d01119d16989aebfc"]
       });
       return album;
@@ -33,6 +33,58 @@ const functions = {
     try {
       const album = await axios.get(`http://localhost:6000/api/albums/${id}`);
       return album;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getSubscriber: async () => {
+    const response = await axios.get("http://localhost:6000/api/subscribers/");
+    return response;
+  },
+  getASubscriber: async body => {
+    try {
+      const response = await axios.get(
+        `http://localhost:6000/api/subscribers/${id}`,
+        body
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  createSubscriber: async body => {
+    try {
+      const response = await axios.post(
+        "http://localhost:6000/api/subscribers/",
+        body
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getSubscriber: async () => {
+    const response = await axios.get("http://localhost:6000/api/subscribers/");
+    return response;
+  },
+  getASubscriber: async body => {
+    try {
+      const response = await axios.get(
+        `http://localhost:6000/api/subscribers/${id}`,
+        body
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  createSubscriber: async body => {
+    try {
+      const response = await axios.post(
+        "http://localhost:6000/api/subscribers/",
+        body
+      );
+      return response;
     } catch (error) {
       console.log(error);
     }
