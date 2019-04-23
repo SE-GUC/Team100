@@ -65,7 +65,7 @@ class Achievements extends Component {
     axios
       .delete(
         "http://localhost:5000/api/achievements/" +
-          e.target.getAttribute("data-index")
+        e.target.getAttribute("data-index")
       )
       .then(res => {
         console.log();
@@ -101,6 +101,24 @@ class Achievements extends Component {
       else if (error.message === "Request failed with status code 401")
         alert("You are unauthorized");
       else alert(error.message);
+    }
+  };
+
+  handleChangeDescription = event => {
+    this.setState({ description: event.target.value });
+  };
+  handleSubmit1 = async ach => {
+    ach.preventDefault();
+    const updatedach = {
+      description: ach.target.description.value
+    };
+    console.log(updatedach);
+    try {
+      await axios.put(`achievements/${ach.target.getAttribute("data-index")}`, updatedach);
+      this.getAchievements();
+    }
+    catch (error) {
+      console.log(error);
     }
   };
 
@@ -207,18 +225,15 @@ class Achievements extends Component {
                     </ul>
                   </Typography>
                   {localStorage.type === "mun_admin" ? (
-                                      <CardActions>
-
-                    <button onClick={this.onDelete} data-index={ach._id}>
-                      Delete
+                    <CardActions>
+                      <button onClick={this.onDelete} data-index={ach._id}>
+                        Delete
                     </button>
-{/*
-<form onSubmit={this.handleSubmit1} data-index={ach._id}>
-Description:<input type="text" name="description" defaultValue={ach.description} />
-<input type="submit" value="Edit" />
-</form>*/}
-</CardActions>
-
+                      <form onSubmit={this.handleSubmit1} data-index={ach._id}>
+                        Description:<input type="text" name="description" defaultValue={ach.description} />
+                        <input type="submit" value="Edit" />
+                      </form>
+                    </CardActions>
                   ) : null}
                 </CardContent>
               </Card>
@@ -227,7 +242,7 @@ Description:<input type="text" name="description" defaultValue={ach.description}
         ))}
         {localStorage.type === "mun_admin" ? (
           <Collapsible
-            
+
             trigger="Create new achievement"
           >
             <form onSubmit={this.handleSubmit}>
